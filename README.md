@@ -1,11 +1,12 @@
 Hi there! 👋 I am Imalsha, It's a pleasure to meet you!
 
-A few things about me
-  * I am UI/UX Designer doing everything creative.
-  * Music, Art, Illustrations, Books ara my happy places.
-  * I enjoy bringing a creative and useful design or idea to life and learning new technologies/trends.
-  * Skilled in creating responsive designs, UI Design, UX best practices, Illustrations.
-  * Self-studying on UI/UX-related concepts like Personas, User Flows, User Journeys, User Research, Prototyping, Wireframing, etc.
+As a passionate UI/UX Designer, I thrive on the intersection of creativity and functionality, consistently striving to improve my skills and stay updated with the latest trends in design. My commitment to following proper design standards ensures that I deliver intuitive, user-friendly, and aesthetically pleasing digital experiences.
+
+I am dedicated to continuous learning and professional development, always seeking new opportunities to expand my knowledge and enhance my design capabilities. My approach is user-centered, focusing on creating designs that not only look great but also provide exceptional user experiences.
+
+I take pride in my ability to translate complex ideas into simple, elegant solutions. By collaborating closely with cross-functional teams, I ensure that my designs meet the needs of both users and stakeholders.
+
+Let's connect and explore how we can create beautiful and effective digital experiences together.
 
 -------------------------------------------------------------------------------------------------------
 
