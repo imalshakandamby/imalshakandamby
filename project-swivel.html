@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swivel Internal Websites & Marketing Pages - Case Study</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root { --bg:#0A0A0F; --white:#E8E4F0; --muted:#AFA9BD; --violet:#6c8ef5; --font-display:'Syne',sans-serif; --font-body:'Inter',sans-serif; --max-w:980px; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:var(--bg);color:var(--white);font-family:var(--font-body);-webkit-font-smoothing:antialiased;min-height:100vh;position:relative;padding-top:7rem}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.5}
+    a{color:inherit;text-decoration:none}
+    .cursor-dot,.cursor-ring{display:none;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+    .cursor-dot{width:8px;height:8px;border-radius:50%;background:rgba(232,228,240,.95)}
+    .cursor-ring{width:34px;height:34px;border-radius:50%;border:1px solid rgba(108,142,245,.7);background:rgba(108,142,245,.08);backdrop-filter:blur(1px);-webkit-backdrop-filter:blur(1px);transition:width .16s,height .16s,border-color .16s}
+    @media (hover:hover) and (pointer:fine){html,body,a,button,[role="button"],.project-card,.tile,.viewer-close{cursor:none!important}.cursor-dot,.cursor-ring{display:block}}
+    .container{max-width:var(--max-w);margin:0 auto;padding:0 1.5rem;position:relative;z-index:1}
+    .site-header{
+      transition: opacity 0.3s ease, transform 0.3s ease;position:fixed;top:1.5rem;left:0;right:0;display:flex;justify-content:center;padding:0 1rem;z-index:50}
+    .nav-pill{display:flex;align-items:center;gap:.25rem;padding:.5rem;border-radius:100px;background:rgba(28,23,41,.85);border:1px solid rgba(108,142,245,.2);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+    .nav-link{font-family:var(--font-display);font-size:.875rem;font-weight:600;letter-spacing:.02em;color:var(--muted);padding:.5rem 1.25rem;border-radius:100px;transition:color .2s,background .2s}
+    .nav-link:hover{color:var(--white);background:rgba(255,255,255,.05)}.nav-link--active{color:rgba(232,228,240,.85);background:rgba(108,142,245,.15)}
+    .back-link{display:inline-flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--muted);margin-bottom:1.25rem;transition:color .2s}.back-link:hover{color:var(--white)}.back-link svg{width:1rem;height:1rem}
+    .case-header h1{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,3rem);line-height:1.08;letter-spacing:-.01em;margin-bottom:.75rem}
+    .case-header p{color:var(--muted);line-height:1.7;margin-bottom:2rem;}
+    .case-section{border-top:1px solid rgba(255,255,255,.08);padding:2.75rem 0 3rem}
+    .case-section h2{font-family:var(--font-display);font-size:1.15rem;margin-bottom:.7rem;color:var(--white)}
+    .case-section p,.case-section li{color:var(--muted);line-height:1.75;font-size:.95rem}.case-section ul{padding-left:1.1rem}
+    /* ─── Creative Footer ─── */
+    .site-footer { position: relative; z-index: 1; padding: 3.5rem 0 2rem; }
+    .footer-glow {
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 520px; height: 160px;
+      background: radial-gradient(ellipse at center, rgba(108,142,245,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: start;
+      gap: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .footer-brand { display: flex; flex-direction: column; gap: 0.35rem; }
+    .footer-brand__name { font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; color: var(--white); }
+    .footer-brand__sub { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.03em; }
+    .footer-brand__tagline {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(108,142,245,0.7);
+      border: 1px solid rgba(108,142,245,0.2);
+      border-radius: 100px;
+      padding: 0.25rem 0.7rem;
+      width: fit-content;
+    }
+    .footer-center { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+    .footer-logo-mark {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      background: rgba(108,142,245,0.1);
+      border: 1px solid rgba(108,142,245,0.25);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(108,142,245,0.8);
+    }
+    .footer-divider-v {
+      width: 1px; height: 32px;
+      background: linear-gradient(to bottom, transparent, rgba(108,142,245,0.3), transparent);
+    }
+    .footer-contact { display: flex; flex-direction: column; align-items: flex-end; gap: 0.55rem; }
+    .footer-contact-link {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.82rem; color: var(--muted);
+      transition: color 0.2s;
+      text-decoration: none;
+    }
+    .footer-contact-link:hover { color: var(--white); }
+    .footer-contact-link svg { flex-shrink: 0; opacity: 0.6; }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 1.5rem; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-socials { display: flex; align-items: center; gap: 0.5rem; }
+    .footer-social-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 0.35rem 0.85rem; height: 32px; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted); font-size: 0.75rem;
+      font-family: var(--font-display); font-weight: 700;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      text-decoration: none;
+    }
+    .footer-social-btn:hover { border-color: rgba(108,142,245,0.5); color: var(--white); background: rgba(108,142,245,0.08); }
+    .footer-copy { font-size: 0.65rem; color: rgba(195,190,210,0.75); letter-spacing: 0.08em; }
+    @media (max-width: 640px) {
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-center { align-items: flex-start; flex-direction: row; }
+      .footer-divider-v { width: 32px; height: 1px; background: linear-gradient(to right, transparent, rgba(108,142,245,0.3), transparent); }
+      .footer-contact { align-items: flex-start; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width:768px){body{padding-top:6.5rem}.footer-inner{flex-direction:column;align-items:flex-start}.footer-vdivider{display:none}}
+
+    /* ─── Project Intro two-column layout ─── */
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+    .intro-para {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 0.95rem;
+    }
+    .intro-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-left: 1px solid rgba(255,255,255,0.08);
+      padding-left: 1.75rem;
+    }
+    .intro-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .intro-meta-item:last-child { border-bottom: none; }
+    .intro-meta-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--violet);
+      font-weight: 500;
+    }
+    .intro-meta-value {
+      font-size: 0.85rem;
+      color: var(--white);
+      font-family: var(--font-display);
+      font-weight: 600;
+    }
+    @media (max-width: 640px) {
+      .intro-grid { grid-template-columns: 1fr; }
+      .intro-meta { border-left: none; padding-left: 0; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.25rem; }
+    }
+
+
+    /* ─── Enhanced entrance animations ─── */
+    @keyframes heroTitle {
+      0%   { opacity:0; transform: translateY(40px) scale(0.97); filter: blur(6px); }
+      100% { opacity:1; transform: translateY(0)   scale(1);    filter: blur(0); }
+    }
+    @keyframes heroSub {
+      0%   { opacity:0; transform: translateY(24px); }
+      100% { opacity:1; transform: translateY(0); }
+    }
+    @keyframes slideInLeft {
+      0%   { opacity:0; transform: translateX(-36px); }
+      100% { opacity:1; transform: translateX(0); }
+    }
+    @keyframes fadeScaleIn {
+      0%   { opacity:0; transform: scale(0.94); }
+      100% { opacity:1; transform: scale(1); }
+    }
+    @keyframes lineGrow {
+      0%   { transform: scaleX(0); transform-origin: left; }
+      100% { transform: scaleX(1); transform-origin: left; }
+    }
+
+    .back-link {
+      animation: slideInLeft 0.55s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    .case-header h1 {
+      animation: heroTitle 0.85s cubic-bezier(0.22,1,0.36,1) 0.1s both;
+    }
+    .case-header p {
+      animation: heroSub 0.75s cubic-bezier(0.22,1,0.36,1) 0.3s both;
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.65s cubic-bezier(0.22,1,0.36,1), transform 0.65s cubic-bezier(0.22,1,0.36,1);
+      will-change: opacity, transform;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.95) translateY(20px);
+      transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+      will-change: opacity, transform;
+    }
+    .reveal-scale.visible {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-32px);
+      transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1);
+    }
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    /* Stagger children inside revealed sections */
+    .reveal-stagger > * {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.5s cubic-bezier(0.22,1,0.36,1), transform 0.5s cubic-bezier(0.22,1,0.36,1);
+    }
+    .reveal-stagger.visible > *:nth-child(1) { opacity:1; transform:none; transition-delay: 0.05s; }
+    .reveal-stagger.visible > *:nth-child(2) { opacity:1; transform:none; transition-delay: 0.13s; }
+    .reveal-stagger.visible > *:nth-child(3) { opacity:1; transform:none; transition-delay: 0.21s; }
+    .reveal-stagger.visible > *:nth-child(4) { opacity:1; transform:none; transition-delay: 0.29s; }
+    .reveal-stagger.visible > *:nth-child(5) { opacity:1; transform:none; transition-delay: 0.37s; }
+    .reveal-stagger.visible > *:nth-child(6) { opacity:1; transform:none; transition-delay: 0.45s; }
+    .reveal-stagger.visible > *:nth-child(n+7) { opacity:1; transform:none; transition-delay: 0.53s; }
+
+    /* Section overflow clip for reveal */
+    .case-section {
+      overflow: visible;
+    }
+
+    /* ── Mobile hamburger nav ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 8px;
+      transition: background 0.2s;
+      z-index: 200;
+      margin-left: auto;
+    }
+    .nav-hamburger:hover { background: rgba(255,255,255,0.06); }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+      transform-origin: center;
+    }
+    .nav-hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.is-open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav-mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 150;
+      background: rgba(10,8,18,0.97);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      padding: 2rem;
+    }
+    .nav-mobile-menu.is-open { display: flex; }
+    .nav-mobile-menu .nav-link {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.5rem 1.5rem;
+      border-radius: 12px;
+      transition: color 0.2s, background 0.2s;
+      text-align: center;
+    }
+    .nav-mobile-menu .nav-link:hover,
+    .nav-mobile-menu .nav-link--active {
+      color: var(--white);
+      background: rgba(108,142,245,0.12);
+    }
+    .nav-mobile-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+    }
+    .nav-mobile-close:hover { color: var(--white); background: rgba(255,255,255,0.06); }
+
+    @media (max-width: 640px) {
+      .nav-pill { justify-content: space-between; width: 100%; max-width: 100%; }
+      .nav-pill .nav-link { display: none; }
+      .nav-hamburger { display: flex; margin-left: auto; }
+      /* Footer mobile */
+      .footer-top {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem;
+        text-align: center;
+      }
+      .footer-brand { align-items: center !important; }
+      .footer-brand__tagline { align-self: center !important; }
+      .footer-center {
+        align-items: center !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        gap: 0.75rem;
+      }
+      .footer-divider-v {
+        width: 24px !important;
+        height: 1px !important;
+        background: linear-gradient(to right, transparent, rgba(108,142,245,0.3), transparent) !important;
+      }
+      .footer-contact {
+        align-items: center !important;
+        width: 100%;
+      }
+      .footer-contact-link { justify-content: center !important; }
+      .footer-bottom {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 0.75rem;
+        text-align: center;
+      }
+      .footer-copy { text-align: center; }
+      .footer-socials { flex-wrap: wrap; gap: 0.4rem; justify-content: center; }
+      .footer-social-btn { font-size: 0.68rem; padding: 0.3rem 0.65rem; }
+    }
+
+    /* ── Global safe padding — prevents any content touching screen edges ── */
+    :root {
+      --side-pad: clamp(1rem, 5vw, 1.5rem);
+    }
+
+    /* Container safe padding on all widths */
+    .container {
+      padding-inline: var(--side-pad) !important;
+    }
+
+    /* Hero section */
+    .hero {
+      padding-left: var(--side-pad) !important;
+      padding-right: var(--side-pad) !important;
+    }
+    .hero__inner {
+      padding-inline: 0 !important;
+    }
+
+    /* Nav pill safe sides */
+    .site-header {
+      padding-inline: var(--side-pad) !important;
+    }
+
+    /* Footer safe sides */
+    .site-footer .container,
+    .site-footer > .container {
+      padding-inline: var(--side-pad) !important;
+    }
+
+    /* Extra-small screens (≤ 400px) — tighter headline, more breathing room */
+    @media (max-width: 400px) {
+      .hero__headline {
+        font-size: clamp(1.55rem, 9vw, 2.2rem) !important;
+        line-height: 1.05 !important;
+      }
+      .hero__bio {
+        font-size: 0.88rem !important;
+      }
+      .case-section h2 {
+        font-size: 1.1rem !important;
+      }
+      h1.case-title {
+        font-size: clamp(1.4rem, 7vw, 2rem) !important;
+      }
+    }
+
+    /* Small screens (≤ 480px) */
+    @media (max-width: 480px) {
+      .hero__headline {
+        font-size: clamp(1.65rem, 8.5vw, 2.4rem) !important;
+      }
+      /* Playground grid: 1 column */
+      .tile-grid {
+        grid-template-columns: 1fr !important;
+      }
+      /* Project intro meta stack */
+      .intro-meta-bar {
+        flex-direction: column !important;
+        gap: 0.75rem !important;
+      }
+    }
+
+    /* Medium-small (≤ 640px) — already handled but reinforce padding */
+    @media (max-width: 640px) {
+      .hero {
+        padding-top: 5.5rem !important;
+        padding-bottom: 3rem !important;
+      }
+      .project-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    /* ── Mobile: all card grids collapse to single column ── */
+    @media (max-width: 640px) {
+
+      /* Any div with inline display:grid inside case sections → 1 column */
+      .case-section [style*="display:grid"],
+      .case-section [style*="display: grid"],
+      main [style*="display:grid"],
+      main [style*="display: grid"] {
+        grid-template-columns: 1fr !important;
+      }
+
+      /* Intro meta bar (2fr 1fr split) → stack */
+      .intro-grid,
+      .challenge-grid,
+      .intro-meta-bar {
+        grid-template-columns: 1fr !important;
+      }
+
+      /* Footer header 3-col → 1 col */
+      .footer-top {
+        grid-template-columns: 1fr !important;
+      }
+
+      /* Wider gap on single-col cards */
+      .case-section [style*="display:grid"],
+      .case-section [style*="display: grid"] {
+        gap: 0.65rem !important;
+      }
+
+      /* Tab layout in rubi solution section */
+      .tab-layout, .tab-panels {
+        flex-direction: column !important;
+      }
+
+      /* Kartclass 2-col key features → 1 col already covered above */
+
+      /* Rubi role cards 3+4 layout → 1 col already covered above */
+    }
+
+    /* Tablet (641–900px): max 2 columns for 3/4-col grids */
+    @media (min-width: 641px) and (max-width: 900px) {
+      .case-section [style*="repeat(3,1fr)"],
+      .case-section [style*="repeat(4,1fr)"],
+      .case-section [style*="repeat(3, 1fr)"],
+      .case-section [style*="repeat(4, 1fr)"] {
+        grid-template-columns: 1fr 1fr !important;
+      }
+    }
+
+    /* ── .mobile-grid: tagged multi-column grids → 1 col on mobile ── */
+    @media (max-width: 640px) {
+      .mobile-grid {
+        grid-template-columns: 1fr !important;
+        gap: 0.65rem !important;
+      }
+    }
+    @media (min-width: 641px) and (max-width: 900px) {
+      .mobile-grid {
+        grid-template-columns: 1fr 1fr !important;
+      }
+    }
+
+    @media (max-width: 640px) {
+      }
+    @media (min-width: 641px) and (max-width: 900px) {
+      }
+
+    /* ── My Role icon cards ── */
+    .role-row { margin-bottom: 0; }
+    .role-row:last-of-type { margin-bottom: 0; }
+    .role-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .role-card__icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(108,142,245,0.08);
+      border: 1px solid rgba(108,142,245,0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(108,142,245,0.85);
+      flex-shrink: 0;
+    }
+    .role-card__text {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+
+    /* ── My Role icon cards ── */
+    .role-row { margin-bottom: 0; }
+    .role-row:last-of-type { margin-bottom: 0; }
+    .role-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      padding: 1.5rem 1.4rem;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(108,142,245,0.18);
+      transition: border-color 0.2s;
+    }
+    .role-card:hover { border-color: rgba(108,142,245,0.38); }
+    .role-card__icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(108,142,245,0.08);
+      border: 1px solid rgba(108,142,245,0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(108,142,245,0.85);
+      flex-shrink: 0;
+    }
+    .role-card__text {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+
+    /* ── Animated left-border glow on accent boxes ── */
+    .glow-border {
+      position: relative;
+      overflow: hidden;
+    }
+    .glow-border::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: -100%;
+      width: 3px;
+      height: 300%;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(108,142,245,0.0) 10%,
+        rgba(108,142,245,0.9) 40%,
+        rgba(160,120,255,1.0) 50%,
+        rgba(108,142,245,0.9) 60%,
+        rgba(108,142,245,0.0) 90%,
+        transparent 100%
+      );
+      animation: borderGlow 2.8s ease-in-out infinite;
+      border-radius: 3px;
+      pointer-events: none;
+    }
+    @keyframes borderGlow {
+      0%   { top: -100%; opacity: 0.6; }
+      50%  { opacity: 1; }
+      100% { top:  100%; opacity: 0.6; }
+    }
+
+    /* ── Footer tablet (641px – 900px): keep two-column layout ── */
+    @media (min-width: 641px) and (max-width: 900px) {
+      .footer-top {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 1.5rem;
+      }
+      .footer-center {
+        display: none !important;
+      }
+      .footer-brand {
+        align-items: flex-start !important;
+      }
+      .footer-contact {
+        align-items: flex-end !important;
+      }
+      .footer-bottom {
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+      }
+      .footer-copy {
+        text-align: left !important;
+      }
+      .footer-socials {
+        justify-content: flex-end;
+      }
+    }
+
+    /* ── Nav fade on scroll ── */
+    .site-header {
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    .site-header.nav-hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-8px);
+    }
+
+    /* ── Swivel My Role: centered flex-wrap layout ── */
+    .role-wrapper {
+      justify-content: center;
+    }
+    .role-wrapper .role-card {
+      flex: 0 0 calc(33.333% - 0.7rem);
+      min-width: 200px;
+    }
+    @media (min-width: 641px) and (max-width: 900px) {
+      .role-wrapper {
+        grid-template-columns: unset !important;
+      }
+      .role-wrapper .role-card {
+        flex: 0 0 calc(50% - 0.5rem);
+      }
+    }
+    @media (max-width: 640px) {
+      .role-wrapper {
+        grid-template-columns: unset !important;
+      }
+      .role-wrapper .role-card {
+        flex: 0 0 100%;
+      }
+    }
+
+    /* ── Swivel Project Intro meta bar: stack on tablet/mobile ── */
+    @media (max-width: 900px) {
+      .intro-meta-bar {
+        flex-direction: column !important;
+      }
+      .intro-meta-bar > div {
+        border-right: none !important;
+        border-bottom: 1px solid rgba(108,142,245,0.12);
+        flex: unset !important;
+        width: 100% !important;
+      }
+      .intro-meta-bar > div:last-child {
+        border-bottom: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header"><nav class="nav-pill" id="mainNav">
+      <a href="index.html" class="nav-link ">Work</a>
+      <a href="playground.html" class="nav-link ">Playground</a>
+      <a href="assets/resume/Imalsha-Kandamby-Resume-Product Designer.pdf" target="_blank" rel="noopener" class="nav-link">Resume ↗</a>
+      <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <!-- Mobile overlay -->
+    <nav class="nav-mobile-menu" id="navMobileMenu" role="dialog" aria-label="Mobile navigation">
+      <button class="nav-mobile-close" id="navMobileClose" aria-label="Close menu">&#x2715;</button>
+      <a href="index.html" class="nav-link ">Work</a>
+      <a href="playground.html" class="nav-link ">Playground</a>
+      <a href="assets/resume/Imalsha-Kandamby-Resume-Product Designer.pdf" target="_blank" rel="noopener" class="nav-link">Resume ↗</a>
+    </nav></header>
+  <main class="container">
+    <a href="index.html" class="back-link" aria-label="Back to main page"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>Back to Main Page</a>
+    <section class="case-header">
+      <h1>Swivel Internal Websites &amp; Marketing Pages</h1>
+      <p>Designed and optimized responsive corporate websites and marketing landing pages for multiple Swivel Group brands, including Swivel Group, Swivel Tech, Swivel Finance, and Swivel Foundation. Working closely with the Lead UX Designer, marketing team, and company co-founders, I helped transform outdated marketing experiences into modern, conversion-focused platforms that improved user engagement and strengthened brand presence across digital channels.</p>
+    </section>
+    <div class="reveal-left" style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.7rem;flex-wrap:wrap;">
+      <span style="font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-right:0.25rem;">Live Product Links :</span>
+
+      <a href="https://swivelgroup.com.au/" target="_blank" rel="noopener" aria-label="Swivel Group" style="display:inline-flex;align-items:center;gap:0.45rem;padding:0.4rem 0.85rem;border-radius:999px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.03);color:var(--muted);font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.04em;transition:border-color 0.2s,color 0.2s,background 0.2s;" onmouseover="this.style.borderColor='rgba(108,142,245,0.6)';this.style.color='var(--white)';this.style.background='rgba(108,142,245,0.08)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='var(--muted)';this.style.background='rgba(255,255,255,0.03)';">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Swivel Group
+      </a>
+
+      <a href="https://swiveltech.io/" target="_blank" rel="noopener" aria-label="Swivel Tech" style="display:inline-flex;align-items:center;gap:0.45rem;padding:0.4rem 0.85rem;border-radius:999px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.03);color:var(--muted);font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.04em;transition:border-color 0.2s,color 0.2s,background 0.2s;" onmouseover="this.style.borderColor='rgba(108,142,245,0.6)';this.style.color='var(--white)';this.style.background='rgba(108,142,245,0.08)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='var(--muted)';this.style.background='rgba(255,255,255,0.03)';">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Swivel Tech
+      </a>
+
+      <a href="https://swivelfinance.com.au/" target="_blank" rel="noopener" aria-label="Swivel Finance" style="display:inline-flex;align-items:center;gap:0.45rem;padding:0.4rem 0.85rem;border-radius:999px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.03);color:var(--muted);font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.04em;transition:border-color 0.2s,color 0.2s,background 0.2s;" onmouseover="this.style.borderColor='rgba(108,142,245,0.6)';this.style.color='var(--white)';this.style.background='rgba(108,142,245,0.08)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='var(--muted)';this.style.background='rgba(255,255,255,0.03)';">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Swivel Finance
+      </a>
+
+      <a href="https://swivelfoundation.org/" target="_blank" rel="noopener" aria-label="Swivel Foundation" style="display:inline-flex;align-items:center;gap:0.45rem;padding:0.4rem 0.85rem;border-radius:999px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.03);color:var(--muted);font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.04em;transition:border-color 0.2s,color 0.2s,background 0.2s;" onmouseover="this.style.borderColor='rgba(108,142,245,0.6)';this.style.color='var(--white)';this.style.background='rgba(108,142,245,0.08)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='var(--muted)';this.style.background='rgba(255,255,255,0.03)';">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Swivel Foundation
+      </a>
+
+    </div>
+    <img class="reveal-fade" src="assets/images/project-swivel/project-swivel-placeholder-1.jpg" alt="Swivel project image 1" style="margin-bottom:1.7rem;width:100%;aspect-ratio:1880/1000;max-height:500px;border-radius:14px;object-fit:cover;display:block;"/>
+    <section class="case-section reveal">
+      <h2>Project Intro</h2>
+      <div class="intro-meta-bar" style="display:flex;flex-wrap:wrap;gap:0;margin-top:1.25rem;border:1px solid rgba(108,142,245,0.15);border-radius:14px;overflow:hidden;">
+
+        <div style="flex:1;min-width:140px;padding:1.1rem 1.25rem;border-right:1px solid rgba(108,142,245,0.12);">
+          <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(108,142,245,0.7);font-weight:500;margin-bottom:0.4rem;">Project Type</span>
+          <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--white);">Internal Marketing Pages</span>
+        </div>
+
+        <div style="flex:1;min-width:140px;padding:1.1rem 1.25rem;border-right:1px solid rgba(108,142,245,0.12);">
+          <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(108,142,245,0.7);font-weight:500;margin-bottom:0.4rem;">Role</span>
+          <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--white);">UX Designer (Collaborated with Lead UX)</span>
+        </div>
+
+        <div style="flex:1;min-width:120px;padding:1.1rem 1.25rem;border-right:1px solid rgba(108,142,245,0.12);">
+          <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(108,142,245,0.7);font-weight:500;margin-bottom:0.4rem;">Client</span>
+          <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--white);">Swivel Group</span>
+        </div>
+
+        <div style="flex:1;min-width:140px;padding:1.1rem 1.25rem;border-right:1px solid rgba(108,142,245,0.12);">
+          <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(108,142,245,0.7);font-weight:500;margin-bottom:0.4rem;">Time</span>
+          <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--white);">Mar 2023 – Mar 2024</span>
+        </div>
+
+        <div style="flex:1;min-width:100px;padding:1.1rem 1.25rem;">
+          <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(108,142,245,0.7);font-weight:500;margin-bottom:0.4rem;">Tools</span>
+          <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--white);">Figma</span>
+        </div>
+
+      </div>
+
+      <!-- Skills Demonstrated -->
+      <div style="margin-top:0.75rem;padding:1rem 1.25rem;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.15);">
+        <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(108,142,245,0.7);font-weight:500;margin-bottom:0.75rem;">Skills Demonstrated</span>
+        <div style="display:flex;flex-wrap:wrap;gap:0.45rem;">
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">UX Design</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Responsive Web Design</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Conversion Rate Optimization (CRO)</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Landing Page Design</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">User Flow Mapping</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Wireframing</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">High-Fidelity UI Design</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Interactive Prototyping</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Design Systems</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">AI-Powered Experience Design</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Stakeholder Management</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Cross-Functional Collaboration</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Usability Evaluation</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Design Handoff &amp; Documentation</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">QA &amp; Developer Collaboration</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Problem Solving</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Figma</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Presentation &amp; Communication Skills</span>
+        </div>
+      </div>
+    </section>
+    <section class="case-section reveal">
+      <h2>The Challenge</h2>
+      <p style="color:var(--muted);line-height:1.8;font-size:0.95rem;margin-bottom:1rem;">The existing marketing websites were not generating the expected level of user engagement and lead conversions. Navigation structures, content presentation, and user journeys required significant improvement to better communicate the company's value proposition and encourage user action.</p>
+      <p style="color:var(--muted);line-height:1.8;font-size:0.95rem;">Additionally, the team wanted to introduce modern AI-powered capabilities while maintaining a consistent experience across multiple brand websites.</p>
+    </section>
+    <section class="case-section reveal">
+                  <h2>My Role &amp; Responsibility</h2>
+      <p style="color:var(--muted);line-height:1.75;font-size:0.95rem;margin-bottom:1.25rem;">Working closely with the Lead UX Designer, I contributed across the full design process:</p>
+
+      <div class="role-wrapper" style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;">
+        <div class="role-row" style="display:contents;">
+          <div class="role-card">
+            <div class="role-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <p class="role-card__text">Collaborated with the Lead UX Designer throughout the end-to-end design process</p>
+          </div>
+          <div class="role-card">
+            <div class="role-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+            <p class="role-card__text">Designed responsive web, tablet, and mobile experiences</p>
+          </div>
+          <div class="role-card">
+            <div class="role-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg></div>
+            <p class="role-card__text">Created multiple design explorations and compared alternative solutions to identify the most effective direction</p>
+          </div>
+        </div>
+        <div class="role-row" style="display:contents;">
+          <div class="role-card">
+            <div class="role-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+            <p class="role-card__text">Built interactive prototypes for stakeholder reviews and usability validation</p>
+          </div>
+          <div class="role-card">
+            <div class="role-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+            <p class="role-card__text">Worked closely with developers and QA teams to ensure smooth implementation and design consistency</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="case-section reveal">
+      <h2>UX Process</h2>
+      <div class="mobile-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.85rem;margin-top:1rem;">
+        
+        <div style="position:relative;padding:1.25rem;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.18);overflow:hidden;display:flex;flex-direction:column;gap:0.75rem;">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,rgba(108,142,245,0.85),rgba(108,142,245,0.05));border-radius:14px 14px 0 0;"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;color:rgba(108,142,245,0.5);">01</span>
+            <span style="color:rgba(108,142,245,0.7);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg></span>
+          </div>
+          <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--white);">Research</div>
+          <ul style="padding-left:1rem;margin:0;list-style:disc;"><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Gathered requirements from stakeholders, marketing teams, and company leadership.</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Reviewed existing websites to identify usability issues, conversion barriers, and content gaps.</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Analyzed competitor experiences and industry best practices.</li></ul>
+        </div>
+        <div style="position:relative;padding:1.25rem;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.18);overflow:hidden;display:flex;flex-direction:column;gap:0.75rem;">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,rgba(108,142,245,0.85),rgba(108,142,245,0.05));border-radius:14px 14px 0 0;"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;color:rgba(108,142,245,0.5);">02</span>
+            <span style="color:rgba(108,142,245,0.7);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg></span>
+          </div>
+          <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--white);">Define</div>
+          <ul style="padding-left:1rem;margin:0;list-style:disc;"><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Created user personas and mapped primary user journeys.</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Defined information architecture and content hierarchy.</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Identified key conversion opportunities and business objectives.</li></ul>
+        </div>
+        <div style="position:relative;padding:1.25rem;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.18);overflow:hidden;display:flex;flex-direction:column;gap:0.75rem;">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,rgba(108,142,245,0.85),rgba(108,142,245,0.05));border-radius:14px 14px 0 0;"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;color:rgba(108,142,245,0.5);">03</span>
+            <span style="color:rgba(108,142,245,0.7);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 1 7 7c0 2.6-1.4 4.8-3.5 6.1V17a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-1.9C6.4 13.8 5 11.6 5 9a7 7 0 0 1 7-7z"/></svg></span>
+          </div>
+          <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--white);">Ideate</div>
+          <ul style="padding-left:1rem;margin:0;list-style:disc;"><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Collaborated with the Lead UX Designer and marketing team to explore multiple design directions.</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Generated alternative concepts for critical landing page sections and conversion-focused components.</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Evaluated solutions based on usability, business goals, and stakeholder feedback.</li></ul>
+        </div>
+        <div style="position:relative;padding:1.25rem;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.18);overflow:hidden;display:flex;flex-direction:column;gap:0.75rem;">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,rgba(108,142,245,0.85),rgba(108,142,245,0.05));border-radius:14px 14px 0 0;"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;color:rgba(108,142,245,0.5);">04</span>
+            <span style="color:rgba(108,142,245,0.7);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span>
+          </div>
+          <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--white);">Design</div>
+          <ul style="padding-left:1rem;margin:0;list-style:disc;"><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Developed low-fidelity wireframes and high-fidelity UI designs.</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Established consistent design patterns and reusable components.</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Designed responsive experiences across desktop, tablet, and mobile devices.</li></ul>
+        </div>
+        <div style="position:relative;padding:1.25rem;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.18);overflow:hidden;display:flex;flex-direction:column;gap:0.75rem;">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,rgba(108,142,245,0.85),rgba(108,142,245,0.05));border-radius:14px 14px 0 0;"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;color:rgba(108,142,245,0.5);">05</span>
+            <span style="color:rgba(108,142,245,0.7);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></span>
+          </div>
+          <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--white);">Prototype</div>
+          <ul style="padding-left:1rem;margin:0;list-style:disc;"><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Created interactive prototypes to demonstrate user flows and validate design decisions.</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Presented solutions to stakeholders and incorporated iterative feedback.</li></ul>
+        </div>
+        <div style="position:relative;padding:1.25rem;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.18);overflow:hidden;display:flex;flex-direction:column;gap:0.75rem;">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,rgba(108,142,245,0.85),rgba(108,142,245,0.05));border-radius:14px 14px 0 0;"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;color:rgba(108,142,245,0.5);">06</span>
+            <span style="color:rgba(108,142,245,0.7);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M10 3v7l-3.5 7A2 2 0 0 0 8.27 20h7.46a2 2 0 0 0 1.77-3L14 10V3"/><path d="M7.5 15h9"/></svg></span>
+          </div>
+          <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--white);">Testing & Handoff</div>
+          <ul style="padding-left:1rem;margin:0;list-style:disc;"><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Conducted internal reviews with the UX Lead, marketing team, and co-founders.</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Refined designs through multiple feedback cycles.</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Delivered detailed specifications and collaborated with developers and QA teams during implementation.</li></ul>
+        </div>
+      </div>
+    </section>
+    <section class="case-section reveal">
+      <h2>The Solution</h2>
+      <ul style="list-style:none;padding:0;margin:1rem 0 0;display:flex;flex-direction:column;gap:0.6rem;">
+        <li style="display:flex;align-items:flex-start;gap:0.85rem;">
+          <span style="flex-shrink:0;margin-top:0.42em;width:7px;height:7px;border-radius:50%;background:rgba(108,142,245,0.85);display:inline-block;"></span>
+          <p style="margin:0;color:var(--muted);font-size:0.92rem;line-height:1.7;flex:1;min-width:0;">Redesigned four corporate and marketing websites across the Swivel Group ecosystem.</p>
+        </li>
+        <li style="display:flex;align-items:flex-start;gap:0.85rem;">
+          <span style="flex-shrink:0;margin-top:0.42em;width:7px;height:7px;border-radius:50%;background:rgba(108,142,245,0.85);display:inline-block;"></span>
+          <p style="margin:0;color:var(--muted);font-size:0.92rem;line-height:1.7;flex:1;min-width:0;">Delivered fully responsive experiences for desktop, tablet, and mobile platforms.</p>
+        </li>
+        <li style="display:flex;align-items:flex-start;gap:0.85rem;">
+          <span style="flex-shrink:0;margin-top:0.42em;width:7px;height:7px;border-radius:50%;background:rgba(108,142,245,0.85);display:inline-block;"></span>
+          <p style="margin:0;color:var(--muted);font-size:0.92rem;line-height:1.7;flex:1;min-width:0;">Enhanced lead generation and contact workflows with improved forms and conversion-focused content.</p>
+        </li>
+        <li style="display:flex;align-items:flex-start;gap:0.85rem;">
+          <span style="flex-shrink:0;margin-top:0.42em;width:7px;height:7px;border-radius:50%;background:rgba(108,142,245,0.85);display:inline-block;"></span>
+          <p style="margin:0;color:var(--muted);font-size:0.92rem;line-height:1.7;flex:1;min-width:0;">Integrated AI-powered engagement features to streamline user interactions.</p>
+        </li>
+        <li style="display:flex;align-items:flex-start;gap:0.85rem;">
+          <span style="flex-shrink:0;margin-top:0.42em;width:7px;height:7px;border-radius:50%;background:rgba(108,142,245,0.85);display:inline-block;"></span>
+          <p style="margin:0;color:var(--muted);font-size:0.92rem;line-height:1.7;flex:1;min-width:0;">Established consistent visual patterns and user experiences across multiple brand websites.</p>
+        </li>
+      </ul>
+    </section>
+    <img class="reveal-fade" src="assets/images/project-swivel/project-swivel-placeholder-2.jpg" alt="Swivel project image 2" style="margin-bottom:1.7rem;width:100%;aspect-ratio:1880/1000;max-height:500px;border-radius:14px;object-fit:cover;display:block;"/>
+
+    <section class="case-section reveal">
+      <h2>Outcome &amp; Impact</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;margin-top:1rem;">
+
+        <div style="position:relative;padding:1.4rem 1.35rem;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.18);overflow:hidden;">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,rgba(108,142,245,0.85),rgba(108,142,245,0.05));border-radius:14px 14px 0 0;"></div>
+          <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:rgba(108,142,245,0.9);line-height:1;margin-bottom:0.5rem;">40%</div>
+          <p style="margin:0;color:var(--muted);font-size:0.88rem;line-height:1.65;">Increased lead conversion rates compared to previous website versions.</p>
+        </div>
+
+        <div style="position:relative;padding:1.4rem 1.35rem;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.18);overflow:hidden;">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,rgba(108,142,245,0.85),rgba(108,142,245,0.05));border-radius:14px 14px 0 0;"></div>
+          <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:rgba(108,142,245,0.9);line-height:1;margin-bottom:0.5rem;">↑</div>
+          <p style="margin:0;color:var(--muted);font-size:0.88rem;line-height:1.65;">Improved user engagement and overall reach across all company websites.</p>
+        </div>
+
+        <div style="position:relative;padding:1.4rem 1.35rem;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.18);overflow:hidden;">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,rgba(108,142,245,0.85),rgba(108,142,245,0.05));border-radius:14px 14px 0 0;"></div>
+          <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:rgba(108,142,245,0.9);line-height:1;margin-bottom:0.5rem;">30%</div>
+          <p style="margin:0;color:var(--muted);font-size:0.88rem;line-height:1.65;">Improved workflow efficiency through AI-powered features introduced across platforms.</p>
+        </div>
+
+        <div style="position:relative;padding:1.4rem 1.35rem;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.18);overflow:hidden;">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,rgba(108,142,245,0.85),rgba(108,142,245,0.05));border-radius:14px 14px 0 0;"></div>
+          <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:rgba(108,142,245,0.9);line-height:1;margin-bottom:0.5rem;">4×</div>
+          <p style="margin:0;color:var(--muted);font-size:0.88rem;line-height:1.65;">Strengthened brand consistency and digital presence across multiple business units.</p>
+        </div>
+
+      </div>
+    </section>
+    <section class="case-section reveal">
+      <h2>Learnings</h2>
+      <ul style="list-style:none;padding:0;margin:1rem 0 0;display:flex;flex-direction:column;gap:0.6rem;">
+        <li style="display:flex;align-items:flex-start;gap:0.85rem;">
+          <span style="flex-shrink:0;margin-top:0.42em;width:7px;height:7px;border-radius:50%;background:rgba(108,142,245,0.85);display:inline-block;"></span>
+          <p style="margin:0;color:var(--muted);font-size:0.92rem;line-height:1.7;flex:1;min-width:0;">Collaborating alongside a Lead Designer sharpened my ability to align on design direction quickly while still contributing distinct creative perspectives</p>
+        </li>
+        <li style="display:flex;align-items:flex-start;gap:0.85rem;">
+          <span style="flex-shrink:0;margin-top:0.42em;width:7px;height:7px;border-radius:50%;background:rgba(108,142,245,0.85);display:inline-block;"></span>
+          <p style="margin:0;color:var(--muted);font-size:0.92rem;line-height:1.7;flex:1;min-width:0;">Designing across multiple sub-brands within one system reinforced the importance of flexible component libraries that maintain consistency without limiting expression</p>
+        </li>
+        <li style="display:flex;align-items:flex-start;gap:0.85rem;">
+          <span style="flex-shrink:0;margin-top:0.42em;width:7px;height:7px;border-radius:50%;background:rgba(108,142,245,0.85);display:inline-block;"></span>
+          <p style="margin:0;color:var(--muted);font-size:0.92rem;line-height:1.7;flex:1;min-width:0;">Stakeholder prototype reviews taught me to present design rationale alongside visuals - decisions land better when the thinking behind them is made explicit</p>
+        </li>
+        <li style="display:flex;align-items:flex-start;gap:0.85rem;">
+          <span style="flex-shrink:0;margin-top:0.42em;width:7px;height:7px;border-radius:50%;background:rgba(108,142,245,0.85);display:inline-block;"></span>
+          <p style="margin:0;color:var(--muted);font-size:0.92rem;line-height:1.7;flex:1;min-width:0;">Working with QA teams highlighted how small implementation gaps can erode the designed experience, making design-dev alignment a continuous process rather than a one-time handoff</p>
+        </li>
+      </ul>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-glow" aria-hidden="true"></div>
+    <div class="container">
+
+      <div class="footer-top">
+        <!-- Brand -->
+        <div class="footer-brand">
+          <span class="footer-brand__name">Imalsha Kandamby</span>
+          <span class="footer-brand__sub">Product Designer · 's-Hertogenbosch, NL</span>
+          <span class="footer-brand__tagline">Available for opportunities</span>
+        </div>
+
+        <!-- Center mark -->
+        <div class="footer-center">
+          <div class="footer-divider-v"></div>
+          <div class="footer-logo-mark" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <div class="footer-divider-v"></div>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-contact">
+          <a href="mailto:imalshakandamby@gmail.com" class="footer-contact-link">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            imalshakandamby@gmail.com
+          </a>
+          <a href="tel:+31638286152" class="footer-contact-link">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            +31 6 3828 6152
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 Imalsha Kandamby · Designed &amp; built with intention</p>
+        <div class="footer-socials">
+          <a href="https://linkedin.com/in/imalsha-kandamby" target="_blank" rel="noopener" class="footer-social-btn" aria-label="LinkedIn">LinkedIn</a>
+          <a href="https://behance.net/imalshakandamby_gihk" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Behance">Behance</a>
+          <a href="https://dribbble.com/gihKandamby" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Dribbble">Dribbble</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+  <script>
+    (() => {
+      const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      if (!finePointer) return;
+      const dot = document.createElement('div');
+      dot.className = 'cursor-dot';
+      const ring = document.createElement('div');
+      ring.className = 'cursor-ring';
+      document.body.append(dot, ring);
+      let mouseX = window.innerWidth / 2;
+      let mouseY = window.innerHeight / 2;
+      let ringX = mouseX;
+      let ringY = mouseY;
+      const setPos = (el, x, y) => { el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`; };
+      const tick = () => {
+        ringX += (mouseX - ringX) * 0.18;
+        ringY += (mouseY - ringY) * 0.18;
+        setPos(dot, mouseX, mouseY);
+        setPos(ring, ringX, ringY);
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+      document.addEventListener('mousemove', (event) => { mouseX = event.clientX; mouseY = event.clientY; });
+      const interactiveSelector = 'a,button,[role="button"],input,textarea,select,.project-card,.tile,.viewer-close';
+      document.addEventListener('mouseover', (event) => {
+        if (event.target.closest(interactiveSelector)) {
+          ring.style.width = '48px';
+          ring.style.height = '48px';
+          ring.style.borderColor = 'rgba(108,142,245,0.95)';
+        }
+      });
+      document.addEventListener('mouseout', (event) => {
+        if (event.target.closest(interactiveSelector)) {
+          ring.style.width = '34px';
+          ring.style.height = '34px';
+          ring.style.borderColor = 'rgba(108,142,245,0.7)';
+        }
+      });
+    })();
+  </script>
+
+  
+
+  
+
+
+  <script>
+    (function() {
+      function initNav() {
+        var btn   = document.getElementById('navHamburger');
+        var menu  = document.getElementById('navMobileMenu');
+        var close = document.getElementById('navMobileClose');
+        if (!btn || !menu) return;
+
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          menu.classList.add('is-open');
+          btn.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+          document.body.style.overflow = 'hidden';
+        });
+
+        function closeMenu() {
+          menu.classList.remove('is-open');
+          btn.classList.remove('is-open');
+          btn.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        }
+
+        if (close) close.addEventListener('click', closeMenu);
+
+        menu.addEventListener('click', function(e) {
+          if (e.target === menu) closeMenu();
+        });
+
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') closeMenu();
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initNav);
+      } else {
+        initNav();
+      }
+    })();
+  </script>
+
+  <script>
+    /* ── Scroll Reveal ── */
+    (function() {
+      var classes = ['reveal', 'reveal-scale', 'reveal-left', 'reveal-fade', 'reveal-stagger'];
+      function revealAll() {
+        classes.forEach(function(cls) {
+          document.querySelectorAll('.' + cls).forEach(function(el) {
+            el.classList.add('visible');
+          });
+        });
+      }
+
+      if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+        classes.forEach(function(cls) {
+          document.querySelectorAll('.' + cls).forEach(function(el) {
+            observer.observe(el);
+          });
+        });
+      } else {
+        revealAll();
+      }
+    })();
+  </script>
+
+  <script>
+    /* ── Nav fade on scroll ── */
+    (function() {
+      var header     = document.querySelector('.site-header');
+      var lastScroll = 0;
+      var threshold  = 60;
+      var ticking    = false;
+
+      function update() {
+        var current = window.scrollY || window.pageYOffset;
+        if (current > threshold && current > lastScroll) {
+          header.classList.add('nav-hidden');
+        } else {
+          header.classList.remove('nav-hidden');
+        }
+        lastScroll = current <= 0 ? 0 : current;
+        ticking = false;
+      }
+
+      if (header) {
+        window.addEventListener('scroll', function() {
+          if (!ticking) {
+            window.requestAnimationFrame(update);
+            ticking = true;
+          }
+        }, { passive: true });
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Playground — Imalsha Kandamby</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #0A0A0F;
+      --surface: #13101C;
+      --surface-2: #1C1729;
+      --violet: #6c8ef5;
+      --violet-lt: #8fa8f8;
+      --white: #E8E4F0;
+      --muted: #AFA9BD;
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --max-w: 1152px;
+      --radius: 16px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    .cursor-dot,
+    .cursor-ring {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+    }
+
+    .cursor-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(232,228,240,0.95);
+    }
+
+    .cursor-ring {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid rgba(108,142,245,0.7);
+      background: rgba(108,142,245,0.08);
+      backdrop-filter: blur(1px);
+      -webkit-backdrop-filter: blur(1px);
+      transition: width 0.16s, height 0.16s, border-color 0.16s;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      html,
+      body,
+      a,
+      button,
+      [role="button"],
+      .project-card,
+      .tile,
+      .viewer-close {
+        cursor: none !important;
+      }
+
+      .cursor-dot,
+      .cursor-ring {
+        display: block;
+      }
+    }
+
+    .container {
+      max-width: var(--max-w);
+      margin-inline: auto;
+      padding-inline: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .site-header {
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      position: fixed;
+      top: 1.5rem;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      padding-inline: 1rem;
+      z-index: 50;
+    }
+
+    .nav-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.5rem;
+      border-radius: 100px;
+      background: rgba(28, 23, 41, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(108, 142, 245, 0.2);
+    }
+
+    .nav-link {
+      font-family: var(--font-display);
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--muted);
+      padding: 0.5rem 1.25rem;
+      border-radius: 100px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-link:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+    .nav-link--active { color: rgba(232,228,240,0.85); background: rgba(108,142,245,0.15); }
+    /* ─── Creative Footer ─── */
+    .site-footer { position: relative; z-index: 1; padding: 3.5rem 0 2rem; }
+    .footer-glow {
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 520px; height: 160px;
+      background: radial-gradient(ellipse at center, rgba(108,142,245,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: start;
+      gap: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .footer-brand { display: flex; flex-direction: column; gap: 0.35rem; }
+    .footer-brand__name { font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; color: var(--white); }
+    .footer-brand__sub { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.03em; }
+    .footer-brand__tagline {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(108,142,245,0.7);
+      border: 1px solid rgba(108,142,245,0.2);
+      border-radius: 100px;
+      padding: 0.25rem 0.7rem;
+      width: fit-content;
+    }
+    .footer-center { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+    .footer-logo-mark {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      background: rgba(108,142,245,0.1);
+      border: 1px solid rgba(108,142,245,0.25);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(108,142,245,0.8);
+    }
+    .footer-divider-v {
+      width: 1px; height: 32px;
+      background: linear-gradient(to bottom, transparent, rgba(108,142,245,0.3), transparent);
+    }
+    .footer-contact { display: flex; flex-direction: column; align-items: flex-end; gap: 0.55rem; }
+    .footer-contact-link {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.82rem; color: var(--muted);
+      transition: color 0.2s;
+      text-decoration: none;
+    }
+    .footer-contact-link:hover { color: var(--white); }
+    .footer-contact-link svg { flex-shrink: 0; opacity: 0.6; }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 1.5rem; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-socials { display: flex; align-items: center; gap: 0.5rem; }
+    .footer-social-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 0.35rem 0.85rem; height: 32px; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted); font-size: 0.75rem;
+      font-family: var(--font-display); font-weight: 700;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      text-decoration: none;
+    }
+    .footer-social-btn:hover { border-color: rgba(108,142,245,0.5); color: var(--white); background: rgba(108,142,245,0.08); }
+    .footer-copy { font-size: 0.65rem; color: rgba(195,190,210,0.75); letter-spacing: 0.08em; }
+    @media (max-width: 640px) {
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-center { align-items: flex-start; flex-direction: row; }
+      .footer-divider-v { width: 32px; height: 1px; background: linear-gradient(to right, transparent, rgba(108,142,245,0.3), transparent); }
+      .footer-contact { align-items: flex-start; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+
+    .page {
+      padding-top: 7.25rem;
+      padding-bottom: 4rem;
+    }
+
+    .hero-copy {
+      margin-bottom: 2rem;
+    }
+
+    .eyebrow {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--violet-lt);
+      margin-bottom: 0.75rem;
+    }
+
+    .title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3.8vw, 3rem);
+      line-height: 1.06;
+      letter-spacing: -0.01em;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin-top: 0.85rem;
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1rem;
+    }
+
+    .tile {
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: var(--surface);
+      position: relative;
+      aspect-ratio: 4 / 3;
+      isolation: isolate;
+      transition: transform 0.28s ease, border-color 0.28s ease;
+      cursor: pointer;
+    }
+
+    .tile:hover {
+      transform: translateY(-4px);
+      border-color: rgba(108,142,245,0.4);
+    }
+
+    .tile:focus-visible {
+      outline: 2px solid rgba(108,142,245,0.75);
+      outline-offset: 2px;
+    }
+
+    .tile::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      filter: saturate(1.08) contrast(1.02);
+      z-index: -2;
+    }
+
+    .tile::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,10,15,0.92), rgba(10,10,15,0.2) 52%, rgba(10,10,15,0.08));
+      z-index: -1;
+    }
+
+    .tile--a,
+    .tile--b,
+    .tile--c,
+    .tile--d,
+    .tile--e,
+    .tile--f,
+    .tile--g { grid-column: span 4; }
+
+    .tile--a::before { background-image: none; }
+    .tile--b::before { background-image: none; }
+    .tile--c::before { background-image: none; }
+    .tile--d::before { background-image: none; }
+    .tile--e::before { background-image: none; }
+    .tile--f::before { background-image: none; }
+    .tile--g::before { background-image: none; }
+
+    .tile-body {
+      position: absolute;
+      inset: auto 0 0 0;
+      padding: 1rem;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .tile-title {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    .note {
+      margin-top: 1rem;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.65;
+    }
+
+    .viewer {
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 8, 13, 0.78);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      z-index: 80;
+    }
+
+    .viewer.is-open { display: flex; }
+
+    .viewer-card {
+      width: min(920px, 100%);
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(19,16,28,0.96);
+      box-shadow: 0 20px 70px rgba(0,0,0,0.55);
+      overflow: hidden;
+    }
+
+    .viewer-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.9rem;
+      padding: 1rem 1rem 0.8rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .viewer-title {
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 1.8vw, 1.25rem);
+      line-height: 1.25;
+      letter-spacing: 0.01em;
+    }
+
+    .viewer-close {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.24);
+      background: rgba(255,255,255,0.03);
+      color: var(--white);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .viewer-close:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(108,142,245,0.6);
+    }
+
+    .viewer-image {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    @media (max-width: 960px) {
+      .tile--a,
+      .tile--b,
+      .tile--c,
+      .tile--d,
+      .tile--e,
+      .tile--f,
+      .tile--g { grid-column: span 6; }
+    }
+
+    @media (max-width: 640px) {
+      .page { padding-top: 6.6rem; }
+      .tile--a,
+      .tile--b,
+      .tile--c,
+      .tile--d,
+      .tile--e,
+      .tile--f,
+      .tile--g { grid-column: span 12; }
+      .subtitle { font-size: 0.9rem; }
+      
+    }
+
+    /* ── Mobile hamburger nav ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 8px;
+      transition: background 0.2s;
+      z-index: 200;
+      margin-left: auto;
+    }
+    .nav-hamburger:hover { background: rgba(255,255,255,0.06); }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+      transform-origin: center;
+    }
+    .nav-hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.is-open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav-mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 150;
+      background: rgba(10,8,18,0.97);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      padding: 2rem;
+    }
+    .nav-mobile-menu.is-open { display: flex; }
+    .nav-mobile-menu .nav-link {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.5rem 1.5rem;
+      border-radius: 12px;
+      transition: color 0.2s, background 0.2s;
+      text-align: center;
+    }
+    .nav-mobile-menu .nav-link:hover,
+    .nav-mobile-menu .nav-link--active {
+      color: var(--white);
+      background: rgba(108,142,245,0.12);
+    }
+    .nav-mobile-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+    }
+    .nav-mobile-close:hover { color: var(--white); background: rgba(255,255,255,0.06); }
+
+    @media (max-width: 640px) {
+      .nav-pill { justify-content: space-between; width: 100%; max-width: 100%; }
+      .nav-pill .nav-link { display: none; }
+      .nav-hamburger { display: flex; margin-left: auto; }
+      /* Footer mobile */
+      .footer-top {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem;
+        text-align: center;
+      }
+      .footer-brand { align-items: center !important; }
+      .footer-brand__tagline { align-self: center !important; }
+      .footer-center {
+        align-items: center !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        gap: 0.75rem;
+      }
+      .footer-divider-v {
+        width: 24px !important;
+        height: 1px !important;
+        background: linear-gradient(to right, transparent, rgba(108,142,245,0.3), transparent) !important;
+      }
+      .footer-contact {
+        align-items: center !important;
+        width: 100%;
+      }
+      .footer-contact-link { justify-content: center !important; }
+      .footer-bottom {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 0.75rem;
+        text-align: center;
+      }
+      .footer-copy { text-align: center; }
+      .footer-socials { flex-wrap: wrap; gap: 0.4rem; justify-content: center; }
+      .footer-social-btn { font-size: 0.68rem; padding: 0.3rem 0.65rem; }
+    }
+
+    /* ── Global safe padding — prevents any content touching screen edges ── */
+    :root {
+      --side-pad: clamp(1rem, 5vw, 1.5rem);
+    }
+
+    /* Container safe padding on all widths */
+    .container {
+      padding-inline: var(--side-pad) !important;
+    }
+
+    /* Hero section */
+    .hero {
+      padding-left: var(--side-pad) !important;
+      padding-right: var(--side-pad) !important;
+    }
+    .hero__inner {
+      padding-inline: 0 !important;
+    }
+
+    /* Nav pill safe sides */
+    .site-header {
+      padding-inline: var(--side-pad) !important;
+    }
+
+    /* Footer safe sides */
+    .site-footer .container,
+    .site-footer > .container {
+      padding-inline: var(--side-pad) !important;
+    }
+
+    /* Extra-small screens (≤ 400px) — tighter headline, more breathing room */
+    @media (max-width: 400px) {
+      .hero__headline {
+        font-size: clamp(1.55rem, 9vw, 2.2rem) !important;
+        line-height: 1.05 !important;
+      }
+      .hero__bio {
+        font-size: 0.88rem !important;
+      }
+      .case-section h2 {
+        font-size: 1.1rem !important;
+      }
+      h1.case-title {
+        font-size: clamp(1.4rem, 7vw, 2rem) !important;
+      }
+    }
+
+    /* Small screens (≤ 480px) */
+    @media (max-width: 480px) {
+      .hero__headline {
+        font-size: clamp(1.65rem, 8.5vw, 2.4rem) !important;
+      }
+      /* Playground grid: 1 column */
+      .tile-grid {
+        grid-template-columns: 1fr !important;
+      }
+      /* Project intro meta stack */
+      .intro-meta-bar {
+        flex-direction: column !important;
+        gap: 0.75rem !important;
+      }
+    }
+
+    /* Medium-small (≤ 640px) — already handled but reinforce padding */
+    @media (max-width: 640px) {
+      .hero {
+        padding-top: 5.5rem !important;
+        padding-bottom: 3rem !important;
+      }
+      .project-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    /* ── Footer tablet (641px – 900px): keep two-column layout ── */
+    @media (min-width: 641px) and (max-width: 900px) {
+      .footer-top {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 1.5rem;
+      }
+      .footer-center {
+        display: none !important;
+      }
+      .footer-brand {
+        align-items: flex-start !important;
+      }
+      .footer-contact {
+        align-items: flex-end !important;
+      }
+      .footer-bottom {
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+      }
+      .footer-copy {
+        text-align: left !important;
+      }
+      .footer-socials {
+        justify-content: flex-end;
+      }
+    }
+
+    /* ── Nav fade on scroll ── */
+    .site-header {
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    .site-header.nav-hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-8px);
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav-pill" id="mainNav">
+      <a href="index.html" class="nav-link ">Work</a>
+      <a href="playground.html" class="nav-link nav-link--active">Playground</a>
+      <a href="assets/resume/Imalsha-Kandamby-Resume-Product Designer.pdf" target="_blank" rel="noopener" class="nav-link">Resume ↗</a>
+      <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <!-- Mobile overlay -->
+    <nav class="nav-mobile-menu" id="navMobileMenu" role="dialog" aria-label="Mobile navigation">
+      <button class="nav-mobile-close" id="navMobileClose" aria-label="Close menu">&#x2715;</button>
+      <a href="index.html" class="nav-link ">Work</a>
+      <a href="playground.html" class="nav-link nav-link--active">Playground</a>
+      <a href="assets/resume/Imalsha-Kandamby-Resume-Product Designer.pdf" target="_blank" rel="noopener" class="nav-link">Resume ↗</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <section class="hero-copy">
+        <p class="eyebrow">Creative Playground</p>
+        <h1 class="title">Hobby Works Beyond Office Projects</h1>
+        <p class="subtitle">A collection of personal experiments, creative explorations, AI-assisted builds, and passion projects created outside of client work. This space allows me to explore new ideas, tools, and design approaches while continuously learning, experimenting, and growing as a designer.</p>
+      </section>
+
+      <section class="gallery" aria-label="Hobby works gallery">
+        <article class="tile tile--a" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-1.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Workflow Builder</h2></div>
+        </article>
+        <article class="tile tile--b" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-2.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Web Chat Assistant</h2></div>
+        </article>
+        <article class="tile tile--c" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-3.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">AI Chat Experience</h2></div>
+        </article>
+        <article class="tile tile--d" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-4.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Voice AI Assistant</h2></div>
+        </article>
+        <article class="tile tile--e" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-5.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Pricing & Plans</h2></div>
+        </article>
+        <article class="tile tile--f" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-6.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Email Templates</h2></div>
+        </article>
+        <article class="tile tile--g" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-7.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Fashion Hero Banner</h2></div>
+        </article>
+        <article class="tile tile--a" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-8.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Textile Landing Hero</h2></div>
+        </article>
+        <article class="tile tile--b" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-9.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Glassmorphism UI</h2></div>
+        </article>
+        <article class="tile tile--c" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-10.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Candle Craft Logo</h2></div>
+        </article>
+        <article class="tile tile--d" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-11.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Bunny Cone Branding</h2></div>
+        </article>
+        <article class="tile tile--e" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-12.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Coffee House Logo</h2></div>
+        </article>
+        <article class="tile tile--f" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-13.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Bloom Logo Concept</h2></div>
+        </article>
+        <article class="tile tile--g" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-14.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Study Abroad Branding</h2></div>
+        </article>
+        <article class="tile tile--a" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-15.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Bento Beauty Store</h2></div>
+        </article>
+        <article class="tile tile--b" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-16.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Golf Club Revamp</h2></div>
+        </article>
+        <article class="tile tile--c" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-17.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Education Portal Revamp</h2></div>
+        </article>
+        <article class="tile tile--d" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-18.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Recipe App</h2></div>
+        </article>
+        <article class="tile tile--e" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-19.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Government Portal Revamp</h2></div>
+        </article>
+        <article class="tile tile--f" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-20.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Floral Store Landing</h2></div>
+        </article>
+        <article class="tile tile--g" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-21.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">3D Button Concept</h2></div>
+        </article>
+        <article class="tile tile--a" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-22.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Baby Bee Illustration</h2></div>
+        </article>
+        <article class="tile tile--b" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-23.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Mobile Blog Feed</h2></div>
+        </article>
+        <article class="tile tile--c" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-24.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Coffee Brand Logo</h2></div>
+        </article>
+        <article class="tile tile--d" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-25.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Legal Document UI</h2></div>
+        </article>
+        <article class="tile tile--e" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-26.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Neon Alien</h2></div>
+        </article>
+        <article class="tile tile--f" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-27.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Devil Mask Illustration</h2></div>
+        </article>
+        <article class="tile tile--g" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-28.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Glowing Cube 3D</h2></div>
+        </article>
+        <article class="tile tile--a" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-29.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Elephant Illustration</h2></div>
+        </article>
+        <article class="tile tile--b" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-30.jpg');background-size:cover;background-position:center;">
+          <div class="tile-body"><h2 class="tile-title">Sri Lankan Heritage Art</h2></div>
+        </article>
+      </section>
+
+
+    </div>
+  </main>
+
+  <div class="viewer" id="playgroundViewer" aria-hidden="true">
+    <div class="viewer-card" role="dialog" aria-modal="true" aria-labelledby="viewerTitle">
+      <div class="viewer-head">
+        <h3 class="viewer-title" id="viewerTitle">Project Preview</h3>
+        <button class="viewer-close" type="button" id="viewerClose" aria-label="Close viewer">&times;</button>
+      </div>
+      <div class="viewer-image" id="viewerImage"></div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-glow" aria-hidden="true"></div>
+    <div class="container">
+
+      <div class="footer-top">
+        <!-- Brand -->
+        <div class="footer-brand">
+          <span class="footer-brand__name">Imalsha Kandamby</span>
+          <span class="footer-brand__sub">Product Designer · 's-Hertogenbosch, NL</span>
+          <span class="footer-brand__tagline">Available for opportunities</span>
+        </div>
+
+        <!-- Center mark -->
+        <div class="footer-center">
+          <div class="footer-divider-v"></div>
+          <div class="footer-logo-mark" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <div class="footer-divider-v"></div>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-contact">
+          <a href="mailto:imalshakandamby@gmail.com" class="footer-contact-link">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            imalshakandamby@gmail.com
+          </a>
+          <a href="tel:+31638286152" class="footer-contact-link">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            +31 6 3828 6152
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 Imalsha Kandamby · Designed &amp; built with intention</p>
+        <div class="footer-socials">
+          <a href="https://linkedin.com/in/imalsha-kandamby" target="_blank" rel="noopener" class="footer-social-btn" aria-label="LinkedIn">LinkedIn</a>
+          <a href="https://behance.net/imalshakandamby_gihk" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Behance">Behance</a>
+          <a href="https://dribbble.com/gihKandamby" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Dribbble">Dribbble</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    const viewer = document.getElementById('playgroundViewer');
+    const viewerClose = document.getElementById('viewerClose');
+    const viewerImage = document.getElementById('viewerImage');
+    const viewerTitle = document.getElementById('viewerTitle');
+    const tiles = document.querySelectorAll('.tile');
+
+    const openViewer = (tile) => {
+      const title = tile.querySelector('.tile-title')?.textContent?.trim() || 'Project Preview';
+      const image = tile.style.backgroundImage || getComputedStyle(tile).backgroundImage;
+      viewerTitle.textContent = title;
+      viewerImage.style.backgroundImage = image;
+      viewer.classList.add('is-open');
+      viewer.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      viewerClose.focus();
+    };
+
+    const closeViewer = () => {
+      viewer.classList.remove('is-open');
+      viewer.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    };
+
+    tiles.forEach((tile) => {
+      tile.addEventListener('click', () => openViewer(tile));
+      tile.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openViewer(tile);
+        }
+      });
+    });
+
+    viewerClose.addEventListener('click', closeViewer);
+    viewer.addEventListener('click', (event) => {
+      if (event.target === viewer) closeViewer();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && viewer.classList.contains('is-open')) closeViewer();
+    });
+  </script>
+
+  <script>
+    (() => {
+      const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      if (!finePointer) return;
+
+      const dot = document.createElement('div');
+      dot.className = 'cursor-dot';
+      const ring = document.createElement('div');
+      ring.className = 'cursor-ring';
+      document.body.append(dot, ring);
+
+      let mouseX = window.innerWidth / 2;
+      let mouseY = window.innerHeight / 2;
+      let ringX = mouseX;
+      let ringY = mouseY;
+
+      const setPos = (el, x, y) => {
+        el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+      };
+
+      const tick = () => {
+        ringX += (mouseX - ringX) * 0.18;
+        ringY += (mouseY - ringY) * 0.18;
+        setPos(dot, mouseX, mouseY);
+        setPos(ring, ringX, ringY);
+        requestAnimationFrame(tick);
+      };
+
+      requestAnimationFrame(tick);
+
+      document.addEventListener('mousemove', (event) => {
+        mouseX = event.clientX;
+        mouseY = event.clientY;
+      });
+
+      const interactiveSelector = 'a,button,[role="button"],input,textarea,select,.project-card,.tile,.viewer-close';
+
+      document.addEventListener('mouseover', (event) => {
+        if (event.target.closest(interactiveSelector)) {
+          ring.style.width = '48px';
+          ring.style.height = '48px';
+          ring.style.borderColor = 'rgba(108,142,245,0.95)';
+        }
+      });
+
+      document.addEventListener('mouseout', (event) => {
+        if (event.target.closest(interactiveSelector)) {
+          ring.style.width = '34px';
+          ring.style.height = '34px';
+          ring.style.borderColor = 'rgba(108,142,245,0.7)';
+        }
+      });
+    })();
+  </script>
+
+  
+
+
+  <script>
+    (function() {
+      function initNav() {
+        var btn   = document.getElementById('navHamburger');
+        var menu  = document.getElementById('navMobileMenu');
+        var close = document.getElementById('navMobileClose');
+        if (!btn || !menu) return;
+
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          menu.classList.add('is-open');
+          btn.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+          document.body.style.overflow = 'hidden';
+        });
+
+        function closeMenu() {
+          menu.classList.remove('is-open');
+          btn.classList.remove('is-open');
+          btn.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        }
+
+        if (close) close.addEventListener('click', closeMenu);
+
+        menu.addEventListener('click', function(e) {
+          if (e.target === menu) closeMenu();
+        });
+
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') closeMenu();
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initNav);
+      } else {
+        initNav();
+      }
+    })();
+  </script>
+
+  <script>
+    /* ── Scroll Reveal ── */
+    (function() {
+      var classes = ['reveal', 'reveal-scale', 'reveal-left', 'reveal-fade', 'reveal-stagger'];
+      function revealAll() {
+        classes.forEach(function(cls) {
+          document.querySelectorAll('.' + cls).forEach(function(el) {
+            el.classList.add('visible');
+          });
+        });
+      }
+
+      if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+        classes.forEach(function(cls) {
+          document.querySelectorAll('.' + cls).forEach(function(el) {
+            observer.observe(el);
+          });
+        });
+      } else {
+        revealAll();
+      }
+    })();
+  </script>
+
+  <script>
+    /* ── Nav fade on scroll ── */
+    (function() {
+      var header     = document.querySelector('.site-header');
+      var lastScroll = 0;
+      var threshold  = 60;
+      var ticking    = false;
+
+      function update() {
+        var current = window.scrollY || window.pageYOffset;
+        if (current > threshold && current > lastScroll) {
+          header.classList.add('nav-hidden');
+        } else {
+          header.classList.remove('nav-hidden');
+        }
+        lastScroll = current <= 0 ? 0 : current;
+        ticking = false;
+      }
+
+      if (header) {
+        window.addEventListener('scroll', function() {
+          if (!ticking) {
+            window.requestAnimationFrame(update);
+            ticking = true;
+          }
+        }, { passive: true });
+      }
+    })();
+  </script>
+</body>
+</html>

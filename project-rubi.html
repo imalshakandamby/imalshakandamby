@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI-Powered Candidate Evaluation System - Case Study</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0A0A0F;
+      --white: #E8E4F0;
+      --muted: #AFA9BD;
+      --violet: #6c8ef5;
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --max-w: 980px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      position: relative;
+      padding-top: 7rem;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+    a { color: inherit; text-decoration: none; }
+    .cursor-dot,
+    .cursor-ring {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+    }
+    .cursor-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(232,228,240,0.95);
+    }
+    .cursor-ring {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid rgba(108,142,245,0.7);
+      background: rgba(108,142,245,0.08);
+      backdrop-filter: blur(1px);
+      -webkit-backdrop-filter: blur(1px);
+      transition: width 0.16s, height 0.16s, border-color 0.16s;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      html,
+      body,
+      a,
+      button,
+      [role="button"],
+      .project-card,
+      .tile,
+      .viewer-close {
+        cursor: none !important;
+      }
+      .cursor-dot,
+      .cursor-ring {
+        display: block;
+      }
+    }
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 1.5rem; position: relative; z-index: 1; }
+    .site-header {
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      position: fixed;
+      top: 1.5rem;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      padding: 0 1rem;
+      z-index: 50;
+    }
+    .nav-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.5rem;
+      border-radius: 100px;
+      background: rgba(28, 23, 41, 0.85);
+      border: 1px solid rgba(108, 142, 245, 0.2);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .nav-link {
+      font-family: var(--font-display);
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--muted);
+      padding: 0.5rem 1.25rem;
+      border-radius: 100px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-link:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+    .nav-link--active { color: rgba(232,228,240,0.85); background: rgba(108,142,245,0.15); }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--white); }
+    .back-link svg { width: 1rem; height: 1rem; }
+    .case-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.75rem;
+    }
+    .case-header p {
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    .case-section {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 2.75rem 0 3rem;
+    }
+    .case-section h2 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      margin-bottom: 0.7rem;
+      color: var(--white);
+    }
+    .case-section p, .case-section li {
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 0.95rem;
+    }
+    .case-section ul { padding-left: 1.1rem; }
+    /* ─── Creative Footer ─── */
+    .site-footer { position: relative; z-index: 1; padding: 3.5rem 0 2rem; }
+    .footer-glow {
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 520px; height: 160px;
+      background: radial-gradient(ellipse at center, rgba(108,142,245,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: start;
+      gap: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .footer-brand { display: flex; flex-direction: column; gap: 0.35rem; }
+    .footer-brand__name { font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; color: var(--white); }
+    .footer-brand__sub { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.03em; }
+    .footer-brand__tagline {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(108,142,245,0.7);
+      border: 1px solid rgba(108,142,245,0.2);
+      border-radius: 100px;
+      padding: 0.25rem 0.7rem;
+      width: fit-content;
+    }
+    .footer-center { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+    .footer-logo-mark {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      background: rgba(108,142,245,0.1);
+      border: 1px solid rgba(108,142,245,0.25);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(108,142,245,0.8);
+    }
+    .footer-divider-v {
+      width: 1px; height: 32px;
+      background: linear-gradient(to bottom, transparent, rgba(108,142,245,0.3), transparent);
+    }
+    .footer-contact { display: flex; flex-direction: column; align-items: flex-end; gap: 0.55rem; }
+    .footer-contact-link {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.82rem; color: var(--muted);
+      transition: color 0.2s;
+      text-decoration: none;
+    }
+    .footer-contact-link:hover { color: var(--white); }
+    .footer-contact-link svg { flex-shrink: 0; opacity: 0.6; }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 1.5rem; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-socials { display: flex; align-items: center; gap: 0.5rem; }
+    .footer-social-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 0.35rem 0.85rem; height: 32px; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted); font-size: 0.75rem;
+      font-family: var(--font-display); font-weight: 700;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      text-decoration: none;
+    }
+    .footer-social-btn:hover { border-color: rgba(108,142,245,0.5); color: var(--white); background: rgba(108,142,245,0.08); }
+    .footer-copy { font-size: 0.65rem; color: rgba(195,190,210,0.75); letter-spacing: 0.08em; }
+    @media (max-width: 640px) {
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-center { align-items: flex-start; flex-direction: row; }
+      .footer-divider-v { width: 32px; height: 1px; background: linear-gradient(to right, transparent, rgba(108,142,245,0.3), transparent); }
+      .footer-contact { align-items: flex-start; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 768px) {
+      body { padding-top: 6.5rem; }
+      
+    }
+
+    /* ─── Project Intro two-column layout ─── */
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+    .intro-para {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 0.95rem;
+    }
+    .intro-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-left: 1px solid rgba(255,255,255,0.08);
+      padding-left: 1.75rem;
+    }
+    .intro-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .intro-meta-item:last-child { border-bottom: none; }
+    .intro-meta-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--violet);
+      font-weight: 500;
+    }
+    .intro-meta-value {
+      font-size: 0.85rem;
+      color: var(--white);
+      font-family: var(--font-display);
+      font-weight: 600;
+    }
+    @media (max-width: 640px) {
+      .intro-grid { grid-template-columns: 1fr; }
+      .intro-meta { border-left: none; padding-left: 0; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.25rem; }
+    }
+
+    /* ─── Challenge two-column layout ─── */
+    .challenge-grid {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    .challenge-illustration {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      aspect-ratio: 1;
+      border-radius: 16px;
+      background: rgba(108,142,245,0.05);
+      border: 1px solid rgba(108,142,245,0.12);
+    }
+    .challenge-para {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 0.95rem;
+    }
+    @media (max-width: 640px) {
+      .challenge-grid { grid-template-columns: 1fr; }
+      .challenge-illustration { aspect-ratio: 2/1; }
+    }
+
+
+    /* ─── Enhanced entrance animations ─── */
+    @keyframes heroTitle {
+      0%   { opacity:0; transform: translateY(40px) scale(0.97); filter: blur(6px); }
+      100% { opacity:1; transform: translateY(0)   scale(1);    filter: blur(0); }
+    }
+    @keyframes heroSub {
+      0%   { opacity:0; transform: translateY(24px); }
+      100% { opacity:1; transform: translateY(0); }
+    }
+    @keyframes slideInLeft {
+      0%   { opacity:0; transform: translateX(-36px); }
+      100% { opacity:1; transform: translateX(0); }
+    }
+    @keyframes fadeScaleIn {
+      0%   { opacity:0; transform: scale(0.94); }
+      100% { opacity:1; transform: scale(1); }
+    }
+    @keyframes lineGrow {
+      0%   { transform: scaleX(0); transform-origin: left; }
+      100% { transform: scaleX(1); transform-origin: left; }
+    }
+
+    .back-link {
+      animation: slideInLeft 0.55s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    .case-header h1 {
+      animation: heroTitle 0.85s cubic-bezier(0.22,1,0.36,1) 0.1s both;
+    }
+    .case-header p {
+      animation: heroSub 0.75s cubic-bezier(0.22,1,0.36,1) 0.3s both;
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.65s cubic-bezier(0.22,1,0.36,1), transform 0.65s cubic-bezier(0.22,1,0.36,1);
+      will-change: opacity, transform;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.95) translateY(20px);
+      transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+      will-change: opacity, transform;
+    }
+    .reveal-scale.visible {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-32px);
+      transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1);
+    }
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    /* Stagger children inside revealed sections */
+    .reveal-stagger > * {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.5s cubic-bezier(0.22,1,0.36,1), transform 0.5s cubic-bezier(0.22,1,0.36,1);
+    }
+    .reveal-stagger.visible > *:nth-child(1) { opacity:1; transform:none; transition-delay: 0.05s; }
+    .reveal-stagger.visible > *:nth-child(2) { opacity:1; transform:none; transition-delay: 0.13s; }
+    .reveal-stagger.visible > *:nth-child(3) { opacity:1; transform:none; transition-delay: 0.21s; }
+    .reveal-stagger.visible > *:nth-child(4) { opacity:1; transform:none; transition-delay: 0.29s; }
+    .reveal-stagger.visible > *:nth-child(5) { opacity:1; transform:none; transition-delay: 0.37s; }
+    .reveal-stagger.visible > *:nth-child(6) { opacity:1; transform:none; transition-delay: 0.45s; }
+    .reveal-stagger.visible > *:nth-child(n+7) { opacity:1; transform:none; transition-delay: 0.53s; }
+
+    /* Section overflow clip for reveal */
+    .case-section {
+      overflow: visible;
+    }
+
+    /* ── Mobile hamburger nav ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 8px;
+      transition: background 0.2s;
+      z-index: 200;
+      margin-left: auto;
+    }
+    .nav-hamburger:hover { background: rgba(255,255,255,0.06); }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+      transform-origin: center;
+    }
+    .nav-hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.is-open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav-mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 150;
+      background: rgba(10,8,18,0.97);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      padding: 2rem;
+    }
+    .nav-mobile-menu.is-open { display: flex; }
+    .nav-mobile-menu .nav-link {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.5rem 1.5rem;
+      border-radius: 12px;
+      transition: color 0.2s, background 0.2s;
+      text-align: center;
+    }
+    .nav-mobile-menu .nav-link:hover,
+    .nav-mobile-menu .nav-link--active {
+      color: var(--white);
+      background: rgba(108,142,245,0.12);
+    }
+    .nav-mobile-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+    }
+    .nav-mobile-close:hover { color: var(--white); background: rgba(255,255,255,0.06); }
+
+    @media (max-width: 640px) {
+      .nav-pill { justify-content: space-between; width: 100%; max-width: 100%; }
+      .nav-pill .nav-link { display: none; }
+      .nav-hamburger { display: flex; margin-left: auto; }
+      /* Footer mobile */
+      .footer-top {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem;
+        text-align: center;
+      }
+      .footer-brand { align-items: center !important; }
+      .footer-brand__tagline { align-self: center !important; }
+      .footer-center {
+        align-items: center !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        gap: 0.75rem;
+      }
+      .footer-divider-v {
+        width: 24px !important;
+        height: 1px !important;
+        background: linear-gradient(to right, transparent, rgba(108,142,245,0.3), transparent) !important;
+      }
+      .footer-contact {
+        align-items: center !important;
+        width: 100%;
+      }
+      .footer-contact-link { justify-content: center !important; }
+      .footer-bottom {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 0.75rem;
+        text-align: center;
+      }
+      .footer-copy { text-align: center; }
+      .footer-socials { flex-wrap: wrap; gap: 0.4rem; justify-content: center; }
+      .footer-social-btn { font-size: 0.68rem; padding: 0.3rem 0.65rem; }
+    }
+
+    /* ── Global safe padding — prevents any content touching screen edges ── */
+    :root {
+      --side-pad: clamp(1rem, 5vw, 1.5rem);
+    }
+
+    /* Container safe padding on all widths */
+    .container {
+      padding-inline: var(--side-pad) !important;
+    }
+
+    /* Hero section */
+    .hero {
+      padding-left: var(--side-pad) !important;
+      padding-right: var(--side-pad) !important;
+    }
+    .hero__inner {
+      padding-inline: 0 !important;
+    }
+
+    /* Nav pill safe sides */
+    .site-header {
+      padding-inline: var(--side-pad) !important;
+    }
+
+    /* Footer safe sides */
+    .site-footer .container,
+    .site-footer > .container {
+      padding-inline: var(--side-pad) !important;
+    }
+
+    /* Extra-small screens (≤ 400px) — tighter headline, more breathing room */
+    @media (max-width: 400px) {
+      .hero__headline {
+        font-size: clamp(1.55rem, 9vw, 2.2rem) !important;
+        line-height: 1.05 !important;
+      }
+      .hero__bio {
+        font-size: 0.88rem !important;
+      }
+      .case-section h2 {
+        font-size: 1.1rem !important;
+      }
+      h1.case-title {
+        font-size: clamp(1.4rem, 7vw, 2rem) !important;
+      }
+    }
+
+    /* Small screens (≤ 480px) */
+    @media (max-width: 480px) {
+      .hero__headline {
+        font-size: clamp(1.65rem, 8.5vw, 2.4rem) !important;
+      }
+      /* Playground grid: 1 column */
+      .tile-grid {
+        grid-template-columns: 1fr !important;
+      }
+      /* Project intro meta stack */
+      .intro-meta-bar {
+        flex-direction: column !important;
+        gap: 0.75rem !important;
+      }
+    }
+
+    /* Medium-small (≤ 640px) — already handled but reinforce padding */
+    @media (max-width: 640px) {
+      .hero {
+        padding-top: 5.5rem !important;
+        padding-bottom: 3rem !important;
+      }
+      .project-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    /* ── Mobile: all card grids collapse to single column ── */
+    @media (max-width: 640px) {
+
+      /* Any div with inline display:grid inside case sections → 1 column */
+      .case-section [style*="display:grid"],
+      .case-section [style*="display: grid"],
+      main [style*="display:grid"],
+      main [style*="display: grid"] {
+        grid-template-columns: 1fr !important;
+      }
+
+      /* Intro meta bar (2fr 1fr split) → stack */
+      .intro-grid,
+      .challenge-grid,
+      .intro-meta-bar {
+        grid-template-columns: 1fr !important;
+      }
+
+      /* Footer header 3-col → 1 col */
+      .footer-top {
+        grid-template-columns: 1fr !important;
+      }
+
+      /* Wider gap on single-col cards */
+      .case-section [style*="display:grid"],
+      .case-section [style*="display: grid"] {
+        gap: 0.65rem !important;
+      }
+
+      /* Tab layout in rubi solution section */
+      .tab-layout, .tab-panels {
+        flex-direction: column !important;
+      }
+
+      /* Kartclass 2-col key features → 1 col already covered above */
+
+      /* Rubi role cards 3+4 layout → 1 col already covered above */
+    }
+
+    /* Tablet (641–900px): max 2 columns for 3/4-col grids */
+    @media (min-width: 641px) and (max-width: 900px) {
+      .case-section [style*="repeat(3,1fr)"],
+      .case-section [style*="repeat(4,1fr)"],
+      .case-section [style*="repeat(3, 1fr)"],
+      .case-section [style*="repeat(4, 1fr)"] {
+        grid-template-columns: 1fr 1fr !important;
+      }
+    }
+
+    /* ── .mobile-grid: tagged multi-column grids → 1 col on mobile ── */
+    @media (max-width: 640px) {
+      .mobile-grid {
+        grid-template-columns: 1fr !important;
+        gap: 0.65rem !important;
+      }
+    }
+    @media (min-width: 641px) and (max-width: 900px) {
+      .mobile-grid {
+        grid-template-columns: 1fr 1fr !important;
+      }
+    }
+
+    @media (max-width: 640px) {
+      }
+    @media (min-width: 641px) and (max-width: 900px) {
+      }
+
+
+
+    /* ── My Role icon cards ── */
+    .role-row { margin-bottom: 0; }
+    .role-row:last-of-type { margin-bottom: 0; }
+    .role-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      padding: 1.5rem 1.4rem;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(108,142,245,0.18);
+      transition: border-color 0.2s;
+    }
+    .role-card:hover { border-color: rgba(108,142,245,0.38); }
+    .role-card__icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(108,142,245,0.08);
+      border: 1px solid rgba(108,142,245,0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(108,142,245,0.85);
+      flex-shrink: 0;
+    }
+    .role-card__text {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin: 0;
+    }
+    @media (max-width: 640px) {
+      .role-wrapper {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+        flex-direction: unset !important;
+      }
+      .role-row {
+        display: contents !important;
+      }
+    }
+    @media (min-width: 641px) and (max-width: 900px) {
+      .role-wrapper {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 1rem !important;
+        flex-direction: unset !important;
+      }
+      .role-row {
+        display: contents !important;
+      }
+      .role-row:last-child .role-card:last-child {
+        grid-column: 1 / -1;
+        max-width: calc(50% - 0.5rem);
+        margin: 0 auto;
+        width: 100%;
+      }
+    }
+50%  { opacity: 1; }
+      100% { top:  100%; opacity: 0.6; }
+    }
+
+    /* ── Footer tablet (641px – 900px): keep two-column layout ── */
+    @media (min-width: 641px) and (max-width: 900px) {
+      .footer-top {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 1.5rem;
+      }
+      .footer-center {
+        display: none !important;
+      }
+      .footer-brand {
+        align-items: flex-start !important;
+      }
+      .footer-contact {
+        align-items: flex-end !important;
+      }
+      .footer-bottom {
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+      }
+      .footer-copy {
+        text-align: left !important;
+      }
+      .footer-socials {
+        justify-content: flex-end;
+      }
+    }
+
+    /* ── Nav fade on scroll ── */
+    .site-header {
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    .site-header.nav-hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-8px);
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav-pill" id="mainNav">
+      <a href="index.html" class="nav-link ">Work</a>
+      <a href="playground.html" class="nav-link ">Playground</a>
+      <a href="assets/resume/Imalsha-Kandamby-Resume-Product Designer.pdf" target="_blank" rel="noopener" class="nav-link">Resume ↗</a>
+      <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <!-- Mobile overlay -->
+    <nav class="nav-mobile-menu" id="navMobileMenu" role="dialog" aria-label="Mobile navigation">
+      <button class="nav-mobile-close" id="navMobileClose" aria-label="Close menu">&#x2715;</button>
+      <a href="index.html" class="nav-link ">Work</a>
+      <a href="playground.html" class="nav-link ">Playground</a>
+      <a href="assets/resume/Imalsha-Kandamby-Resume-Product Designer.pdf" target="_blank" rel="noopener" class="nav-link">Resume ↗</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <a href="index.html" class="back-link" aria-label="Back to main page">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+      Back to Main Page
+    </a>
+
+    <section class="case-header">
+      <h1>AI-Powered Candidate Evaluation System</h1>
+      <p>RubiRecruit is an AI-powered recruitment evaluation system designed to streamline hiring tasks for recruiters and offer a seamless application experience for candidates. This project includes the UX/UI design of a Chrome extension workflow, along with newly designed Admin and User portals. My focus was to create a structured, intuitive process that helps recruiters evaluate candidates faster, with clear navigation, simplified steps, and a scalable design system.</p>
+    </section>
+    <div class="reveal-left" style="display:flex;align-items:center;gap:0.85rem;margin-bottom:1.7rem;">
+      <span style="font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);">Live Product Link :</span>
+      <a href="https://www.rubirecruit.ai/" target="_blank" rel="noopener" aria-label="Live Product" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.04);color:var(--muted);transition:border-color 0.2s,color 0.2s;" onmouseover="this.style.borderColor='rgba(108,142,245,0.6)';this.style.color='var(--violet)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.18)';this.style.color='var(--muted)';">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      </a>
+    </div>
+
+    <img class="reveal-fade" src="assets/images/project-rubi/project-rubi-placeholder-1.jpg" alt="RubiRecruit project image 1" style="margin-bottom:1.7rem;width:100%;aspect-ratio:1880/1000;max-height:500px;border-radius:14px;object-fit:cover;display:block;"/>
+
+    <section class="case-section reveal">
+      <h2>Project Intro</h2>
+      <div class="intro-grid">
+        <p class="intro-para">RubiRecruit is an AI-driven Candidate Evaluation System created to optimize and modernize the hiring process for recruitment teams. The project involves the design of three interconnected experiences: a Chrome extension that guides recruiters through step-based evaluation workflows, a newly built Admin Portal for managing users, audit logs, and subscriptions, and a User Portal designed for candidates to manage their profiles and subscription details.<br><br>The primary users of the platform are recruiters who need a structured, efficient way to process candidate data, and candidates who require a simple interface to manage their personal information. My role was to design clear, task-oriented flows within the Chrome extension, craft responsive and scalable portal interfaces, and ensure consistency across all touchpoints through reusable components and a modern visual system.<br><br>The final solution provides a seamless recruitment experience - improving clarity, reducing manual effort, and enhancing the speed and quality of candidate evaluation. The design prioritizes usability, transparency, and workflow efficiency, enabling recruitment teams to make more informed decisions through an intuitive and well-organized system.</p>
+        <div class="intro-meta">
+          <div class="intro-meta-item">
+            <span class="intro-meta-label">Project Type</span>
+            <span class="intro-meta-value">Desktop</span>
+          </div>
+          <div class="intro-meta-item">
+            <span class="intro-meta-label">Role</span>
+            <span class="intro-meta-value">UX Designer</span>
+          </div>
+          <div class="intro-meta-item">
+            <span class="intro-meta-label">Client</span>
+            <span class="intro-meta-value">Rubirecruit</span>
+          </div>
+          <div class="intro-meta-item">
+            <span class="intro-meta-label">Time</span>
+            <span class="intro-meta-value">2025 Sep - 2025 Dec</span>
+          </div>
+          <div class="intro-meta-item">
+            <span class="intro-meta-label">Tools</span>
+            <span class="intro-meta-value">Figma, FigJam, ChatGPT, Perplexity AI</span>
+          </div>
+        </div>
+      </div>
+      <!-- Skills Demonstrated -->
+      <div style="margin-top:0.75rem;padding:1rem 1.25rem;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.15);">
+        <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(108,142,245,0.7);font-weight:500;margin-bottom:0.75rem;">Skills Demonstrated</span>
+        <div style="display:flex;flex-wrap:wrap;gap:0.45rem;">
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">End-to-End Product Design</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">UX Research & Discovery</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Workflow Optimization</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Information Architecture</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">User Journey Mapping</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Interaction Design</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Chrome Extension UX</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Admin Dashboard Design</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Design Systems</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Responsive Design</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Interactive Prototyping</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Cross-Functional Collaboration</span>
+        </div>
+      </div>
+    </section>
+    <section class="case-section reveal">
+      <h2>The Challenge</h2>
+      <div class="challenge-grid">
+        <div class="challenge-illustration" aria-hidden="true">
+          <svg width="100%" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width:160px;">
+            <style>
+              @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+              @keyframes spin-rev  { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+              @keyframes pulse-dot { 0%,100% { opacity:1; r:4; } 50% { opacity:0.4; r:3; } }
+              @keyframes float-y   { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+              @keyframes dash-flow { to { stroke-dashoffset: -24; } }
+              .ring-outer { transform-origin: 80px 80px; animation: spin-slow 14s linear infinite; }
+              .ring-inner { transform-origin: 80px 80px; animation: spin-rev 9s linear infinite; }
+              .core-group { transform-origin: 80px 80px; animation: float-y 3s ease-in-out infinite; }
+              .dot-a { animation: pulse-dot 2s ease-in-out infinite; }
+              .dot-b { animation: pulse-dot 2s ease-in-out 0.5s infinite; }
+              .dot-c { animation: pulse-dot 2s ease-in-out 1s infinite; }
+              .dot-d { animation: pulse-dot 2s ease-in-out 1.5s infinite; }
+              .flow-line { stroke-dasharray: 4 4; animation: dash-flow 1.2s linear infinite; }
+            </style>
+            <!-- Outer dashed orbit -->
+            <circle class="ring-outer" cx="80" cy="80" r="66" stroke="rgba(108,142,245,0.18)" stroke-width="1" stroke-dasharray="3 5"/>
+            <!-- Inner orbit -->
+            <circle class="ring-inner" cx="80" cy="80" r="46" stroke="rgba(108,142,245,0.28)" stroke-width="1" stroke-dasharray="2 4"/>
+            <!-- Orbit nodes -->
+            <circle class="dot-a" cx="80" cy="14" r="4" fill="rgba(108,142,245,0.9)"/>
+            <circle class="dot-b" cx="146" cy="80" r="4" fill="rgba(108,142,245,0.6)"/>
+            <circle class="dot-c" cx="80" cy="146" r="4" fill="rgba(108,142,245,0.9)"/>
+            <circle class="dot-d" cx="14" cy="80" r="4" fill="rgba(108,142,245,0.6)"/>
+            <!-- Flow lines from center to nodes -->
+            <line class="flow-line" x1="80" y1="62" x2="80" y2="22" stroke="rgba(108,142,245,0.35)" stroke-width="1"/>
+            <line class="flow-line" x1="98" y1="80" x2="138" y2="80" stroke="rgba(108,142,245,0.25)" stroke-width="1"/>
+            <line class="flow-line" x1="80" y1="98" x2="80" y2="138" stroke="rgba(108,142,245,0.35)" stroke-width="1"/>
+            <line class="flow-line" x1="62" y1="80" x2="22" y2="80" stroke="rgba(108,142,245,0.25)" stroke-width="1"/>
+            <!-- Core hexagon -->
+            <g class="core-group">
+              <polygon points="80,58 95,67 95,85 80,94 65,85 65,67" fill="rgba(108,142,245,0.1)" stroke="rgba(108,142,245,0.55)" stroke-width="1.5"/>
+              <!-- Exclamation icon inside hex -->
+              <line x1="80" y1="69" x2="80" y2="80" stroke="rgba(108,142,245,1)" stroke-width="2.2" stroke-linecap="round"/>
+              <circle cx="80" cy="85" r="1.5" fill="rgba(108,142,245,1)"/>
+            </g>
+          </svg>
+        </div>
+        <p class="challenge-para">Designing an AI-powered recruitment solution required quickly understanding complex recruiter workflows, candidate evaluation processes, and subscription-based user management. The existing Chrome extension had limited functionality, unclear user flows, and usability issues, requiring a complete UX overhaul. Additionally, the Admin and User Portals were entirely new concepts, demanding the definition of features, user journeys, and workflows from scratch. Ensuring a seamless experience across all three platforms while establishing a scalable design system was a key challenge.</p>
+      </div>
+    </section>
+    <section class="case-section reveal">
+                  <h2>My Role &amp; Responsibility</h2>
+      <p style="color:var(--muted);line-height:1.75;font-size:0.95rem;margin-bottom:1.25rem;">As the UI/UX Designer, I was responsible for the entire end-to-end design process, including:</p>
+
+      <div class="role-wrapper" style="display:flex;flex-direction:column;gap:1rem;">
+        <div class="role-row mobile-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
+          <div class="role-card">
+            <div class="role-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
+            <p class="role-card__text">Conducting research to understand recruiter requirements, candidate flows, and system expectations</p>
+          </div>
+          <div class="role-card">
+            <div class="role-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg></div>
+            <p class="role-card__text">Mapping user journeys and step-based workflows for the Chrome add-on</p>
+          </div>
+          <div class="role-card">
+            <div class="role-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div>
+            <p class="role-card__text">Creating information architecture for the Admin and User Portals</p>
+          </div>
+        </div>
+        <div class="role-row mobile-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;">
+          <div class="role-card">
+            <div class="role-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg></div>
+            <p class="role-card__text">Designing wireframes, prototypes, and high-fidelity UI for all modules</p>
+          </div>
+          <div class="role-card">
+            <div class="role-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+            <p class="role-card__text">Building reusable components and setting up a unified design system</p>
+          </div>
+          <div class="role-card">
+            <div class="role-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></div>
+            <p class="role-card__text">Preparing visual guidelines, layout rules, and interaction patterns</p>
+          </div>
+          <div class="role-card">
+            <div class="role-card__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+            <p class="role-card__text">Receiving feedback through UX &amp; development team reviews, refining designs based on technical feasibility</p>
+          </div>
+        </div>
+      </div>
+      <p style="color:var(--muted);line-height:1.75;font-size:0.95rem;margin-top:1.5rem;">The project's design direction, component library, and final interfaces were all created by me, with stakeholder input helping refine decisions.</p>
+    </section>
+    <section class="case-section reveal">
+      <h2>UX Process</h2>
+      <div class="mobile-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.85rem;margin-top:1rem;">
+        
+        <div style="position:relative;padding:1.25rem;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.18);overflow:hidden;display:flex;flex-direction:column;gap:0.75rem;">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,rgba(108,142,245,0.85),rgba(108,142,245,0.05));border-radius:14px 14px 0 0;"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;color:rgba(108,142,245,0.5);">01</span>
+            <span style="color:rgba(108,142,245,0.7);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg></span>
+          </div>
+          <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--white);">Research</div>
+          <ul style="padding-left:1rem;margin:0;list-style:disc;"><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Explored the recruitment domain</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Identified key tasks performed by recruiters and candidates</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Understood constraints and expectations for a Chrome Extension environment</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Benchmarked similar tools for workflow optimization</li></ul>
+        </div>
+        <div style="position:relative;padding:1.25rem;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.18);overflow:hidden;display:flex;flex-direction:column;gap:0.75rem;">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,rgba(108,142,245,0.85),rgba(108,142,245,0.05));border-radius:14px 14px 0 0;"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;color:rgba(108,142,245,0.5);">02</span>
+            <span style="color:rgba(108,142,245,0.7);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg></span>
+          </div>
+          <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--white);">Define</div>
+          <ul style="padding-left:1rem;margin:0;list-style:disc;"><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Identified recruiter pain points and inefficiencies in traditional evaluation workflows</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Created high-level problem statements for each module</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Mapped permissions and interactions across Admin, User, and Extension views</li></ul>
+        </div>
+        <div style="position:relative;padding:1.25rem;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.18);overflow:hidden;display:flex;flex-direction:column;gap:0.75rem;">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,rgba(108,142,245,0.85),rgba(108,142,245,0.05));border-radius:14px 14px 0 0;"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;color:rgba(108,142,245,0.5);">03</span>
+            <span style="color:rgba(108,142,245,0.7);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 1 7 7c0 2.6-1.4 4.8-3.5 6.1V17a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-1.9C6.4 13.8 5 11.6 5 9a7 7 0 0 1 7-7z"/></svg></span>
+          </div>
+          <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--white);">Ideate</div>
+          <ul style="padding-left:1rem;margin:0;list-style:disc;"><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Built task flows and step-based maps for the add-on</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Defined IA for Admin navigation (Users, Audit Logs, Subscriptions)</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Structured a clean, compact layout for candidate user portal</li></ul>
+        </div>
+        <div style="position:relative;padding:1.25rem;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.18);overflow:hidden;display:flex;flex-direction:column;gap:0.75rem;">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,rgba(108,142,245,0.85),rgba(108,142,245,0.05));border-radius:14px 14px 0 0;"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;color:rgba(108,142,245,0.5);">04</span>
+            <span style="color:rgba(108,142,245,0.7);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span>
+          </div>
+          <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--white);">Design</div>
+          <ul style="padding-left:1rem;margin:0;list-style:disc;"><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Created low-fidelity wireframes for all screens</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Designed a component library (cards, tabs, lists, modals, buttons, progress indicators) for consistent UI</li></ul>
+        </div>
+        <div style="position:relative;padding:1.25rem;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.18);overflow:hidden;display:flex;flex-direction:column;gap:0.75rem;">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,rgba(108,142,245,0.85),rgba(108,142,245,0.05));border-radius:14px 14px 0 0;"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;color:rgba(108,142,245,0.5);">05</span>
+            <span style="color:rgba(108,142,245,0.7);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></span>
+          </div>
+          <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--white);">Prototype</div>
+          <ul style="padding-left:1rem;margin:0;list-style:disc;"><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Designed UIs for both portals</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Crafted an elegant and functional UI for the Chrome extension</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Built clickable prototypes for testing and developer hand-off</li></ul>
+        </div>
+        <div style="position:relative;padding:1.25rem;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.18);overflow:hidden;display:flex;flex-direction:column;gap:0.75rem;">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,rgba(108,142,245,0.85),rgba(108,142,245,0.05));border-radius:14px 14px 0 0;"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;color:rgba(108,142,245,0.5);">06</span>
+            <span style="color:rgba(108,142,245,0.7);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M10 3v7l-3.5 7A2 2 0 0 0 8.27 20h7.46a2 2 0 0 0 1.77-3L14 10V3"/><path d="M7.5 15h9"/></svg></span>
+          </div>
+          <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--white);">Testing</div>
+          <ul style="padding-left:1rem;margin:0;list-style:disc;"><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Conducted internal reviews with UX team members</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Adjusted visuals, interaction patterns, and states based on dev team feedback</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Ensured the final solution balanced usability with technical feasibility</li></ul>
+        </div>
+      </div>
+    </section>
+    <section class="case-section reveal">
+      <h2>The Solution</h2>
+      <p style="color:var(--muted);line-height:1.75;font-size:0.95rem;margin-bottom:1.5rem;">The final solution brings together three interconnected digital experiences - a Chrome Add-On, an Admin Portal, and a User Portal - designed to streamline recruitment workflows and make candidate evaluation more efficient and intuitive.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid rgba(108,142,245,0.18);border-radius:14px;overflow:hidden;">
+
+        <!-- Left: Title list -->
+        <div style="border-right:1px solid rgba(108,142,245,0.18);">
+          <button onclick="selectSolution(0)" id="sol-btn-0" style="width:100%;text-align:left;padding:1.1rem 1.25rem;background:rgba(108,142,245,0.12);border:none;border-bottom:1px solid rgba(108,142,245,0.18);cursor:pointer;display:flex;align-items:center;gap:0.75rem;transition:background 0.2s;">
+            <span style="flex-shrink:0;width:22px;height:22px;border-radius:6px;background:rgba(108,142,245,0.25);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:0.6rem;font-weight:700;color:rgba(108,142,245,1);">01</span>
+            <span style="font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:600;color:var(--white);line-height:1.4;">Chrome Add-On – Guided Evaluation Workflow</span>
+          </button>
+          <button onclick="selectSolution(1)" id="sol-btn-1" style="width:100%;text-align:left;padding:1.1rem 1.25rem;background:transparent;border:none;border-bottom:1px solid rgba(108,142,245,0.18);cursor:pointer;display:flex;align-items:center;gap:0.75rem;transition:background 0.2s;">
+            <span style="flex-shrink:0;width:22px;height:22px;border-radius:6px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:0.6rem;font-weight:700;color:rgba(108,142,245,0.5);">02</span>
+            <span style="font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:600;color:var(--muted);line-height:1.4;">Admin Portal – Clear, Role-Based Management</span>
+          </button>
+          <button onclick="selectSolution(2)" id="sol-btn-2" style="width:100%;text-align:left;padding:1.1rem 1.25rem;background:transparent;border:none;border-bottom:1px solid rgba(108,142,245,0.18);cursor:pointer;display:flex;align-items:center;gap:0.75rem;transition:background 0.2s;">
+            <span style="flex-shrink:0;width:22px;height:22px;border-radius:6px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:0.6rem;font-weight:700;color:rgba(108,142,245,0.5);">03</span>
+            <span style="font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:600;color:var(--muted);line-height:1.4;">User Portal – Simple Access for Candidates</span>
+          </button>
+          <button onclick="selectSolution(3)" id="sol-btn-3" style="width:100%;text-align:left;padding:1.1rem 1.25rem;background:transparent;border:none;border-bottom:1px solid rgba(108,142,245,0.18);cursor:pointer;display:flex;align-items:center;gap:0.75rem;transition:background 0.2s;">
+            <span style="flex-shrink:0;width:22px;height:22px;border-radius:6px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:0.6rem;font-weight:700;color:rgba(108,142,245,0.5);">04</span>
+            <span style="font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:600;color:var(--muted);line-height:1.4;">Unified Visual Language</span>
+          </button>
+          <button onclick="selectSolution(4)" id="sol-btn-4" style="width:100%;text-align:left;padding:1.1rem 1.25rem;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:0.75rem;transition:background 0.2s;">
+            <span style="flex-shrink:0;width:22px;height:22px;border-radius:6px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:0.6rem;font-weight:700;color:rgba(108,142,245,0.5);">05</span>
+            <span style="font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:600;color:var(--muted);line-height:1.4;">Scalable, Flexible Architecture</span>
+          </button>
+        </div>
+
+        <!-- Right: Content panel -->
+        <div style="padding:1.75rem 1.5rem;min-height:220px;display:flex;flex-direction:column;justify-content:center;">
+          <div id="sol-content-0" style="display:block;">
+            <p style="font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;color:rgba(108,142,245,0.85);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.6rem;">Chrome Add-On</p>
+            <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin:0;">The Chrome extension was designed as a structured, step-based flow to help recruiters complete key tasks with clarity and minimal effort. Each step is visually separated, supported by simple input fields, progress indicators, and contextual actions. The layout ensures recruiters can extract and process candidate information directly from their browser without switching between multiple tools.</p>
+          </div>
+          <div id="sol-content-1" style="display:none;">
+            <p style="font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;color:rgba(108,142,245,0.85);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.6rem;">Admin Portal</p>
+            <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin:0;">The Admin Portal provides administrators with streamlined access to essential system controls such as Users, Audit Logs, and Subscription settings. A clean navigation structure and modular layout make it easy to manage and monitor user activity, subscription plans, and system usage. The interface promotes transparency and accelerates routine administrative operations.</p>
+          </div>
+          <div id="sol-content-2" style="display:none;">
+            <p style="font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;color:rgba(108,142,245,0.85);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.6rem;">User Portal</p>
+            <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin:0;">The User Portal focuses on clarity and simplicity, allowing candidates to view and manage their profiles and subscription details effortlessly. The design supports readability and minimizes friction, ensuring a positive experience throughout the candidate's interaction with the system.</p>
+          </div>
+          <div id="sol-content-3" style="display:none;">
+            <p style="font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;color:rgba(108,142,245,0.85);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.6rem;">Unified Visual Language</p>
+            <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin:0;">Across all platforms, a consistent design system was applied, covering components, spacing rules, typography, color usage, and interaction patterns. This ensures a coherent experience and reduces cognitive load for all users, regardless of which part of the system they interact with.</p>
+          </div>
+          <div id="sol-content-4" style="display:none;">
+            <p style="font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;color:rgba(108,142,245,0.85);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.6rem;">Scalable Architecture</p>
+            <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin:0;">By building reusable modules and components, the system is prepared for future feature expansions and integrations. This foundational consistency helps designers and developers work more efficiently and reduces rework during updates.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <script>
+        function selectSolution(index) {
+          for (var i = 0; i < 5; i++) {
+            var btn = document.getElementById('sol-btn-' + i);
+            var content = document.getElementById('sol-content-' + i);
+            content.style.display = 'none';
+            btn.style.background = 'transparent';
+            btn.querySelector('span:first-child').style.background = 'rgba(255,255,255,0.05)';
+            btn.querySelector('span:first-child').style.color = 'rgba(108,142,245,0.5)';
+            btn.querySelector('span:last-child').style.color = 'var(--muted)';
+          }
+          var activeBtn = document.getElementById('sol-btn-' + index);
+          var activeContent = document.getElementById('sol-content-' + index);
+          activeContent.style.display = 'block';
+          activeBtn.style.background = 'rgba(108,142,245,0.12)';
+          activeBtn.querySelector('span:first-child').style.background = 'rgba(108,142,245,0.25)';
+          activeBtn.querySelector('span:first-child').style.color = 'rgba(108,142,245,1)';
+          activeBtn.querySelector('span:last-child').style.color = 'var(--white)';
+        }
+      </script>
+    </section>
+    <img class="reveal-fade" src="assets/images/project-rubi/project-rubi-placeholder-2.jpg" alt="RubiRecruit project image 2" style="margin-bottom:1.7rem;width:100%;aspect-ratio:1880/1000;max-height:500px;border-radius:14px;object-fit:cover;display:block;"/>
+
+    <section class="case-section reveal">
+      <h2>Design Highlights</h2>
+      <div style="display:flex;flex-direction:column;gap:0.6rem;margin-top:1rem;">
+
+        <div style="display:flex;align-items:center;gap:1.25rem;padding:1rem 1.25rem;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.15);border-left:1px solid rgba(108,142,245,0.25);">
+          <span style="flex-shrink:0;width:34px;height:34px;border-radius:9px;background:rgba(108,142,245,0.1);display:flex;align-items:center;justify-content:center;color:rgba(108,142,245,0.9);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </span>
+          <div>
+            <p style="margin:0 0 0.2rem;font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--white);">Step-Based Structured Workflow</p>
+            <p style="margin:0;color:var(--muted);font-size:0.84rem;line-height:1.65;">Clean, guided steps inside the Chrome add-on make complex evaluation tasks feel simple and linear.</p>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:1.25rem;padding:1rem 1.25rem;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.15);border-left:1px solid rgba(108,142,245,0.25);">
+          <span style="flex-shrink:0;width:34px;height:34px;border-radius:9px;background:rgba(108,142,245,0.1);display:flex;align-items:center;justify-content:center;color:rgba(108,142,245,0.9);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </span>
+          <div>
+            <p style="margin:0 0 0.2rem;font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--white);">Clear Role-Based Navigation</p>
+            <p style="margin:0;color:var(--muted);font-size:0.84rem;line-height:1.65;">Admin Portal: Users, Subscriptions, Audit Logs | User Portal: Profile, Subscription Management</p>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:1.25rem;padding:1rem 1.25rem;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.15);border-left:1px solid rgba(108,142,245,0.25);">
+          <span style="flex-shrink:0;width:34px;height:34px;border-radius:9px;background:rgba(108,142,245,0.1);display:flex;align-items:center;justify-content:center;color:rgba(108,142,245,0.9);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </span>
+          <div>
+            <p style="margin:0 0 0.2rem;font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--white);">Unified Visual System</p>
+            <p style="margin:0;color:var(--muted);font-size:0.84rem;line-height:1.65;">Consistent components, spacing, typography, and colors across all platforms.</p>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:1.25rem;padding:1rem 1.25rem;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.15);border-left:1px solid rgba(108,142,245,0.25);">
+          <span style="flex-shrink:0;width:34px;height:34px;border-radius:9px;background:rgba(108,142,245,0.1);display:flex;align-items:center;justify-content:center;color:rgba(108,142,245,0.9);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </span>
+          <div>
+            <p style="margin:0 0 0.2rem;font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--white);">Efficient Layouts</p>
+            <p style="margin:0;color:var(--muted);font-size:0.84rem;line-height:1.65;">Screens designed for focus, reducing clutter and decision fatigue.</p>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:1.25rem;padding:1rem 1.25rem;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.15);border-left:1px solid rgba(108,142,245,0.25);">
+          <span style="flex-shrink:0;width:34px;height:34px;border-radius:9px;background:rgba(108,142,245,0.1);display:flex;align-items:center;justify-content:center;color:rgba(108,142,245,0.9);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </span>
+          <div>
+            <p style="margin:0 0 0.2rem;font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--white);">Scalable UI Components</p>
+            <p style="margin:0;color:var(--muted);font-size:0.84rem;line-height:1.65;">Ensures quick future enhancements and easy development handoff.</p>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:1.25rem;padding:1rem 1.25rem;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.15);border-left:1px solid rgba(108,142,245,0.25);">
+          <span style="flex-shrink:0;width:34px;height:34px;border-radius:9px;background:rgba(108,142,245,0.1);display:flex;align-items:center;justify-content:center;color:rgba(108,142,245,0.9);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </span>
+          <div>
+            <p style="margin:0 0 0.2rem;font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--white);">Responsive &amp; Accessible Design</p>
+            <p style="margin:0;color:var(--muted);font-size:0.84rem;line-height:1.65;">Readable layouts, balanced spacing, and accessible color contrasts.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <section class="case-section reveal">
+      <h2>Outcome &amp; Impact</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.65rem;margin-top:1rem;">
+
+        <div style="position:relative;padding:1.1rem 1.1rem 1.1rem 1.35rem;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.14);overflow:hidden;">
+          <div style="position:absolute;top:0;bottom:0;left:0;width:3px;background:linear-gradient(to bottom,rgba(108,142,245,0.9),rgba(108,142,245,0.2));border-radius:12px 0 0 12px;"></div>
+          <div style="display:flex;align-items:flex-start;gap:0.7rem;">
+            <span style="flex-shrink:0;margin-top:1px;width:20px;height:20px;border-radius:50%;background:rgba(108,142,245,0.12);display:flex;align-items:center;justify-content:center;color:rgba(108,142,245,0.9);">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <p style="margin:0;color:var(--muted);font-size:0.86rem;line-height:1.65;">Provided recruiters with a structured, automated, and intuitive evaluation flow, reducing manual effort.</p>
+          </div>
+        </div>
+
+        <div style="position:relative;padding:1.1rem 1.1rem 1.1rem 1.35rem;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.14);overflow:hidden;">
+          <div style="position:absolute;top:0;bottom:0;left:0;width:3px;background:linear-gradient(to bottom,rgba(108,142,245,0.9),rgba(108,142,245,0.2));border-radius:12px 0 0 12px;"></div>
+          <div style="display:flex;align-items:flex-start;gap:0.7rem;">
+            <span style="flex-shrink:0;margin-top:1px;width:20px;height:20px;border-radius:50%;background:rgba(108,142,245,0.12);display:flex;align-items:center;justify-content:center;color:rgba(108,142,245,0.9);">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <p style="margin:0;color:var(--muted);font-size:0.86rem;line-height:1.65;">Enabled administrators to manage users, monitor system usage, and oversee subscriptions with clarity.</p>
+          </div>
+        </div>
+
+        <div style="position:relative;padding:1.1rem 1.1rem 1.1rem 1.35rem;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.14);overflow:hidden;">
+          <div style="position:absolute;top:0;bottom:0;left:0;width:3px;background:linear-gradient(to bottom,rgba(108,142,245,0.9),rgba(108,142,245,0.2));border-radius:12px 0 0 12px;"></div>
+          <div style="display:flex;align-items:flex-start;gap:0.7rem;">
+            <span style="flex-shrink:0;margin-top:1px;width:20px;height:20px;border-radius:50%;background:rgba(108,142,245,0.12);display:flex;align-items:center;justify-content:center;color:rgba(108,142,245,0.9);">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <p style="margin:0;color:var(--muted);font-size:0.86rem;line-height:1.65;">Delivered a clean, minimal user portal for candidates, improving transparency and self-management.</p>
+          </div>
+        </div>
+
+        <div style="position:relative;padding:1.1rem 1.1rem 1.1rem 1.35rem;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.14);overflow:hidden;">
+          <div style="position:absolute;top:0;bottom:0;left:0;width:3px;background:linear-gradient(to bottom,rgba(108,142,245,0.9),rgba(108,142,245,0.2));border-radius:12px 0 0 12px;"></div>
+          <div style="display:flex;align-items:flex-start;gap:0.7rem;">
+            <span style="flex-shrink:0;margin-top:1px;width:20px;height:20px;border-radius:50%;background:rgba(108,142,245,0.12);display:flex;align-items:center;justify-content:center;color:rgba(108,142,245,0.9);">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <p style="margin:0;color:var(--muted);font-size:0.86rem;line-height:1.65;">Improved consistency and development speed through reusable components and clear documentation.</p>
+          </div>
+        </div>
+
+        <div style="position:relative;padding:1.1rem 1.1rem 1.1rem 1.35rem;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.14);overflow:hidden;">
+          <div style="position:absolute;top:0;bottom:0;left:0;width:3px;background:linear-gradient(to bottom,rgba(108,142,245,0.9),rgba(108,142,245,0.2));border-radius:12px 0 0 12px;"></div>
+          <div style="display:flex;align-items:flex-start;gap:0.7rem;">
+            <span style="flex-shrink:0;margin-top:1px;width:20px;height:20px;border-radius:50%;background:rgba(108,142,245,0.12);display:flex;align-items:center;justify-content:center;color:rgba(108,142,245,0.9);">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <p style="margin:0;color:var(--muted);font-size:0.86rem;line-height:1.65;">Strengthened the product's scalability, making it easier for the team to expand features in the future.</p>
+          </div>
+        </div>
+
+        <div style="position:relative;padding:1.1rem 1.1rem 1.1rem 1.35rem;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.14);overflow:hidden;">
+          <div style="position:absolute;top:0;bottom:0;left:0;width:3px;background:linear-gradient(to bottom,rgba(108,142,245,0.9),rgba(108,142,245,0.2));border-radius:12px 0 0 12px;"></div>
+          <div style="display:flex;align-items:flex-start;gap:0.7rem;">
+            <span style="flex-shrink:0;margin-top:1px;width:20px;height:20px;border-radius:50%;background:rgba(108,142,245,0.12);display:flex;align-items:center;justify-content:center;color:rgba(108,142,245,0.9);">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <p style="margin:0;color:var(--muted);font-size:0.86rem;line-height:1.65;">Enhanced team alignment with clearer user flows, diagrams, and visual guidelines handed off to developers.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <section class="case-section reveal">
+      <h2>Learnings</h2>
+      <ul style="list-style:none;padding:0;margin:1rem 0 0;display:flex;flex-direction:column;gap:0.6rem;">
+        <li style="display:flex;align-items:flex-start;gap:0.85rem;">
+          <span style="flex-shrink:0;margin-top:0.42em;width:7px;height:7px;border-radius:50%;background:rgba(108,142,245,0.85);display:inline-block;"></span>
+          <p style="margin:0;color:var(--muted);font-size:0.92rem;line-height:1.7;flex:1;min-width:0;">Designing for AI-driven products requires balancing automation clarity with user trust - every AI action needs a legible rationale in the UI</p>
+        </li>
+        <li style="display:flex;align-items:flex-start;gap:0.85rem;">
+          <span style="flex-shrink:0;margin-top:0.42em;width:7px;height:7px;border-radius:50%;background:rgba(108,142,245,0.85);display:inline-block;"></span>
+          <p style="margin:0;color:var(--muted);font-size:0.92rem;line-height:1.7;flex:1;min-width:0;">Stepped workflows (like the Chrome add-on) demand meticulous edge-case thinking: empty states, error flows, and partial completions are as critical as the happy path</p>
+        </li>
+        <li style="display:flex;align-items:flex-start;gap:0.85rem;">
+          <span style="flex-shrink:0;margin-top:0.42em;width:7px;height:7px;border-radius:50%;background:rgba(108,142,245,0.85);display:inline-block;"></span>
+          <p style="margin:0;color:var(--muted);font-size:0.92rem;line-height:1.7;flex:1;min-width:0;">Building a design system from scratch taught me the value of decision documentation - naming conventions, token structures, and usage rules prevent costly inconsistencies later</p>
+        </li>
+        <li style="display:flex;align-items:flex-start;gap:0.85rem;">
+          <span style="flex-shrink:0;margin-top:0.42em;width:7px;height:7px;border-radius:50%;background:rgba(108,142,245,0.85);display:inline-block;"></span>
+          <p style="margin:0;color:var(--muted);font-size:0.92rem;line-height:1.7;flex:1;min-width:0;">Working with complex admin portals revealed the importance of progressive disclosure: exposing advanced features only when relevant reduces cognitive overload</p>
+        </li>
+        <li style="display:flex;align-items:flex-start;gap:0.85rem;">
+          <span style="flex-shrink:0;margin-top:0.42em;width:7px;height:7px;border-radius:50%;background:rgba(108,142,245,0.85);display:inline-block;"></span>
+          <p style="margin:0;color:var(--muted);font-size:0.92rem;line-height:1.7;flex:1;min-width:0;">Frequent developer syncs early in the process saved significant rework - technical constraints are design constraints and should be surfaced in ideation, not handoff</p>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-glow" aria-hidden="true"></div>
+    <div class="container">
+
+      <div class="footer-top">
+        <!-- Brand -->
+        <div class="footer-brand">
+          <span class="footer-brand__name">Imalsha Kandamby</span>
+          <span class="footer-brand__sub">Product Designer · 's-Hertogenbosch, NL</span>
+          <span class="footer-brand__tagline">Available for opportunities</span>
+        </div>
+
+        <!-- Center mark -->
+        <div class="footer-center">
+          <div class="footer-divider-v"></div>
+          <div class="footer-logo-mark" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <div class="footer-divider-v"></div>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-contact">
+          <a href="mailto:imalshakandamby@gmail.com" class="footer-contact-link">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            imalshakandamby@gmail.com
+          </a>
+          <a href="tel:+31638286152" class="footer-contact-link">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            +31 6 3828 6152
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 Imalsha Kandamby · Designed &amp; built with intention</p>
+        <div class="footer-socials">
+          <a href="https://linkedin.com/in/imalsha-kandamby" target="_blank" rel="noopener" class="footer-social-btn" aria-label="LinkedIn">LinkedIn</a>
+          <a href="https://behance.net/imalshakandamby_gihk" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Behance">Behance</a>
+          <a href="https://dribbble.com/gihKandamby" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Dribbble">Dribbble</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      if (!finePointer) return;
+
+      const dot = document.createElement('div');
+      dot.className = 'cursor-dot';
+      const ring = document.createElement('div');
+      ring.className = 'cursor-ring';
+      document.body.append(dot, ring);
+
+      let mouseX = window.innerWidth / 2;
+      let mouseY = window.innerHeight / 2;
+      let ringX = mouseX;
+      let ringY = mouseY;
+
+      const setPos = (el, x, y) => {
+        el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+      };
+
+      const tick = () => {
+        ringX += (mouseX - ringX) * 0.18;
+        ringY += (mouseY - ringY) * 0.18;
+        setPos(dot, mouseX, mouseY);
+        setPos(ring, ringX, ringY);
+        requestAnimationFrame(tick);
+      };
+
+      requestAnimationFrame(tick);
+
+      document.addEventListener('mousemove', (event) => {
+        mouseX = event.clientX;
+        mouseY = event.clientY;
+      });
+
+      const interactiveSelector = 'a,button,[role="button"],input,textarea,select,.project-card,.tile,.viewer-close';
+
+      document.addEventListener('mouseover', (event) => {
+        if (event.target.closest(interactiveSelector)) {
+          ring.style.width = '48px';
+          ring.style.height = '48px';
+          ring.style.borderColor = 'rgba(108,142,245,0.95)';
+        }
+      });
+
+      document.addEventListener('mouseout', (event) => {
+        if (event.target.closest(interactiveSelector)) {
+          ring.style.width = '34px';
+          ring.style.height = '34px';
+          ring.style.borderColor = 'rgba(108,142,245,0.7)';
+        }
+      });
+    })();
+  </script>
+
+  
+
+  
+
+
+  <script>
+    (function() {
+      function initNav() {
+        var btn   = document.getElementById('navHamburger');
+        var menu  = document.getElementById('navMobileMenu');
+        var close = document.getElementById('navMobileClose');
+        if (!btn || !menu) return;
+
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          menu.classList.add('is-open');
+          btn.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+          document.body.style.overflow = 'hidden';
+        });
+
+        function closeMenu() {
+          menu.classList.remove('is-open');
+          btn.classList.remove('is-open');
+          btn.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        }
+
+        if (close) close.addEventListener('click', closeMenu);
+
+        menu.addEventListener('click', function(e) {
+          if (e.target === menu) closeMenu();
+        });
+
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') closeMenu();
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initNav);
+      } else {
+        initNav();
+      }
+    })();
+  </script>
+
+  <script>
+    /* ── Scroll Reveal ── */
+    (function() {
+      var classes = ['reveal', 'reveal-scale', 'reveal-left', 'reveal-fade', 'reveal-stagger'];
+      function revealAll() {
+        classes.forEach(function(cls) {
+          document.querySelectorAll('.' + cls).forEach(function(el) {
+            el.classList.add('visible');
+          });
+        });
+      }
+
+      if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+        classes.forEach(function(cls) {
+          document.querySelectorAll('.' + cls).forEach(function(el) {
+            observer.observe(el);
+          });
+        });
+      } else {
+        revealAll();
+      }
+    })();
+  </script>
+
+  <script>
+    /* ── Nav fade on scroll ── */
+    (function() {
+      var header     = document.querySelector('.site-header');
+      var lastScroll = 0;
+      var threshold  = 60;
+      var ticking    = false;
+
+      function update() {
+        var current = window.scrollY || window.pageYOffset;
+        if (current > threshold && current > lastScroll) {
+          header.classList.add('nav-hidden');
+        } else {
+          header.classList.remove('nav-hidden');
+        }
+        lastScroll = current <= 0 ? 0 : current;
+        ticking = false;
+      }
+
+      if (header) {
+        window.addEventListener('scroll', function() {
+          if (!ticking) {
+            window.requestAnimationFrame(update);
+            ticking = true;
+          }
+        }, { passive: true });
+      }
+    })();
+  </script>
+</body>
+</html>
