@@ -1260,6 +1260,89 @@
       pointer-events: none;
       transform: translateY(-8px);
     }
+
+    /* ── Tool Kit cell ── */
+    .bento-cell--edu-full {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+    .bento-edu-row {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      flex-wrap: wrap;
+    }
+    .bento-edu-row .bento-edu__body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      flex: 1;
+      min-width: 0;
+    }
+    .bento-edu-row .bento-edu__degree {
+      font-family: var(--font-display);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.35;
+    }
+    .bento-edu-row .bento-edu__meta {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .bento-edu-row .bento-edu__year {
+      align-self: center;
+      margin-top: 0;
+      white-space: nowrap;
+    }
+
+    /* ── Toolkit grid ── */
+    .toolkit-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.55rem;
+      margin-top: 0.85rem;
+    }
+    .toolkit-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      padding: 0.65rem 0.4rem;
+      border-radius: 10px;
+      background: rgba(108,142,245,0.04);
+      border: 1px solid rgba(108,142,245,0.1);
+      transition: border-color 0.2s, background 0.2s;
+      min-height: 72px;
+    }
+    .toolkit-item:hover {
+      border-color: rgba(108,142,245,0.3);
+      background: rgba(108,142,245,0.08);
+    }
+    .toolkit-icon {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+    .toolkit-item span {
+      font-size: 0.6rem;
+      color: rgba(195,190,210,0.85);
+      text-align: center;
+      line-height: 1.3;
+      font-weight: 500;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .bento-cell--edu-full { grid-column: 1; grid-row: auto; }
+      .toolkit-grid { grid-template-columns: repeat(4, 1fr); }
+      .bento-edu-row { gap: 0.75rem; }
+    }
+    @media (max-width: 480px) {
+      .toolkit-grid { grid-template-columns: repeat(3, 1fr); }
+    }
   </style>
 </head>
 
@@ -1416,24 +1499,86 @@
           </div>
         </div>
 
-        <!-- ── EDUCATION ── -->
+        <!-- ── TOOL KIT ── -->
         <div class="bento-cell bento-cell--edu">
+          <div class="about-section-label">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            Tool Kit
+          </div>
+                    <div class="toolkit-grid">
+            <div class="toolkit-item">
+              <img src="assets/images/index/toolkit/figma.png" alt="Figma" class="toolkit-icon" width="48" height="48" />
+              <span>Figma</span>
+            </div>
+            <div class="toolkit-item">
+              <img src="assets/images/index/toolkit/figjam.png" alt="FigJam" class="toolkit-icon" width="48" height="48" />
+              <span>FigJam</span>
+            </div>
+            <div class="toolkit-item">
+              <img src="assets/images/index/toolkit/figma-make.png" alt="Figma Make" class="toolkit-icon" width="48" height="48" />
+              <span>Figma Make</span>
+            </div>
+            <div class="toolkit-item">
+              <img src="assets/images/index/toolkit/claude.png" alt="Claude" class="toolkit-icon" width="48" height="48" />
+              <span>Claude</span>
+            </div>
+            <div class="toolkit-item">
+              <img src="assets/images/index/toolkit/framer.png" alt="Framer" class="toolkit-icon" width="48" height="48" />
+              <span>Framer</span>
+            </div>
+            <div class="toolkit-item">
+              <img src="assets/images/index/toolkit/webflow.png" alt="Webflow" class="toolkit-icon" width="48" height="48" />
+              <span>Webflow</span>
+            </div>
+            <div class="toolkit-item">
+              <img src="assets/images/index/toolkit/miro.png" alt="Miro" class="toolkit-icon" width="48" height="48" />
+              <span>Miro</span>
+            </div>
+            <div class="toolkit-item">
+              <img src="assets/images/index/toolkit/jira.png" alt="Jira" class="toolkit-icon" width="48" height="48" />
+              <span>Jira</span>
+            </div>
+            <div class="toolkit-item">
+              <img src="assets/images/index/toolkit/adobe-xd.png" alt="Adobe XD" class="toolkit-icon" width="48" height="48" />
+              <span>Adobe XD</span>
+            </div>
+            <div class="toolkit-item">
+              <img src="assets/images/index/toolkit/photoshop.png" alt="Photoshop" class="toolkit-icon" width="48" height="48" />
+              <span>Photoshop</span>
+            </div>
+            <div class="toolkit-item">
+              <img src="assets/images/index/toolkit/illustrator.png" alt="Illustrator" class="toolkit-icon" width="48" height="48" />
+              <span>Illustrator</span>
+            </div>
+            <div class="toolkit-item">
+              <img src="assets/images/index/toolkit/html-css.png" alt="HTML / CSS" class="toolkit-icon" width="48" height="48" />
+              <span>HTML / CSS</span>
+            </div>
+            <div class="toolkit-item">
+              <img src="assets/images/index/toolkit/copilot.png" alt="Copilot" class="toolkit-icon" width="48" height="48" />
+              <span>Copilot</span>
+            </div>
+            <div class="toolkit-item">
+              <img src="assets/images/index/toolkit/gemini.png" alt="Gemini" class="toolkit-icon" width="48" height="48" />
+              <span>Gemini</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── EDUCATION (full width below) ── -->
+        <div class="bento-cell bento-cell--edu-full">
           <div class="about-section-label">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
             Education
           </div>
-          <div class="bento-edu">
-            <div class="bento-edu__badge">BSc</div>
-            <div class="bento-edu__degree">B.Sc. (Hons) in Information Technology &amp; Management</div>
-            <div class="bento-edu__meta">
-              Faculty of Information Technology<br>
-              University of Moratuwa, Sri Lanka
+          <div class="bento-edu-row">
+            <div class="bento-edu__body">
+              <div class="bento-edu__degree">B.Sc. (Hons) in Information Technology &amp; Management</div>
+              <div class="bento-edu__meta">Faculty of Information Technology · University of Moratuwa, Sri Lanka</div>
             </div>
             <span class="bento-edu__year">2017 – 2022</span>
           </div>
         </div>
-
-
 
       </div><!-- /bento -->
     </div>
