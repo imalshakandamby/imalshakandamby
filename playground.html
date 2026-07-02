@@ -47,53 +47,6 @@
 
     a { text-decoration: none; color: inherit; }
 
-    .cursor-dot,
-    .cursor-ring {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-    }
-
-    .cursor-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(232,228,240,0.95);
-    }
-
-    .cursor-ring {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      border: 1px solid rgba(108,142,245,0.7);
-      background: rgba(108,142,245,0.08);
-      backdrop-filter: blur(1px);
-      -webkit-backdrop-filter: blur(1px);
-      transition: width 0.16s, height 0.16s, border-color 0.16s;
-    }
-
-    @media (hover: hover) and (pointer: fine) {
-      html,
-      body,
-      a,
-      button,
-      [role="button"],
-      .project-card,
-      .tile,
-      .viewer-close {
-        cursor: none !important;
-      }
-
-      .cursor-dot,
-      .cursor-ring {
-        display: block;
-      }
-    }
-
     .container {
       max-width: var(--max-w);
       margin-inline: auto;
@@ -670,6 +623,41 @@
       pointer-events: none;
       transform: translateY(-8px);
     }
+
+    /* ── Custom cursor: violet arrow + "You" tag ── */
+    * { cursor: none !important; }
+    #customCursor {
+      position: fixed;
+      top: 0; left: 0;
+      width: 0; height: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-2px, -2px);
+      will-change: transform;
+    }
+    #customCursor svg {
+      display: block;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35));
+    }
+    #customCursor .cursor-tag {
+      position: absolute;
+      top: 22px;
+      left: 14px;
+      background: var(--violet);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      padding: 0.22rem 0.65rem;
+      border-radius: 999px;
+      white-space: nowrap;
+      box-shadow: 0 4px 10px rgba(108,142,245,0.35);
+    }
+    @media (hover: none), (pointer: coarse) {
+      * { cursor: auto !important; }
+      #customCursor { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -896,62 +884,6 @@
       if (event.key === 'Escape' && viewer.classList.contains('is-open')) closeViewer();
     });
   </script>
-
-  <script>
-    (() => {
-      const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-      if (!finePointer) return;
-
-      const dot = document.createElement('div');
-      dot.className = 'cursor-dot';
-      const ring = document.createElement('div');
-      ring.className = 'cursor-ring';
-      document.body.append(dot, ring);
-
-      let mouseX = window.innerWidth / 2;
-      let mouseY = window.innerHeight / 2;
-      let ringX = mouseX;
-      let ringY = mouseY;
-
-      const setPos = (el, x, y) => {
-        el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
-      };
-
-      const tick = () => {
-        ringX += (mouseX - ringX) * 0.18;
-        ringY += (mouseY - ringY) * 0.18;
-        setPos(dot, mouseX, mouseY);
-        setPos(ring, ringX, ringY);
-        requestAnimationFrame(tick);
-      };
-
-      requestAnimationFrame(tick);
-
-      document.addEventListener('mousemove', (event) => {
-        mouseX = event.clientX;
-        mouseY = event.clientY;
-      });
-
-      const interactiveSelector = 'a,button,[role="button"],input,textarea,select,.project-card,.tile,.viewer-close';
-
-      document.addEventListener('mouseover', (event) => {
-        if (event.target.closest(interactiveSelector)) {
-          ring.style.width = '48px';
-          ring.style.height = '48px';
-          ring.style.borderColor = 'rgba(108,142,245,0.95)';
-        }
-      });
-
-      document.addEventListener('mouseout', (event) => {
-        if (event.target.closest(interactiveSelector)) {
-          ring.style.width = '34px';
-          ring.style.height = '34px';
-          ring.style.borderColor = 'rgba(108,142,245,0.7)';
-        }
-      });
-    })();
-  </script>
-
   
 
 
@@ -1059,5 +991,35 @@
       }
     })();
   </script>
+
+  <!-- Custom cursor -->
+  <div id="customCursor" aria-hidden="true">
+    <svg width="22" height="26" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 1.5L20 12.8L11.7 14.6L8 23.5L2 1.5Z" fill="#6c8ef5" stroke="#0A0812" stroke-width="1.2" stroke-linejoin="round"/>
+    </svg>
+    <span class="cursor-tag">You</span>
+  </div>
+
+  <script>
+    /* ── Custom cursor follow ── */
+    (function() {
+      var cursor = document.getElementById('customCursor');
+      if (!cursor) return;
+      var isCoarse = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+      if (isCoarse) return;
+
+      document.addEventListener('mousemove', function(e) {
+        cursor.style.transform = 'translate(' + e.clientX + 'px, ' + e.clientY + 'px)';
+      });
+
+      document.addEventListener('mouseleave', function() {
+        cursor.style.opacity = '0';
+      });
+      document.addEventListener('mouseenter', function() {
+        cursor.style.opacity = '1';
+      });
+    })();
+  </script>
+
 </body>
 </html>
