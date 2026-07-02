@@ -1339,9 +1339,202 @@
       .bento-cell--edu-full { grid-column: 1; grid-row: auto; }
       .toolkit-grid { grid-template-columns: repeat(4, 1fr); }
       .bento-edu-row { gap: 0.75rem; }
+      .bento-edu-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .bento-edu-row .bento-edu__year {
+        align-self: flex-start;
+      }
     }
     @media (max-width: 480px) {
       .toolkit-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* ── Experience card popup ── */
+    .exp-card--clickable {
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    }
+    .exp-card--clickable:hover {
+      border-color: rgba(108,142,245,0.4);
+      background: rgba(108,142,245,0.06);
+      transform: translateY(-2px);
+    }
+    .exp-card--clickable:focus-visible {
+      outline: 2px solid rgba(108,142,245,0.6);
+      outline-offset: 2px;
+    }
+
+    .exp-viewer {
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 8, 13, 0.78);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      z-index: 300;
+    }
+    .exp-viewer.is-open { display: flex; }
+
+    .exp-viewer-card {
+      width: min(640px, 100%);
+      max-height: 82vh;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(19,16,28,0.97);
+      box-shadow: 0 20px 70px rgba(0,0,0,0.55);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .exp-viewer-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.9rem;
+      padding: 1.25rem 1.25rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      flex-shrink: 0;
+    }
+
+    .exp-viewer-head-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .exp-viewer-title {
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      line-height: 1.25;
+      letter-spacing: 0.01em;
+      color: var(--white);
+    }
+
+    .exp-viewer-sub {
+      font-size: 0.78rem;
+      color: rgba(108,142,245,0.8);
+      font-weight: 600;
+    }
+
+    .exp-viewer-close {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.24);
+      background: rgba(255,255,255,0.03);
+      color: var(--white);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      flex-shrink: 0;
+      font-size: 1.3rem;
+      line-height: 1;
+    }
+    .exp-viewer-close:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(108,142,245,0.6);
+    }
+
+    .exp-viewer-body {
+      padding: 1.1rem 1.25rem 1.5rem;
+      overflow-y: auto;
+      overflow-x: hidden;
+      overflow-wrap: break-word;
+    }
+    .exp-viewer-body ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .exp-viewer-body li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+    }
+    .exp-viewer-body li::before {
+      content: '';
+      flex-shrink: 0;
+      margin-top: 0.5em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(108,142,245,0.85);
+    }
+    .exp-viewer-body li p {
+      margin: 0;
+      font-size: 0.85rem;
+      line-height: 1.65;
+      color: var(--muted);
+    }
+    .exp-viewer-body li p strong {
+      color: rgba(195,190,210,0.95);
+      font-weight: 600;
+    }
+    .exp-viewer-body li.exp-viewer-subitem {
+      margin-left: 1.35rem;
+      margin-top: -0.15rem;
+    }
+    .exp-viewer-body li.exp-viewer-subitem::before {
+      width: 4px;
+      height: 4px;
+      margin-top: 0.55em;
+      background: rgba(108,142,245,0.5);
+    }
+    .exp-viewer-body li.exp-viewer-subitem p {
+      font-size: 0.8rem;
+    }
+    .exp-viewer-body li.exp-viewer-chipblock {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 0.5rem;
+    }
+    .exp-viewer-body li.exp-viewer-chipblock::before {
+      display: none;
+    }
+    .exp-chip-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: rgba(195,190,210,0.95);
+      margin: 0 0 2rem;
+    }
+    .exp-viewer-body li.exp-viewer-chipblock + li.exp-viewer-chipblock {
+      margin-top: 0.4rem;
+    }
+    .exp-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .exp-chip {
+      font-size: 0.7rem;
+      padding: 0.28rem 0.65rem;
+      border-radius: 14px;
+      background: rgba(108,142,245,0.08);
+      border: 1px solid rgba(108,142,245,0.2);
+      color: rgba(195,190,210,0.85);
+      white-space: normal;
+      max-width: 100%;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 640px) {
+      .exp-viewer { padding: 0.75rem; }
+      .exp-viewer-card { max-height: 88vh; }
+      .exp-chip { font-size: 0.68rem; padding: 0.26rem 0.55rem; }
+      .exp-viewer-head { padding: 1rem 1rem 0.85rem; }
+      .exp-viewer-body { padding: 1rem 1rem 1.25rem; }
+      .exp-viewer-body li p { font-size: 0.82rem; }
     }
   </style>
 </head>
@@ -1461,21 +1654,21 @@
 
           <div class="bento-exp-grid">
 
-            <div class="bento-exp-card">
+            <div class="bento-exp-card exp-card--clickable" role="button" tabindex="0" data-exp="swivel" aria-haspopup="dialog">
               <span class="bento-exp-card__duration">3 yrs</span>
               <span class="bento-exp-card__role">UX Designer</span>
               <span class="bento-exp-card__co">Swivel Tech Pvt Ltd<br>Colombo 03, Sri Lanka</span>
               <span class="bento-exp-card__period">Mar 2023 – Apr 2026</span>
             </div>
 
-            <div class="bento-exp-card">
+            <div class="bento-exp-card exp-card--clickable" role="button" tabindex="0" data-exp="akvasoft" aria-haspopup="dialog">
               <span class="bento-exp-card__duration">1 yr</span>
               <span class="bento-exp-card__role">UI/UX Engineer</span>
               <span class="bento-exp-card__co">Akvasoft Pvt Ltd<br>Galle, Sri Lanka</span>
               <span class="bento-exp-card__period">Mar 2022 – Mar 2023</span>
             </div>
 
-            <div class="bento-exp-card">
+            <div class="bento-exp-card exp-card--clickable" role="button" tabindex="0" data-exp="inova" aria-haspopup="dialog">
               <span class="bento-exp-card__duration">6 mo</span>
               <span class="bento-exp-card__role">Trainee Software Engineer</span>
               <span class="bento-exp-card__co">Inova Labs Pvt Ltd<br>Sri Lanka</span>
@@ -1967,6 +2160,132 @@
           }
         }, { passive: true });
       }
+    })();
+  </script>
+
+
+  <!-- Experience Detail Popup -->
+  <div class="exp-viewer" id="expViewer" aria-hidden="true">
+    <div class="exp-viewer-card" role="dialog" aria-modal="true" aria-labelledby="expViewerTitle">
+      <div class="exp-viewer-head">
+        <div class="exp-viewer-head-text">
+          <h3 class="exp-viewer-title" id="expViewerTitle">Role Title</h3>
+          <span class="exp-viewer-sub" id="expViewerSub">Company · Location</span>
+        </div>
+        <button class="exp-viewer-close" type="button" id="expViewerClose" aria-label="Close">&times;</button>
+      </div>
+      <div class="exp-viewer-body" id="expViewerBody">
+        <ul id="expViewerList"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ── Experience card popup ── */
+    (function() {
+      const expData = {
+        swivel: {
+          title: 'UX Designer',
+          sub: 'Swivel Tech Pvt Ltd · Colombo 03, Sri Lanka',
+          items: [
+            'Promoted from Associate UX Designer based on consistent performance, ownership, and positive contributions to team outcomes recognized during annual KPI evaluations.',
+            'Led end-to-end product design across HRTech, LegalTech, Recruitment, AI-powered SaaS, Lead Management, Healthcare, Marketing, and E-commerce domains, covering discovery, user research, UX strategy, prototyping, high-fidelity design, usability testing, and developer handoff for web, mobile, and AI-powered platforms.',
+            'Conducted user research, workflow analysis, and usability testing to uncover user needs and pain points, translating insights into intuitive, user-centered solutions that aligned business goals with user expectations.',
+            'Built and maintained a scalable design system adopted across multiple products, improving design consistency, streamlining design-to-development collaboration, and accelerating UI delivery.',
+            'Collaborated closely with product managers, developers, stakeholders, and marketing teams to deliver digital products, branding assets, campaign materials, presentations, social media content, and marketing collateral while maintaining usability and brand consistency.',
+            'Drove product outcomes by simplifying complex workflows, improving user experiences, establishing scalable design foundations, and enabling faster delivery across multiple business-critical products.',
+            'Delivered key product initiatives including:',
+            'CHIPS::Sole Designer (End-to-end responsibility from discovery to developer handoff)::Wills Australia (LegalTech platform)|RubiRecruit Add-on &amp; Portal (Recruitment workflow platform)|HRIA (AI-powered HR assistant)|LeadFlow Caller App &amp; Admin Dashboard (AI-assisted lead management platform)|Crunch AI (Chat Assistant for Finance Division of Swivel)|Property Profile Dashboard for OneGroup.au',
+            'CHIPS::Collaborative Projects::Swivel Design System|Swivel Corporate Websites &amp; Marketing Pages|Kartclass Apex Chat Assistant|Venda Marketing Landing Page|RinseAI - Dental Clinics Chat Assistant|TigerPay AUS - Payroll Management System'
+          ]
+        },
+        akvasoft: {
+          title: 'UI/UX Engineer',
+          sub: 'Akvasoft Pvt Ltd · Galle, Sri Lanka',
+          items: [
+            'Promoted from Associate UI/UX Engineer within 3 months in recognition of strong performance, adaptability, and ability to take on increased responsibilities.',
+            'Designed and developed interactive product recommendation quizzes and Shopify theme experiences, improving product discovery, personalization, and user engagement across e-commerce platforms.',
+            'Created UI designs in Figma and implemented them using AskWhai (Visual Quiz Builder), enhancing experiences through custom front-end styling (HTML, CSS, Shopify Liquid) and responsive design principles.',
+            'Delivered user-centered experiences across Food &amp; Beverage, Furniture &amp; Home Furnishings, Beauty &amp; Personal Care, Home &amp; Interior Design, Fashion &amp; Apparel, and Agriculture domains.',
+            'Collaborated closely with developers to ensure seamless implementation, design consistency, and high-quality user experiences across multiple Shopify stores.',
+            'Designed key Shopify quiz experiences for brands including Plum Deluxe, RoomLift, Noteworthy Scents, Sweat &amp; Milk and Dora Larsen, aligning solutions with brand identity and supporting personalized customer journeys.'
+          ]
+        },
+        inova: {
+          title: 'Trainee Software Engineer',
+          sub: 'Inova Labs Pvt Ltd · Sri Lanka',
+          items: [
+            'Completed a 6-month Front-End Development internship, contributing to real-world projects.',
+            'Collaborated with the development team and adapted quickly in a fast-paced environment.',
+            'Gained hands-on experience with React, Bootstrap, and Ant Design for building responsive interfaces.',
+            'Applied UI/UX design principles in front-end implementation.'
+          ]
+        }
+      };
+
+      const viewer = document.getElementById('expViewer');
+      const closeBtn = document.getElementById('expViewerClose');
+      const titleEl = document.getElementById('expViewerTitle');
+      const subEl = document.getElementById('expViewerSub');
+      const listEl = document.getElementById('expViewerList');
+      const cards = document.querySelectorAll('.exp-card--clickable');
+
+      function openExp(key) {
+        const data = expData[key];
+        if (!data) return;
+        titleEl.textContent = data.title;
+        subEl.textContent = data.sub;
+        listEl.innerHTML = data.items.map(function(item) {
+          if (item.indexOf('CHIPS::') === 0) {
+            var parts = item.slice(7).split('::');
+            var label = parts[0];
+            var chips = parts[1].split('|');
+            var chipsHtml = chips.map(function(c) {
+              return '<span class="exp-chip">' + c + '</span>';
+            }).join('');
+            return '<li class="exp-viewer-subitem exp-viewer-chipblock">' +
+                     '<div>' +
+                       '<p class="exp-chip-label">' + label + '</p>' +
+                       '<div class="exp-chip-row">' + chipsHtml + '</div>' +
+                     '</div>' +
+                   '</li>';
+          }
+          if (item.indexOf('SUB::') === 0) {
+            return '<li class="exp-viewer-subitem"><p>' + item.slice(5) + '</p></li>';
+          }
+          return '<li><p>' + item + '</p></li>';
+        }).join('');
+        viewer.classList.add('is-open');
+        viewer.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        closeBtn.focus();
+      }
+
+      function closeExp() {
+        viewer.classList.remove('is-open');
+        viewer.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+
+      cards.forEach(function(card) {
+        card.addEventListener('click', function() {
+          openExp(card.getAttribute('data-exp'));
+        });
+        card.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openExp(card.getAttribute('data-exp'));
+          }
+        });
+      });
+
+      closeBtn.addEventListener('click', closeExp);
+      viewer.addEventListener('click', function(e) {
+        if (e.target === viewer) closeExp();
+      });
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && viewer.classList.contains('is-open')) closeExp();
+      });
     })();
   </script>
 
