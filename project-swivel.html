@@ -72,22 +72,72 @@
       background: linear-gradient(to bottom, transparent, rgba(108,142,245,0.3), transparent);
     }
     .footer-contact { display: flex; flex-direction: column; align-items: flex-end; gap: 0.55rem; }
-    .footer-contact-link {
-      display: flex; align-items: center; gap: 0.5rem;
-      font-size: 0.82rem; color: var(--muted);
-      transition: color 0.2s;
-      text-decoration: none;
+    .footer-contact-row {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      width: 300px;
+      max-width: 100%;
+      padding: 0.42rem 0.55rem 0.42rem 0.7rem;
+      border-radius: 10px;
+      border: none;
+      background: rgba(255,255,255,0.035);
+      transition: background 0.2s;
     }
-    .footer-contact-link:hover { color: var(--white); }
-    .footer-contact-link svg { flex-shrink: 0; opacity: 0.6; }
+    .footer-contact-row:hover {
+      background: rgba(255,255,255,0.06);
+    }
+    .footer-contact-row__icon {
+      flex-shrink: 0;
+      color: rgba(167,155,214,0.85);
+    }
+    .footer-contact-row__text {
+      flex: 1;
+      min-width: 0;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-decoration: none;
+      white-space: nowrap;
+      text-align: left;
+      transition: color 0.2s;
+    }
+    .footer-contact-row__text:hover { color: var(--white); }
+    .footer-copy-btn {
+      flex-shrink: 0;
+      position: relative;
+      min-width: 58px;
+      padding: 0.24rem 0.6rem;
+      border-radius: 999px;
+      background: transparent;
+      border: 1px solid rgba(108,142,245,0.45);
+      color: var(--violet-lt);
+      font-family: var(--font-display);
+      font-size: 0.64rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+    .footer-copy-btn:hover {
+      background: rgba(108,142,245,0.15);
+      border-color: rgba(108,142,245,0.7);
+      color: var(--white);
+    }
+    .footer-copy-btn.is-copied {
+      border-color: rgba(110,231,160,0.55);
+      color: #6ee7a0;
+      background: rgba(110,231,160,0.08);
+    }
     .footer-bottom {
       display: flex; align-items: center; justify-content: space-between;
       padding-top: 1.5rem; flex-wrap: wrap; gap: 1rem;
     }
-    .footer-socials { display: flex; align-items: center; gap: 0.5rem; }
+    .footer-socials { display: flex; align-items: center; gap: 0.5rem; width: 300px; max-width: 100%; }
     .footer-social-btn {
       display: inline-flex; align-items: center; justify-content: center;
-      padding: 0.35rem 0.85rem; height: 32px; border-radius: 8px;
+      flex: 1;
+      padding: 0.35rem 0.6rem; height: 32px; border-radius: 8px;
       border: 1px solid rgba(255,255,255,0.1);
       background: rgba(255,255,255,0.03);
       color: var(--muted); font-size: 0.75rem;
@@ -104,7 +154,7 @@
       .footer-contact { align-items: flex-start; }
       .footer-bottom { flex-direction: column; align-items: flex-start; }
     }
-    @media (max-width:768px){body{padding-top:6.5rem}.footer-inner{flex-direction:column;align-items:flex-start}.footer-vdivider{display:none}}
+    @media (max-width:768px){body{padding-top:6.5rem}}
 
     /* ─── Project Intro two-column layout ─── */
     .intro-grid {
@@ -356,7 +406,11 @@
         align-items: center !important;
         width: 100%;
       }
-      .footer-contact-link { justify-content: center !important; }
+      .footer-contact-row {
+        width: 100%;
+        max-width: 300px;
+        justify-content: flex-start;
+      }
       .footer-bottom {
         flex-direction: column !important;
         align-items: center !important;
@@ -364,8 +418,8 @@
         text-align: center;
       }
       .footer-copy { text-align: center; }
-      .footer-socials { flex-wrap: wrap; gap: 0.4rem; justify-content: center; }
-      .footer-social-btn { font-size: 0.68rem; padding: 0.3rem 0.65rem; }
+      .footer-socials { gap: 0.4rem; justify-content: center; margin-inline: auto; }
+      .footer-social-btn { font-size: 0.68rem; padding: 0.3rem 0.5rem; }
     }
 
     /* ── Global safe padding — prevents any content touching screen edges ── */
@@ -457,11 +511,6 @@
       .intro-grid,
       .challenge-grid,
       .intro-meta-bar {
-        grid-template-columns: 1fr !important;
-      }
-
-      /* Footer header 3-col → 1 col */
-      .footer-top {
         grid-template-columns: 1fr !important;
       }
 
@@ -1005,7 +1054,7 @@
         <!-- Brand -->
         <div class="footer-brand">
           <span class="footer-brand__name">Imalsha Kandamby</span>
-          <span class="footer-brand__sub">Product Designer · 's-Hertogenbosch, NL</span>
+          <span class="footer-brand__sub">Product Designer · 's-Hertogenbosch, Netherlands</span>
           <span class="footer-brand__tagline">Available for opportunities</span>
         </div>
 
@@ -1020,14 +1069,20 @@
 
         <!-- Contact -->
         <div class="footer-contact">
-          <a href="mailto:imalshakandamby@gmail.com" class="footer-contact-link">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            imalshakandamby@gmail.com
-          </a>
-          <a href="tel:+31638286152" class="footer-contact-link">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            +31 6 3828 6152
-          </a>
+          <div class="footer-contact-row" data-copy="imalshakandamby@gmail.com" data-copy-label="Email">
+            <svg class="footer-contact-row__icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <a href="mailto:imalshakandamby@gmail.com" class="footer-contact-row__text">imalshakandamby@gmail.com</a>
+            <button type="button" class="footer-copy-btn">
+              <span class="footer-copy-btn__label">Copy</span>
+            </button>
+          </div>
+          <div class="footer-contact-row" data-copy="+31 6 3828 6152" data-copy-label="Phone number">
+            <svg class="footer-contact-row__icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:+31638286152" class="footer-contact-row__text">+31 6 3828 6152</a>
+            <button type="button" class="footer-copy-btn">
+              <span class="footer-copy-btn__label">Copy</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -1178,6 +1233,58 @@
       document.addEventListener('mouseenter', function() {
         cursor.style.opacity = '1';
       });
+    })();
+  </script>
+
+
+  <script>
+    /* ── Footer copy-to-clipboard ── */
+    (function() {
+      document.querySelectorAll('.footer-contact-row').forEach(function(row) {
+        var btn = row.querySelector('.footer-copy-btn');
+        var labelEl = btn ? btn.querySelector('.footer-copy-btn__label') : null;
+        var value = row.getAttribute('data-copy');
+        if (!btn || !labelEl || !value) return;
+
+        var originalText = labelEl.textContent;
+        var resetTimer;
+
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          function showFeedback() {
+            clearTimeout(resetTimer);
+            btn.classList.add('is-copied');
+            labelEl.textContent = 'Copied!';
+            resetTimer = setTimeout(function() {
+              btn.classList.remove('is-copied');
+              labelEl.textContent = originalText;
+            }, 1600);
+          }
+
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(value).then(showFeedback).catch(function() {
+              fallbackCopy(value);
+              showFeedback();
+            });
+          } else {
+            fallbackCopy(value);
+            showFeedback();
+          }
+        });
+      });
+
+      function fallbackCopy(text) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+      }
     })();
   </script>
 
