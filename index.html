@@ -107,6 +107,21 @@
       padding: 6rem 1.5rem 4rem;
     }
 
+    /* subtle background grid */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(108,142,245,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(108,142,245,0.07) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 40%, transparent 90%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 40%, transparent 90%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
     /* background radial glow */
     .hero__glow {
       position: absolute;
@@ -278,7 +293,7 @@
     }
     .blob-badge {
       position: absolute;
-      bottom: 46px; left: -6px;
+      bottom: 96px; left: -6px;
       background: rgba(18,14,30,0.92);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
@@ -305,6 +320,7 @@
     .blob-badge__text { display: flex; flex-direction: column; gap: 2px; }
     .blob-badge__name { font-family: var(--font-display); font-size: 0.7rem; font-weight: 700; color: var(--white); }
     .blob-badge__role { font-family: var(--font-body); font-size: 0.6rem; color: var(--muted); letter-spacing: 0.03em; }
+    .blob-badge__location { font-family: var(--font-body); font-size: 0.58rem; color: rgba(108,142,245,0.75); letter-spacing: 0.03em; }
     .blob-chip {
       position: absolute;
       top: 10px; right: -10px;
@@ -332,6 +348,11 @@
       right: 26px;
       top: auto;
       animation-delay: 1.5s;
+    }
+    .blob-chip--shipped {
+      top: -14px;
+      right: -20px;
+      animation-delay: 0.8s;
     }
     .blob-dot {
       position: absolute;
@@ -623,7 +644,7 @@
       .blob-wrap     { width: 200px; height: 280px; flex-shrink: 0; }
       .blob-photo    { width: 152px; height: 198px; top: 12px; }
       .blob-badge    {
-        bottom: 28px; left: -4px;
+        bottom: 58px; left: -4px;
         padding: 0.35rem 0.5rem;
         gap: 0.4rem;
         border-radius: 9px;
@@ -631,11 +652,15 @@
       .blob-badge__avatar { width: 22px; height: 22px; font-size: 0.5rem; border-radius: 6px; }
       .blob-badge__name   { font-size: 0.6rem; }
       .blob-badge__role   { font-size: 0.52rem; }
+      .blob-badge__location { font-size: 0.5rem; }
       .blob-chip          { padding: 0.3rem 0.5rem; border-radius: 8px; gap: 0.15rem; width: fit-content; }
       .blob-chip__num     { font-size: 1rem; }
       .blob-chip__label   { font-size: 0.46rem; }
-      .blob-chip--domains { top: 12px; right: -12px; }
+      .blob-chip--domains { top: 60px; left: -14px; right: auto; }
       .blob-chip--projects{ bottom: 80px; right: -14px; }
+      .blob-chip--shipped { top: 4px; right: -8px; left: auto; }
+      .blob-chip--shipped .blob-chip__num   { font-size: 0.85rem; }
+      .blob-chip--shipped .blob-chip__label { font-size: 0.4rem; }
       .blob-dot      { display: none; }
       .project-grid  { grid-template-columns: 1fr; }
       .section-header { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
@@ -649,7 +674,7 @@
       .blob-wrap     { width: 180px; height: 240px; flex-shrink: 0; }
       .blob-photo    { width: 134px; height: 174px; top: 10px; }
       .blob-badge    {
-        bottom: 20px; left: -4px;
+        bottom: 44px; left: -4px;
         padding: 0.3rem 0.45rem;
         gap: 0.35rem;
         border-radius: 8px;
@@ -657,11 +682,15 @@
       .blob-badge__avatar { width: 20px; height: 20px; font-size: 0.48rem; border-radius: 5px; }
       .blob-badge__name   { font-size: 0.56rem; }
       .blob-badge__role   { font-size: 0.48rem; }
+      .blob-badge__location { font-size: 0.46rem; }
       .blob-chip          { padding: 0.28rem 0.45rem; border-radius: 7px; gap: 0.12rem; width: fit-content; }
       .blob-chip__num     { font-size: 0.9rem; }
       .blob-chip__label   { font-size: 0.42rem; }
-      .blob-chip--domains { top: 8px; right: -10px; }
+      .blob-chip--domains { top: 48px; left: -12px; right: auto; }
       .blob-chip--projects{ bottom: 64px; right: -12px; }
+      .blob-chip--shipped { top: 2px; right: -6px; left: auto; }
+      .blob-chip--shipped .blob-chip__num   { font-size: 0.75rem; }
+      .blob-chip--shipped .blob-chip__label { font-size: 0.36rem; }
       .blob-dot      { display: none; }
       .project-grid  { grid-template-columns: 1fr; }
       .section-header { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
@@ -1321,191 +1350,6 @@
       .toolkit-grid { grid-template-columns: repeat(3, 1fr); }
     }
 
-    /* ── Experience card popup ── */
-    .exp-card--clickable {
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s, transform 0.2s;
-    }
-    .exp-card--clickable:hover {
-      border-color: rgba(108,142,245,0.4);
-      background: rgba(108,142,245,0.06);
-      transform: translateY(-2px);
-    }
-    .exp-card--clickable:focus-visible {
-      outline: 2px solid rgba(108,142,245,0.6);
-      outline-offset: 2px;
-    }
-
-    .exp-viewer {
-      position: fixed;
-      inset: 0;
-      background: rgba(7, 8, 13, 0.78);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 1.25rem;
-      z-index: 300;
-    }
-    .exp-viewer.is-open { display: flex; }
-
-    .exp-viewer-card {
-      width: min(640px, 100%);
-      max-height: 82vh;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(19,16,28,0.97);
-      box-shadow: 0 20px 70px rgba(0,0,0,0.55);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .exp-viewer-head {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 0.9rem;
-      padding: 1.25rem 1.25rem 1rem;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      flex-shrink: 0;
-    }
-
-    .exp-viewer-head-text {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-    }
-
-    .exp-viewer-title {
-      font-family: var(--font-display);
-      font-size: clamp(1rem, 1.8vw, 1.2rem);
-      line-height: 1.25;
-      letter-spacing: 0.01em;
-      color: var(--white);
-    }
-
-    .exp-viewer-sub {
-      font-size: 0.78rem;
-      color: rgba(108,142,245,0.8);
-      font-weight: 600;
-    }
-
-    .exp-viewer-close {
-      width: 34px;
-      height: 34px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.24);
-      background: rgba(255,255,255,0.03);
-      color: var(--white);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: background 0.2s, border-color 0.2s;
-      flex-shrink: 0;
-      font-size: 1.3rem;
-      line-height: 1;
-    }
-    .exp-viewer-close:hover {
-      background: rgba(255,255,255,0.08);
-      border-color: rgba(108,142,245,0.6);
-    }
-
-    .exp-viewer-body {
-      padding: 1.1rem 1.25rem 1.5rem;
-      overflow-y: auto;
-      overflow-x: hidden;
-      overflow-wrap: break-word;
-    }
-    .exp-viewer-body ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0.65rem;
-    }
-    .exp-viewer-body li {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.7rem;
-    }
-    .exp-viewer-body li::before {
-      content: '';
-      flex-shrink: 0;
-      margin-top: 0.5em;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: rgba(108,142,245,0.85);
-    }
-    .exp-viewer-body li p {
-      margin: 0;
-      font-size: 0.85rem;
-      line-height: 1.65;
-      color: var(--muted);
-    }
-    .exp-viewer-body li p strong {
-      color: rgba(195,190,210,0.95);
-      font-weight: 600;
-    }
-    .exp-viewer-body li.exp-viewer-subitem {
-      margin-left: 1.35rem;
-      margin-top: -0.15rem;
-    }
-    .exp-viewer-body li.exp-viewer-subitem::before {
-      width: 4px;
-      height: 4px;
-      margin-top: 0.55em;
-      background: rgba(108,142,245,0.5);
-    }
-    .exp-viewer-body li.exp-viewer-subitem p {
-      font-size: 0.8rem;
-    }
-    .exp-viewer-body li.exp-viewer-chipblock {
-      flex-direction: column;
-      align-items: flex-start;
-      margin-bottom: 0.5rem;
-    }
-    .exp-viewer-body li.exp-viewer-chipblock::before {
-      display: none;
-    }
-    .exp-chip-label {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: rgba(195,190,210,0.95);
-      margin: 0 0 2rem;
-    }
-    .exp-viewer-body li.exp-viewer-chipblock + li.exp-viewer-chipblock {
-      margin-top: 0.4rem;
-    }
-    .exp-chip-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
-    .exp-chip {
-      font-size: 0.7rem;
-      padding: 0.28rem 0.65rem;
-      border-radius: 14px;
-      background: rgba(108,142,245,0.08);
-      border: 1px solid rgba(108,142,245,0.2);
-      color: rgba(195,190,210,0.85);
-      white-space: normal;
-      max-width: 100%;
-      line-height: 1.4;
-    }
-
-    @media (max-width: 640px) {
-      .exp-viewer { padding: 0.75rem; }
-      .exp-viewer-card { max-height: 88vh; }
-      .exp-chip { font-size: 0.68rem; padding: 0.26rem 0.55rem; }
-      .exp-viewer-head { padding: 1rem 1rem 0.85rem; }
-      .exp-viewer-body { padding: 1rem 1rem 1.25rem; }
-      .exp-viewer-body li p { font-size: 0.82rem; }
-    }
 
     /* ── Custom cursor: violet arrow + "You" tag ── */
     * { cursor: none !important; }
@@ -1595,7 +1439,7 @@
 
         <!-- bio -->
         <p class="hero__bio">
-          A Product &amp; UX Designer with 4+ years of experience shaping digital products across SaaS, AI, e-commerce, web, and mobile — focused on the full design lifecycle, from discovery to delivery.
+          A Product &amp; UX Designer with 4 years of experience shaping digital products across SaaS, AI, e-commerce, web, and mobile — focused on the full design lifecycle, from discovery to delivery.
         </p>
 
       </div><!-- /hero__content -->
@@ -1613,7 +1457,8 @@
           <div class="blob-badge__avatar" aria-hidden="true">IK</div>
           <div class="blob-badge__text">
             <span class="blob-badge__name">Imalsha Kandamby</span>
-            <span class="blob-badge__role">Product Designer · NL</span>
+            <span class="blob-badge__role">Product Designer</span>
+            <span class="blob-badge__location">Netherlands</span>
           </div>
         </div>
 
@@ -1624,8 +1469,13 @@
         </div>
 
         <div class="blob-chip blob-chip--projects">
-          <div class="blob-chip__num">4+</div>
+          <div class="blob-chip__num">4</div>
           <div class="blob-chip__label">Years</div>
+        </div>
+
+        <div class="blob-chip blob-chip--shipped">
+          <div class="blob-chip__num">10+</div>
+          <div class="blob-chip__label">Shipped Products</div>
         </div>
 
         <div class="blob-dot" aria-hidden="true"></div>
@@ -1659,21 +1509,21 @@
 
           <div class="bento-exp-grid">
 
-            <div class="bento-exp-card exp-card--clickable" role="button" tabindex="0" data-exp="swivel" aria-haspopup="dialog">
+            <div class="bento-exp-card">
               <span class="bento-exp-card__duration">3 yrs</span>
               <span class="bento-exp-card__role">UX Designer</span>
               <span class="bento-exp-card__co">Swivel Tech Pvt Ltd<br>Colombo 03, Sri Lanka</span>
               <span class="bento-exp-card__period">Mar 2023 – Apr 2026</span>
             </div>
 
-            <div class="bento-exp-card exp-card--clickable" role="button" tabindex="0" data-exp="akvasoft" aria-haspopup="dialog">
+            <div class="bento-exp-card">
               <span class="bento-exp-card__duration">1 yr</span>
               <span class="bento-exp-card__role">UI/UX Engineer</span>
               <span class="bento-exp-card__co">Akvasoft Pvt Ltd<br>Galle, Sri Lanka</span>
               <span class="bento-exp-card__period">Mar 2022 – Mar 2023</span>
             </div>
 
-            <div class="bento-exp-card exp-card--clickable" role="button" tabindex="0" data-exp="inova" aria-haspopup="dialog">
+            <div class="bento-exp-card">
               <span class="bento-exp-card__duration">6 mo</span>
               <span class="bento-exp-card__role">Trainee Software Engineer</span>
               <span class="bento-exp-card__co">Inova Labs Pvt Ltd<br>Sri Lanka</span>
@@ -1686,12 +1536,12 @@
           <div class="bento-domains">
             <span class="bento-domains__label">Domains Covered</span>
             <div class="bento-domains__pills">
-              <span>HR Technology</span><span>Marketing</span><span>SportsTech AI</span>
-              <span>E-Commerce</span><span>Healthcare</span><span>FinTech AI</span>
-              <span>Legal Technology</span><span>Lead Generation</span><span>Analytics &amp; Stats</span>
-              <span>AI-Powered Solutions</span><span>Property</span><span>Food &amp; Beverage</span>
-              <span>Furniture &amp; Home</span><span>Beauty &amp; Personal Care</span>
-              <span>Home &amp; Interior Design</span><span>Fashion &amp; Apparel</span>
+              <span>E-Commerce</span><span>FinTech AI</span><span>Healthcare</span>
+              <span>AI-Powered Solutions</span><span>HR Technology</span><span>Marketing</span>
+              <span>Analytics &amp; Stats</span><span>Legal Technology</span><span>Lead Generation</span>
+              <span>Property</span><span>Fashion &amp; Apparel</span><span>Beauty &amp; Personal Care</span>
+              <span>Food &amp; Beverage</span><span>Home &amp; Interior Design</span>
+              <span>Furniture &amp; Home</span><span>SportsTech AI</span>
               <span>Agriculture &amp; Farming</span>
             </div>
           </div>
@@ -2115,130 +1965,7 @@
   </script>
 
 
-  <!-- Experience Detail Popup -->
-  <div class="exp-viewer" id="expViewer" aria-hidden="true">
-    <div class="exp-viewer-card" role="dialog" aria-modal="true" aria-labelledby="expViewerTitle">
-      <div class="exp-viewer-head">
-        <div class="exp-viewer-head-text">
-          <h3 class="exp-viewer-title" id="expViewerTitle">Role Title</h3>
-          <span class="exp-viewer-sub" id="expViewerSub">Company · Location</span>
-        </div>
-        <button class="exp-viewer-close" type="button" id="expViewerClose" aria-label="Close">&times;</button>
-      </div>
-      <div class="exp-viewer-body" id="expViewerBody">
-        <ul id="expViewerList"></ul>
-      </div>
-    </div>
-  </div>
 
-  <script>
-    /* ── Experience card popup ── */
-    (function() {
-      const expData = {
-        swivel: {
-          title: 'UX Designer',
-          sub: 'Swivel Tech Pvt Ltd · Colombo 03, Sri Lanka',
-          items: [
-            'Promoted from Associate UX Designer based on consistent performance, ownership, and positive contributions to team outcomes recognized during annual KPI evaluations.',
-            'Led end-to-end product design across HRTech, LegalTech, Recruitment, AI-powered SaaS, Lead Management, Healthcare, Marketing, and E-commerce domains, covering discovery, user research, UX strategy, prototyping, high-fidelity design, usability testing, and developer handoff for web, mobile, and AI-powered platforms.',
-            'Conducted user research, workflow analysis, and usability testing to uncover user needs and pain points, translating insights into intuitive, user-centered solutions that aligned business goals with user expectations.',
-            'Built and maintained a scalable design system adopted across multiple products, improving design consistency, streamlining design-to-development collaboration, and accelerating UI delivery.',
-            'Collaborated closely with product managers, developers, stakeholders, and marketing teams to deliver digital products, branding assets, campaign materials, presentations, social media content, and marketing collateral while maintaining usability and brand consistency.',
-            'Drove product outcomes by simplifying complex workflows, improving user experiences, establishing scalable design foundations, and enabling faster delivery across multiple business-critical products.',
-            'Delivered key product initiatives including:',
-            'CHIPS::Sole Designer (End-to-end responsibility from discovery to developer handoff)::Wills Australia (LegalTech platform)|RubiRecruit Add-on &amp; Portal (Recruitment workflow platform)|HRIA (AI-powered HR assistant)|LeadFlow Caller App &amp; Admin Dashboard (AI-assisted lead management platform)|Crunch AI (Chat Assistant for Finance Division of Swivel)|Property Profile Dashboard for OneGroup.au',
-            'CHIPS::Collaborative Projects::Swivel Design System|Swivel Corporate Websites &amp; Marketing Pages|Kartclass Apex Chat Assistant|Venda Marketing Landing Page|RinseAI - Dental Clinics Chat Assistant|TigerPay AUS - Payroll Management System'
-          ]
-        },
-        akvasoft: {
-          title: 'UI/UX Engineer',
-          sub: 'Akvasoft Pvt Ltd · Galle, Sri Lanka',
-          items: [
-            'Promoted from Associate UI/UX Engineer within 3 months in recognition of strong performance, adaptability, and ability to take on increased responsibilities.',
-            'Designed and developed interactive product recommendation quizzes and Shopify theme experiences, improving product discovery, personalization, and user engagement across e-commerce platforms.',
-            'Created UI designs in Figma and implemented them using AskWhai (Visual Quiz Builder), enhancing experiences through custom front-end styling (HTML, CSS, Shopify Liquid) and responsive design principles.',
-            'Delivered user-centered experiences across Food &amp; Beverage, Furniture &amp; Home Furnishings, Beauty &amp; Personal Care, Home &amp; Interior Design, Fashion &amp; Apparel, and Agriculture domains.',
-            'Collaborated closely with developers to ensure seamless implementation, design consistency, and high-quality user experiences across multiple Shopify stores.',
-            'Designed key Shopify quiz experiences for brands including Plum Deluxe, RoomLift, Noteworthy Scents, Sweat &amp; Milk and Dora Larsen, aligning solutions with brand identity and supporting personalized customer journeys.'
-          ]
-        },
-        inova: {
-          title: 'Trainee Software Engineer',
-          sub: 'Inova Labs Pvt Ltd · Sri Lanka',
-          items: [
-            'Completed a 6-month Front-End Development internship, contributing to real-world projects.',
-            'Collaborated with the development team and adapted quickly in a fast-paced environment.',
-            'Gained hands-on experience with React, Bootstrap, and Ant Design for building responsive interfaces.',
-            'Applied UI/UX design principles in front-end implementation.'
-          ]
-        }
-      };
-
-      const viewer = document.getElementById('expViewer');
-      const closeBtn = document.getElementById('expViewerClose');
-      const titleEl = document.getElementById('expViewerTitle');
-      const subEl = document.getElementById('expViewerSub');
-      const listEl = document.getElementById('expViewerList');
-      const cards = document.querySelectorAll('.exp-card--clickable');
-
-      function openExp(key) {
-        const data = expData[key];
-        if (!data) return;
-        titleEl.textContent = data.title;
-        subEl.textContent = data.sub;
-        listEl.innerHTML = data.items.map(function(item) {
-          if (item.indexOf('CHIPS::') === 0) {
-            var parts = item.slice(7).split('::');
-            var label = parts[0];
-            var chips = parts[1].split('|');
-            var chipsHtml = chips.map(function(c) {
-              return '<span class="exp-chip">' + c + '</span>';
-            }).join('');
-            return '<li class="exp-viewer-subitem exp-viewer-chipblock">' +
-                     '<div>' +
-                       '<p class="exp-chip-label">' + label + '</p>' +
-                       '<div class="exp-chip-row">' + chipsHtml + '</div>' +
-                     '</div>' +
-                   '</li>';
-          }
-          if (item.indexOf('SUB::') === 0) {
-            return '<li class="exp-viewer-subitem"><p>' + item.slice(5) + '</p></li>';
-          }
-          return '<li><p>' + item + '</p></li>';
-        }).join('');
-        viewer.classList.add('is-open');
-        viewer.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-        closeBtn.focus();
-      }
-
-      function closeExp() {
-        viewer.classList.remove('is-open');
-        viewer.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-      }
-
-      cards.forEach(function(card) {
-        card.addEventListener('click', function() {
-          openExp(card.getAttribute('data-exp'));
-        });
-        card.addEventListener('keydown', function(e) {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            openExp(card.getAttribute('data-exp'));
-          }
-        });
-      });
-
-      closeBtn.addEventListener('click', closeExp);
-      viewer.addEventListener('click', function(e) {
-        if (e.target === viewer) closeExp();
-      });
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && viewer.classList.contains('is-open')) closeExp();
-      });
-    })();
-  </script>
 
 
   <!-- Custom cursor -->
