@@ -766,6 +766,22 @@
       * { cursor: auto !important; }
       #customCursor { display: none; }
     }
+
+    /* ── Project Intro meta bar: stack on tablet/mobile ── */
+    @media (max-width: 900px) {
+      .intro-meta-bar {
+        flex-direction: column !important;
+      }
+      .intro-meta-bar > div {
+        border-right: none !important;
+        border-bottom: 1px solid rgba(108,142,245,0.12);
+        flex: unset !important;
+        width: 100% !important;
+      }
+      .intro-meta-bar > div:last-child {
+        border-bottom: none !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -786,7 +802,7 @@
       <a href="assets/resume/Imalsha-Kandamby-Resume-Product Designer.pdf" target="_blank" rel="noopener" class="nav-link">Resume ↗</a>
     </nav></header>
   <main class="container">
-    <a href="index.html" class="back-link" aria-label="Back to main page"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>Back to Main Page</a>
+    <a href="index.html#work" class="back-link" aria-label="Back to other works"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>Back to Other Works</a>
     <section class="case-header">
       <h1>Kartclass Chat Assistant - Conversational Support for Go-Karting Platform</h1>
       <p>Kartclass is a digital platform for a go-karting company in Australia. This project focused on designing a chat assistant integrated into the user dashboard, enabling users to ask questions and receive instant support related to services, bookings, and general inquiries.</p>
@@ -800,8 +816,35 @@
     <img class="reveal-fade" src="assets/images/project-kartclass/project-kartclass-placeholder-1.jpg" alt="Kartclass project image 1" style="margin-bottom:1.7rem;width:100%;aspect-ratio:1880/1000;max-height:500px;border-radius:14px;object-fit:cover;display:block;"/>
     <section class="case-section reveal">
       <h2>Project Intro</h2>
-      <div class="intro-grid">
-        <div class="intro-para">
+      <div class="intro-meta-bar" style="display:flex;flex-wrap:wrap;gap:0;margin-top:1.25rem;border:1px solid rgba(108,142,245,0.15);border-radius:14px;overflow:hidden;">
+
+        <div style="flex:1;min-width:140px;padding:1.1rem 1.25rem;border-right:1px solid rgba(108,142,245,0.12);">
+          <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(108,142,245,0.7);font-weight:500;margin-bottom:0.4rem;">Project Type</span>
+          <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--white);">SportsTech Product (Go-Karting Industry)</span>
+        </div>
+
+        <div style="flex:1;min-width:140px;padding:1.1rem 1.25rem;border-right:1px solid rgba(108,142,245,0.12);">
+          <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(108,142,245,0.7);font-weight:500;margin-bottom:0.4rem;">Role</span>
+          <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--white);">UX Designer (Collaborating with Lead UX)</span>
+        </div>
+
+        <div style="flex:1;min-width:120px;padding:1.1rem 1.25rem;border-right:1px solid rgba(108,142,245,0.12);">
+          <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(108,142,245,0.7);font-weight:500;margin-bottom:0.4rem;">Client</span>
+          <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--white);">Kartclass</span>
+        </div>
+
+        <div style="flex:1;min-width:140px;padding:1.1rem 1.25rem;border-right:1px solid rgba(108,142,245,0.12);">
+          <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(108,142,245,0.7);font-weight:500;margin-bottom:0.4rem;">Time</span>
+          <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--white);">2024 Dec - 2025 Jan</span>
+        </div>
+
+        <div style="flex:1;min-width:100px;padding:1.1rem 1.25rem;">
+          <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(108,142,245,0.7);font-weight:500;margin-bottom:0.4rem;">Tools</span>
+          <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--white);">Figma</span>
+        </div>
+
+      </div>
+      <div class="intro-para" style="margin-top:1.25rem;">
           <p>The goal of this project was to design a chatbot experience within an existing platform used by customers of a go-karting service.</p>
           <br>
           <p>Users could log in to their dashboard and interact with a chat assistant to:</p>
@@ -813,29 +856,6 @@
           <br>
           <p>A key requirement was to align all designs with the existing brand and UI system while introducing a new conversational feature.</p>
         </div>
-        <div class="intro-meta">
-          <div class="intro-meta-item">
-            <span class="intro-meta-label">Project Type</span>
-            <span class="intro-meta-value">SportsTech Product (Go-Karting Industry)</span>
-          </div>
-          <div class="intro-meta-item">
-            <span class="intro-meta-label">Role</span>
-            <span class="intro-meta-value">UX Designer (Collaborating with Lead UX)</span>
-          </div>
-          <div class="intro-meta-item">
-            <span class="intro-meta-label">Client</span>
-            <span class="intro-meta-value">Kartclass</span>
-          </div>
-          <div class="intro-meta-item">
-            <span class="intro-meta-label">Time</span>
-            <span class="intro-meta-value">2024 Dec - 2025 Jan</span>
-          </div>
-          <div class="intro-meta-item">
-            <span class="intro-meta-label">Tools</span>
-            <span class="intro-meta-value">Figma</span>
-          </div>
-        </div>
-      </div>
       <!-- Skills Demonstrated -->
       <div style="margin-top:0.75rem;padding:1rem 1.25rem;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.15);">
         <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(108,142,245,0.7);font-weight:500;margin-bottom:0.75rem;">Skills Demonstrated</span>

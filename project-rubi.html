@@ -811,6 +811,22 @@
       * { cursor: auto !important; }
       #customCursor { display: none; }
     }
+
+    /* ── Project Intro meta bar: stack on tablet/mobile ── */
+    @media (max-width: 900px) {
+      .intro-meta-bar {
+        flex-direction: column !important;
+      }
+      .intro-meta-bar > div {
+        border-right: none !important;
+        border-bottom: 1px solid rgba(108,142,245,0.12);
+        flex: unset !important;
+        width: 100% !important;
+      }
+      .intro-meta-bar > div:last-child {
+        border-bottom: none !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -834,9 +850,9 @@
   </header>
 
   <main class="container">
-    <a href="index.html" class="back-link" aria-label="Back to main page">
+    <a href="index.html#work" class="back-link" aria-label="Back to other works">
       <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-      Back to Main Page
+      Back to Other Works
     </a>
 
     <section class="case-header">
@@ -854,31 +870,35 @@
 
     <section class="case-section reveal">
       <h2>Project Intro</h2>
-      <div class="intro-grid">
-        <p class="intro-para">RubiRecruit is an AI-driven Candidate Evaluation System created to optimize and modernize the hiring process for recruitment teams. The project involves the design of three interconnected experiences: a Chrome extension that guides recruiters through step-based evaluation workflows, a newly built Admin Portal for managing users, audit logs, and subscriptions, and a User Portal designed for candidates to manage their profiles and subscription details.<br><br>The primary users of the platform are recruiters who need a structured, efficient way to process candidate data, and candidates who require a simple interface to manage their personal information. My role was to design clear, task-oriented flows within the Chrome extension, craft responsive and scalable portal interfaces, and ensure consistency across all touchpoints through reusable components and a modern visual system.<br><br>The final solution provides a seamless recruitment experience - improving clarity, reducing manual effort, and enhancing the speed and quality of candidate evaluation. The design prioritizes usability, transparency, and workflow efficiency, enabling recruitment teams to make more informed decisions through an intuitive and well-organized system.</p>
-        <div class="intro-meta">
-          <div class="intro-meta-item">
-            <span class="intro-meta-label">Project Type</span>
-            <span class="intro-meta-value">Desktop</span>
-          </div>
-          <div class="intro-meta-item">
-            <span class="intro-meta-label">Role</span>
-            <span class="intro-meta-value">UX Designer</span>
-          </div>
-          <div class="intro-meta-item">
-            <span class="intro-meta-label">Client</span>
-            <span class="intro-meta-value">Rubirecruit</span>
-          </div>
-          <div class="intro-meta-item">
-            <span class="intro-meta-label">Time</span>
-            <span class="intro-meta-value">2025 Sep - 2025 Dec</span>
-          </div>
-          <div class="intro-meta-item">
-            <span class="intro-meta-label">Tools</span>
-            <span class="intro-meta-value">Figma, FigJam, ChatGPT, Perplexity AI</span>
-          </div>
+      <div class="intro-meta-bar" style="display:flex;flex-wrap:wrap;gap:0;margin-top:1.25rem;border:1px solid rgba(108,142,245,0.15);border-radius:14px;overflow:hidden;">
+
+        <div style="flex:1;min-width:140px;padding:1.1rem 1.25rem;border-right:1px solid rgba(108,142,245,0.12);">
+          <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(108,142,245,0.7);font-weight:500;margin-bottom:0.4rem;">Project Type</span>
+          <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--white);">Recruitment - Web</span>
         </div>
+
+        <div style="flex:1;min-width:140px;padding:1.1rem 1.25rem;border-right:1px solid rgba(108,142,245,0.12);">
+          <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(108,142,245,0.7);font-weight:500;margin-bottom:0.4rem;">Role</span>
+          <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--white);">UX Designer</span>
+        </div>
+
+        <div style="flex:1;min-width:120px;padding:1.1rem 1.25rem;border-right:1px solid rgba(108,142,245,0.12);">
+          <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(108,142,245,0.7);font-weight:500;margin-bottom:0.4rem;">Client</span>
+          <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--white);">Rubirecruit</span>
+        </div>
+
+        <div style="flex:1;min-width:140px;padding:1.1rem 1.25rem;border-right:1px solid rgba(108,142,245,0.12);">
+          <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(108,142,245,0.7);font-weight:500;margin-bottom:0.4rem;">Time</span>
+          <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--white);">2025 Sep - 2025 Dec</span>
+        </div>
+
+        <div style="flex:1;min-width:100px;padding:1.1rem 1.25rem;">
+          <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(108,142,245,0.7);font-weight:500;margin-bottom:0.4rem;">Tools</span>
+          <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--white);">Figma, FigJam, ChatGPT, Perplexity AI</span>
+        </div>
+
       </div>
+      <p class="intro-para" style="margin-top:1.25rem;">RubiRecruit is an AI-driven Candidate Evaluation System created to optimize and modernize the hiring process for recruitment teams. The project involves the design of three interconnected experiences: a Chrome extension that guides recruiters through step-based evaluation workflows, a newly built Admin Portal for managing users, audit logs, and subscriptions, and a User Portal designed for candidates to manage their profiles and subscription details.<br><br>The primary users of the platform are recruiters who need a structured, efficient way to process candidate data, and candidates who require a simple interface to manage their personal information. My role was to design clear, task-oriented flows within the Chrome extension, craft responsive and scalable portal interfaces, and ensure consistency across all touchpoints through reusable components and a modern visual system.<br><br>The final solution provides a seamless recruitment experience - improving clarity, reducing manual effort, and enhancing the speed and quality of candidate evaluation. The design prioritizes usability, transparency, and workflow efficiency, enabling recruitment teams to make more informed decisions through an intuitive and well-organized system.</p>
       <!-- Skills Demonstrated -->
       <div style="margin-top:0.75rem;padding:1rem 1.25rem;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.15);">
         <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(108,142,245,0.7);font-weight:500;margin-bottom:0.75rem;">Skills Demonstrated</span>
@@ -902,43 +922,49 @@
       <h2>The Challenge</h2>
       <div class="challenge-grid">
         <div class="challenge-illustration" aria-hidden="true">
-          <svg width="100%" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width:160px;">
+          <svg width="86%" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
             <style>
-              @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-              @keyframes spin-rev  { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-              @keyframes pulse-dot { 0%,100% { opacity:1; r:4; } 50% { opacity:0.4; r:3; } }
-              @keyframes float-y   { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
-              @keyframes dash-flow { to { stroke-dashoffset: -24; } }
-              .ring-outer { transform-origin: 80px 80px; animation: spin-slow 14s linear infinite; }
-              .ring-inner { transform-origin: 80px 80px; animation: spin-rev 9s linear infinite; }
-              .core-group { transform-origin: 80px 80px; animation: float-y 3s ease-in-out infinite; }
-              .dot-a { animation: pulse-dot 2s ease-in-out infinite; }
-              .dot-b { animation: pulse-dot 2s ease-in-out 0.5s infinite; }
-              .dot-c { animation: pulse-dot 2s ease-in-out 1s infinite; }
-              .dot-d { animation: pulse-dot 2s ease-in-out 1.5s infinite; }
-              .flow-line { stroke-dasharray: 4 4; animation: dash-flow 1.2s linear infinite; }
+              @keyframes untangle-drift { 0%,100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
+              @keyframes thread-pull-l  { 0%,100% { transform: translateX(0); } 50% { transform: translateX(-3px); } }
+              @keyframes thread-pull-r  { 0%,100% { transform: translateX(0); } 50% { transform: translateX(3px); } }
+              @keyframes pulse-dot      { 0%,100% { opacity:1; r:5; } 50% { opacity:0.5; r:3.8; } }
+              @keyframes dash-flow      { to { stroke-dashoffset: -20; } }
+              @keyframes knot-breathe   { 0%,100% { stroke-width:1.8; } 50% { stroke-width:2.3; } }
+              @keyframes ring-pulse     { 0%,100% { opacity:0.55; } 50% { opacity:0.85; } }
+              .knot-group  { transform-origin: 80px 78px; animation: untangle-drift 5s ease-in-out infinite; }
+              .knot-path   { animation: knot-breathe 3s ease-in-out infinite; }
+              .thread-left  { animation: thread-pull-l 3.4s ease-in-out infinite; }
+              .thread-right { animation: thread-pull-r 3.4s ease-in-out infinite 0.3s; }
+              .dot-left  { animation: pulse-dot 2.4s ease-in-out infinite; }
+              .dot-right { animation: pulse-dot 2.4s ease-in-out 0.9s infinite; }
+              .flow-line { stroke-dasharray: 4 4; animation: dash-flow 1.4s linear infinite; }
+              .outer-ring { animation: ring-pulse 3.6s ease-in-out infinite; }
             </style>
-            <!-- Outer dashed orbit -->
-            <circle class="ring-outer" cx="80" cy="80" r="66" stroke="rgba(108,142,245,0.18)" stroke-width="1" stroke-dasharray="3 5"/>
-            <!-- Inner orbit -->
-            <circle class="ring-inner" cx="80" cy="80" r="46" stroke="rgba(108,142,245,0.28)" stroke-width="1" stroke-dasharray="2 4"/>
-            <!-- Orbit nodes -->
-            <circle class="dot-a" cx="80" cy="14" r="4" fill="rgba(108,142,245,0.9)"/>
-            <circle class="dot-b" cx="146" cy="80" r="4" fill="rgba(108,142,245,0.6)"/>
-            <circle class="dot-c" cx="80" cy="146" r="4" fill="rgba(108,142,245,0.9)"/>
-            <circle class="dot-d" cx="14" cy="80" r="4" fill="rgba(108,142,245,0.6)"/>
-            <!-- Flow lines from center to nodes -->
-            <line class="flow-line" x1="80" y1="62" x2="80" y2="22" stroke="rgba(108,142,245,0.35)" stroke-width="1"/>
-            <line class="flow-line" x1="98" y1="80" x2="138" y2="80" stroke="rgba(108,142,245,0.25)" stroke-width="1"/>
-            <line class="flow-line" x1="80" y1="98" x2="80" y2="138" stroke="rgba(108,142,245,0.35)" stroke-width="1"/>
-            <line class="flow-line" x1="62" y1="80" x2="22" y2="80" stroke="rgba(108,142,245,0.25)" stroke-width="1"/>
-            <!-- Core hexagon -->
-            <g class="core-group">
-              <polygon points="80,58 95,67 95,85 80,94 65,85 65,67" fill="rgba(108,142,245,0.1)" stroke="rgba(108,142,245,0.55)" stroke-width="1.5"/>
-              <!-- Exclamation icon inside hex -->
-              <line x1="80" y1="69" x2="80" y2="80" stroke="rgba(108,142,245,1)" stroke-width="2.2" stroke-linecap="round"/>
-              <circle cx="80" cy="85" r="1.5" fill="rgba(108,142,245,1)"/>
+
+            <!-- Tangled knot at centre — denser loops -->
+            <g class="knot-group">
+              <path class="knot-path" d="M80,44 C99,44 106,58 94,66 C82,74 62,68 65,54 C68,40 92,36 102,50
+                C112,64 104,88 84,92 C64,96 46,82 52,64 C58,46 84,40 96,56
+                C108,72 96,96 76,94 C56,92 48,74 60,62 C72,50 92,54 92,70
+                C92,86 70,92 62,78 C54,64 66,50 80,54 C94,58 98,76 84,82
+                C70,88 56,78 60,66"
+                stroke="rgba(108,142,245,0.78)" stroke-width="2" stroke-linecap="round" fill="none"/>
             </g>
+
+            <!-- Left thread pulling away -->
+            <g class="thread-left">
+              <path class="flow-line" d="M52,64 C38,60 24,68 10,79" stroke="rgba(108,142,245,0.45)" stroke-width="1.4" fill="none"/>
+              <circle class="dot-left" cx="9" cy="82" r="5" fill="rgba(108,142,245,0.9)"/>
+            </g>
+
+            <!-- Right thread pulling away -->
+            <g class="thread-right">
+              <path class="flow-line" d="M102,50 C118,43 132,48 148,38" stroke="rgba(108,142,245,0.45)" stroke-width="1.4" fill="none"/>
+              <circle class="dot-right" cx="151" cy="35" r="5" fill="rgba(108,142,245,0.9)"/>
+            </g>
+
+            <!-- Outer containment ring — more visible -->
+            <circle class="outer-ring" cx="80" cy="80" r="74" stroke="rgba(108,142,245,0.32)" stroke-width="1.5" stroke-dasharray="3 6"/>
           </svg>
         </div>
         <p class="challenge-para">Designing an AI-powered recruitment solution required quickly understanding complex recruiter workflows, candidate evaluation processes, and subscription-based user management. The existing Chrome extension had limited functionality, unclear user flows, and usability issues, requiring a complete UX overhaul. Additionally, the Admin and User Portals were entirely new concepts, demanding the definition of features, user journeys, and workflows from scratch. Ensuring a seamless experience across all three platforms while establishing a scalable design system was a key challenge.</p>
