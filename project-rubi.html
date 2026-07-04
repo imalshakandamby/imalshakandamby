@@ -113,6 +113,35 @@
     .case-section ul { padding-left: 1.1rem; }
     /* ─── Creative Footer ─── */
     .site-footer { position: relative; z-index: 1; padding: 3.5rem 0 2rem; }
+    .site-footer::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(108,142,245,0.5) 50%,
+        transparent 100%);
+    }
+    .site-footer::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 40%; height: 2px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(160,150,255,0.95) 50%,
+        transparent 100%);
+      filter: blur(0.5px);
+      animation: footerEdgeShine 6s ease-in-out infinite;
+    }
+    @keyframes footerEdgeShine {
+      0%   { left: -40%; opacity: 0; }
+      15%  { opacity: 1; }
+      50%  { left: 60%; opacity: 1; }
+      85%  { opacity: 1; }
+      100% { left: 100%; opacity: 0; }
+    }
     .footer-glow {
       position: absolute;
       bottom: 0; left: 50%;
@@ -827,6 +856,38 @@
         border-bottom: none !important;
       }
     }
+
+    /* ── Bottom "Back to Other Works" link ── */
+    .back-link-bottom-wrap {
+      margin-top: 1.5rem;
+      margin-bottom: 3rem;
+      display: flex;
+      justify-content: center;
+    }
+    .back-link--bottom {
+      margin-bottom: 0;
+      padding: 0.6rem 1.25rem;
+      border-radius: 999px;
+      border: 1px solid rgba(108,142,245,0.3);
+      background: rgba(108,142,245,0.08);
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+    }
+    .back-link--bottom:hover {
+      border-color: rgba(108,142,245,0.55);
+      background: rgba(108,142,245,0.14);
+    }
+    @media (max-width: 900px) {
+      .back-link-bottom-wrap {
+        margin-top: 1.25rem;
+        margin-bottom: 2.5rem;
+      }
+    }
+    @media (max-width: 640px) {
+      .back-link-bottom-wrap {
+        margin-top: 1rem;
+        margin-bottom: 2rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1306,6 +1367,13 @@
         </li>
       </ul>
     </section>
+
+    <div class="back-link-bottom-wrap">
+      <a href="index.html#work" class="back-link back-link--bottom" aria-label="Back to other works">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        Back to Other Works
+      </a>
+    </div>
   </main>
 
   <footer class="site-footer">

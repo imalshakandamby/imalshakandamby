@@ -94,6 +94,35 @@
     .nav-link--active { color: rgba(232,228,240,0.85); background: rgba(108,142,245,0.15); }
     /* ─── Creative Footer ─── */
     .site-footer { position: relative; z-index: 1; padding: 3.5rem 0 2rem; }
+    .site-footer::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(108,142,245,0.5) 50%,
+        transparent 100%);
+    }
+    .site-footer::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 40%; height: 2px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(160,150,255,0.95) 50%,
+        transparent 100%);
+      filter: blur(0.5px);
+      animation: footerEdgeShine 6s ease-in-out infinite;
+    }
+    @keyframes footerEdgeShine {
+      0%   { left: -40%; opacity: 0; }
+      15%  { opacity: 1; }
+      50%  { left: 60%; opacity: 1; }
+      85%  { opacity: 1; }
+      100% { left: 100%; opacity: 0; }
+    }
     .footer-glow {
       position: absolute;
       bottom: 0; left: 50%;
