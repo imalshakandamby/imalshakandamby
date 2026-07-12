@@ -846,12 +846,13 @@
     }
   </style>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="367feb64-6bc2-4d86-9c91-c5d3bd3d553f"></script>
+  <script defer src="assets/js/analytics.js"></script>
 </head>
 <body>
   <header class="site-header"><nav class="nav-pill" id="mainNav">
-      <a href="index.html" class="nav-link ">Work</a>
-      <a href="playground.html" class="nav-link ">Playground</a>
-      <a href="assets/resume/Imalsha-Kandamby-Resume-Product Designer.pdf" target="_blank" rel="noopener" class="nav-link">Resume ↗</a>
+      <a href="index.html" class="nav-link " data-umami-event="nav-click" data-umami-event-target="work">Work</a>
+      <a href="playground.html" class="nav-link " data-umami-event="nav-click" data-umami-event-target="playground">Playground</a>
+      <a href="assets/resume/Imalsha-Kandamby-Resume-Product Designer.pdf" target="_blank" rel="noopener" class="nav-link" data-umami-event="resume-download">Resume ↗</a>
       <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -860,9 +861,9 @@
     <!-- Mobile overlay -->
     <nav class="nav-mobile-menu" id="navMobileMenu" role="dialog" aria-label="Mobile navigation">
       <button class="nav-mobile-close" id="navMobileClose" aria-label="Close menu">&#x2715;</button>
-      <a href="index.html" class="nav-link ">Work</a>
-      <a href="playground.html" class="nav-link ">Playground</a>
-      <a href="assets/resume/Imalsha-Kandamby-Resume-Product Designer.pdf" target="_blank" rel="noopener" class="nav-link">Resume ↗</a>
+      <a href="index.html" class="nav-link " data-umami-event="nav-click" data-umami-event-target="work">Work</a>
+      <a href="playground.html" class="nav-link " data-umami-event="nav-click" data-umami-event-target="playground">Playground</a>
+      <a href="assets/resume/Imalsha-Kandamby-Resume-Product Designer.pdf" target="_blank" rel="noopener" class="nav-link" data-umami-event="resume-download">Resume ↗</a>
     </nav></header>
   <main class="container">
     <a href="index.html#work" class="back-link" aria-label="Back to other works"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>Back to Other Works</a>
@@ -872,7 +873,7 @@
     </section>
     <div class="reveal-left" style="display:flex;align-items:center;gap:0.85rem;margin-bottom:1.7rem;">
       <span style="font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);">Live Product Link :</span>
-      <a href="https://kartclass.com/products/karting-chatbot" target="_blank" rel="noopener" aria-label="Live Product" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.04);color:var(--muted);transition:border-color 0.2s,color 0.2s;" onmouseover="this.style.borderColor='rgba(108,142,245,0.6)';this.style.color='var(--violet)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.18)';this.style.color='var(--muted)';">
+      <a href="https://kartclass.com/products/karting-chatbot" target="_blank" rel="noopener" aria-label="Live Product" data-umami-event="live-demo-click" data-umami-event-client="kartclass" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.04);color:var(--muted);transition:border-color 0.2s,color 0.2s;" onmouseover="this.style.borderColor='rgba(108,142,245,0.6)';this.style.color='var(--violet)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.18)';this.style.color='var(--muted)';">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
       </a>
     </div>
@@ -1264,9 +1265,9 @@
       <div class="footer-bottom">
         <p class="footer-copy">© 2026 Imalsha Kandamby · Designed &amp; built with intention</p>
         <div class="footer-socials">
-          <a href="https://linkedin.com/in/imalsha-kandamby" target="_blank" rel="noopener" class="footer-social-btn" aria-label="LinkedIn">LinkedIn</a>
-          <a href="https://behance.net/imalshakandamby_gihk" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Behance">Behance</a>
-          <a href="https://dribbble.com/gihKandamby" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Dribbble">Dribbble</a>
+          <a href="https://linkedin.com/in/imalsha-kandamby" target="_blank" rel="noopener" class="footer-social-btn" aria-label="LinkedIn" data-umami-event="social-click" data-umami-event-platform="linkedin">LinkedIn</a>
+          <a href="https://behance.net/imalshakandamby_gihk" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Behance" data-umami-event="social-click" data-umami-event-platform="behance">Behance</a>
+          <a href="https://dribbble.com/gihKandamby" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Dribbble" data-umami-event="social-click" data-umami-event-platform="dribbble">Dribbble</a>
         </div>
       </div>
 

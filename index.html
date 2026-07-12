@@ -1471,6 +1471,7 @@
     }
   </style>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="367feb64-6bc2-4d86-9c91-c5d3bd3d553f"></script>
+  <script defer src="assets/js/analytics.js"></script>
 </head>
 
 <body>
@@ -1480,9 +1481,9 @@
   ══════════════════════════════ -->
   <header class="site-header">
     <nav class="nav-pill" id="mainNav">
-      <a href="#work" class="nav-link" id="navWorkLink">Work</a>
-      <a href="playground.html" class="nav-link">Playground</a>
-      <a href="assets/resume/Imalsha-Kandamby-Resume-Product Designer.pdf" target="_blank" rel="noopener" class="nav-link">Resume ↗</a>
+      <a href="#work" class="nav-link" id="navWorkLink" data-umami-event="nav-click" data-umami-event-target="work">Work</a>
+      <a href="playground.html" class="nav-link" data-umami-event="nav-click" data-umami-event-target="playground">Playground</a>
+      <a href="assets/resume/Imalsha-Kandamby-Resume-Product Designer.pdf" target="_blank" rel="noopener" class="nav-link" data-umami-event="resume-download">Resume ↗</a>
       <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -1491,9 +1492,9 @@
     <!-- Mobile overlay -->
     <nav class="nav-mobile-menu" id="navMobileMenu" role="dialog" aria-label="Mobile navigation">
       <button class="nav-mobile-close" id="navMobileClose" aria-label="Close menu">&#x2715;</button>
-      <a href="#work" class="nav-link" id="navWorkLinkMobile">Work</a>
-      <a href="playground.html" class="nav-link">Playground</a>
-      <a href="assets/resume/Imalsha-Kandamby-Resume-Product Designer.pdf" target="_blank" rel="noopener" class="nav-link">Resume ↗</a>
+      <a href="#work" class="nav-link" id="navWorkLinkMobile" data-umami-event="nav-click" data-umami-event-target="work">Work</a>
+      <a href="playground.html" class="nav-link" data-umami-event="nav-click" data-umami-event-target="playground">Playground</a>
+      <a href="assets/resume/Imalsha-Kandamby-Resume-Product Designer.pdf" target="_blank" rel="noopener" class="nav-link" data-umami-event="resume-download">Resume ↗</a>
     </nav>
   </header>
 
@@ -1501,7 +1502,7 @@
   <!-- ══════════════════════════════
        HERO
   ══════════════════════════════ -->
-  <section class="hero">
+  <section class="hero" id="hero">
 
     <div class="hero__glow"></div>
 
@@ -1580,7 +1581,7 @@
   <!-- ══════════════════════════════
        ABOUT SNAPSHOT
   ══════════════════════════════ -->
-  <section class="about-snapshot reveal">
+  <section class="about-snapshot reveal" id="about">
     <div class="container">
 
       <div class="bento">
@@ -1735,7 +1736,7 @@
       <div class="project-grid">
 
         <!-- Card 1 — RubiRecruit -->
-        <article class="project-card reveal" style="background:#2A0717;" role="link" tabindex="0" onclick="window.location.href='project-rubi.html'" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.location.href='project-rubi.html';}">
+        <article class="project-card reveal" style="background:#2A0717;" role="link" tabindex="0" onclick="window.location.href='project-rubi.html'" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.location.href='project-rubi.html';}" data-umami-event="project-open" data-umami-event-project="rubi">
           <div class="card-image-area" style="background:#2A0717;background-image:url('assets/images/index/project-rubi-card-placeholder.jpg');background-size:cover;background-position:center;"></div>
           <div class="card-body">
             <div class="card-meta">
@@ -1754,7 +1755,7 @@
         </article>
 
         <!-- Card 2 — Swivel -->
-        <article class="project-card reveal" style="background:#130A2E;" role="link" tabindex="0" onclick="window.location.href='project-swivel.html'" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.location.href='project-swivel.html';}">
+        <article class="project-card reveal" style="background:#130A2E;" role="link" tabindex="0" onclick="window.location.href='project-swivel.html'" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.location.href='project-swivel.html';}" data-umami-event="project-open" data-umami-event-project="swivel">
           <div class="card-image-area" style="background:#130A2E;background-image:url('assets/images/index/project-swivel-card-placeholder.jpg');background-size:cover;background-position:center;"></div>
           <div class="card-body">
             <div class="card-meta">
@@ -1773,7 +1774,7 @@
         </article>
 
         <!-- Card 3 — Kartclass -->
-        <article class="project-card reveal" style="background:#041A0C;" role="link" tabindex="0" onclick="window.location.href='project-kartclass.html'" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.location.href='project-kartclass.html';}">
+        <article class="project-card reveal" style="background:#041A0C;" role="link" tabindex="0" onclick="window.location.href='project-kartclass.html'" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.location.href='project-kartclass.html';}" data-umami-event="project-open" data-umami-event-project="kartclass">
           <div class="card-image-area" style="background:#041A0C;background-image:url('assets/images/index/project-kartclass-card-placeholder.jpg');background-size:cover;background-position:center;"></div>
           <div class="card-body">
             <div class="card-meta">
@@ -1792,7 +1793,7 @@
         </article>
 
         <!-- Card 4 — Shopify -->
-        <article class="project-card reveal" style="background:#141F04;" role="link" tabindex="0" onclick="window.location.href='project-shopify.html'" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.location.href='project-shopify.html';}">
+        <article class="project-card reveal" style="background:#141F04;" role="link" tabindex="0" onclick="window.location.href='project-shopify.html'" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.location.href='project-shopify.html';}" data-umami-event="project-open" data-umami-event-project="shopify">
           <div class="card-image-area" style="background:#141F04;background-image:url('assets/images/index/project-shopify-card-placeholder.jpg');background-size:cover;background-position:center;"></div>
           <div class="card-body">
             <div class="card-meta">
@@ -1863,9 +1864,9 @@
       <div class="footer-bottom">
         <p class="footer-copy">© 2026 Imalsha Kandamby · Designed &amp; built with intention</p>
         <div class="footer-socials">
-          <a href="https://linkedin.com/in/imalsha-kandamby" target="_blank" rel="noopener" class="footer-social-btn" aria-label="LinkedIn">LinkedIn</a>
-          <a href="https://behance.net/imalshakandamby_gihk" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Behance">Behance</a>
-          <a href="https://dribbble.com/gihKandamby" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Dribbble">Dribbble</a>
+          <a href="https://linkedin.com/in/imalsha-kandamby" target="_blank" rel="noopener" class="footer-social-btn" aria-label="LinkedIn" data-umami-event="social-click" data-umami-event-platform="linkedin">LinkedIn</a>
+          <a href="https://behance.net/imalshakandamby_gihk" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Behance" data-umami-event="social-click" data-umami-event-platform="behance">Behance</a>
+          <a href="https://dribbble.com/gihKandamby" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Dribbble" data-umami-event="social-click" data-umami-event-platform="dribbble">Dribbble</a>
         </div>
       </div>
 

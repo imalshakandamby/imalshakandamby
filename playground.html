@@ -744,13 +744,14 @@
     }
   </style>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="367feb64-6bc2-4d86-9c91-c5d3bd3d553f"></script>
+  <script defer src="assets/js/analytics.js"></script>
 </head>
 <body>
   <header class="site-header">
     <nav class="nav-pill" id="mainNav">
-      <a href="index.html" class="nav-link ">Work</a>
-      <a href="playground.html" class="nav-link nav-link--active">Playground</a>
-      <a href="assets/resume/Imalsha-Kandamby-Resume-Product Designer.pdf" target="_blank" rel="noopener" class="nav-link">Resume ↗</a>
+      <a href="index.html" class="nav-link " data-umami-event="nav-click" data-umami-event-target="work">Work</a>
+      <a href="playground.html" class="nav-link nav-link--active" data-umami-event="nav-click" data-umami-event-target="playground">Playground</a>
+      <a href="assets/resume/Imalsha-Kandamby-Resume-Product Designer.pdf" target="_blank" rel="noopener" class="nav-link" data-umami-event="resume-download">Resume ↗</a>
       <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -759,9 +760,9 @@
     <!-- Mobile overlay -->
     <nav class="nav-mobile-menu" id="navMobileMenu" role="dialog" aria-label="Mobile navigation">
       <button class="nav-mobile-close" id="navMobileClose" aria-label="Close menu">&#x2715;</button>
-      <a href="index.html" class="nav-link ">Work</a>
-      <a href="playground.html" class="nav-link nav-link--active">Playground</a>
-      <a href="assets/resume/Imalsha-Kandamby-Resume-Product Designer.pdf" target="_blank" rel="noopener" class="nav-link">Resume ↗</a>
+      <a href="index.html" class="nav-link " data-umami-event="nav-click" data-umami-event-target="work">Work</a>
+      <a href="playground.html" class="nav-link nav-link--active" data-umami-event="nav-click" data-umami-event-target="playground">Playground</a>
+      <a href="assets/resume/Imalsha-Kandamby-Resume-Product Designer.pdf" target="_blank" rel="noopener" class="nav-link" data-umami-event="resume-download">Resume ↗</a>
     </nav>
   </header>
 
@@ -923,9 +924,9 @@
       <div class="footer-bottom">
         <p class="footer-copy">© 2026 Imalsha Kandamby · Designed &amp; built with intention</p>
         <div class="footer-socials">
-          <a href="https://linkedin.com/in/imalsha-kandamby" target="_blank" rel="noopener" class="footer-social-btn" aria-label="LinkedIn">LinkedIn</a>
-          <a href="https://behance.net/imalshakandamby_gihk" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Behance">Behance</a>
-          <a href="https://dribbble.com/gihKandamby" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Dribbble">Dribbble</a>
+          <a href="https://linkedin.com/in/imalsha-kandamby" target="_blank" rel="noopener" class="footer-social-btn" aria-label="LinkedIn" data-umami-event="social-click" data-umami-event-platform="linkedin">LinkedIn</a>
+          <a href="https://behance.net/imalshakandamby_gihk" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Behance" data-umami-event="social-click" data-umami-event-platform="behance">Behance</a>
+          <a href="https://dribbble.com/gihKandamby" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Dribbble" data-umami-event="social-click" data-umami-event-platform="dribbble">Dribbble</a>
         </div>
       </div>
 
