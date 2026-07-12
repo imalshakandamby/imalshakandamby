@@ -821,7 +821,7 @@
   <header class="site-header"><nav class="nav-pill" id="mainNav">
       <a href="index.html" class="nav-link " data-umami-event="nav-click" data-umami-event-target="work">Work</a>
       <a href="playground.html" class="nav-link " data-umami-event="nav-click" data-umami-event-target="playground">Playground</a>
-      <a href="assets/resume/Imalsha-Kandamby-Resume-Product Designer.pdf" target="_blank" rel="noopener" class="nav-link" data-umami-event="resume-download">Resume ↗</a>
+      <a href="assets/resume/Imalsha-Kandamby-Resume-Product Designer.pdf" target="_blank" rel="noopener" class="nav-link" data-umami-event="resume-view">Resume ↗</a>
       <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -832,10 +832,10 @@
       <button class="nav-mobile-close" id="navMobileClose" aria-label="Close menu">&#x2715;</button>
       <a href="index.html" class="nav-link " data-umami-event="nav-click" data-umami-event-target="work">Work</a>
       <a href="playground.html" class="nav-link " data-umami-event="nav-click" data-umami-event-target="playground">Playground</a>
-      <a href="assets/resume/Imalsha-Kandamby-Resume-Product Designer.pdf" target="_blank" rel="noopener" class="nav-link" data-umami-event="resume-download">Resume ↗</a>
+      <a href="assets/resume/Imalsha-Kandamby-Resume-Product Designer.pdf" target="_blank" rel="noopener" class="nav-link" data-umami-event="resume-view">Resume ↗</a>
     </nav></header>
   <main class="container">
-    <a href="index.html#work" class="back-link" aria-label="Back to other works"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>Back to Other Works</a>
+    <a href="index.html#work" class="back-link" aria-label="Back to other works" data-umami-event="back-to-work" data-umami-event-position="top"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>Back to Other Works</a>
     <section class="case-header">
       <h1>Shopify Product Recommendation Quizzes</h1>
       <p>Designed and developed interactive product recommendation quizzes for multiple Shopify e-commerce brands, helping customers discover products tailored to their preferences while improving engagement and conversion rates. I was responsible for the end-to-end experience, from UX planning and visual design to implementation, testing, and developer collaboration.</p>
@@ -1167,7 +1167,7 @@
     </section>
 
     <div class="back-link-bottom-wrap">
-      <a href="index.html#work" class="back-link back-link--bottom" aria-label="Back to other works">
+      <a href="index.html#work" class="back-link back-link--bottom" aria-label="Back to other works" data-umami-event="back-to-work" data-umami-event-position="bottom">
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
         Back to Other Works
       </a>
@@ -1198,14 +1198,14 @@
         <div class="footer-contact">
           <div class="footer-contact-row" data-copy="imalshakandamby@gmail.com" data-copy-label="Email">
             <svg class="footer-contact-row__icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            <a href="mailto:imalshakandamby@gmail.com" class="footer-contact-row__text">imalshakandamby@gmail.com</a>
+            <a href="mailto:imalshakandamby@gmail.com" class="footer-contact-row__text" data-umami-event="contact-click" data-umami-event-type="email">imalshakandamby@gmail.com</a>
             <button type="button" class="footer-copy-btn">
               <span class="footer-copy-btn__label">Copy</span>
             </button>
           </div>
           <div class="footer-contact-row" data-copy="+31 6 3828 6152" data-copy-label="Phone number">
             <svg class="footer-contact-row__icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            <a href="tel:+31638286152" class="footer-contact-row__text">+31 6 3828 6152</a>
+            <a href="tel:+31638286152" class="footer-contact-row__text" data-umami-event="contact-click" data-umami-event-type="phone">+31 6 3828 6152</a>
             <button type="button" class="footer-copy-btn">
               <span class="footer-copy-btn__label">Copy</span>
             </button>
@@ -1384,6 +1384,9 @@
             clearTimeout(resetTimer);
             btn.classList.add('is-copied');
             labelEl.textContent = 'Copied!';
+            if (window.umami && typeof window.umami.track === 'function') {
+              window.umami.track('contact-copy', { type: row.getAttribute('data-copy-label') });
+            }
             resetTimer = setTimeout(function() {
               btn.classList.remove('is-copied');
               labelEl.textContent = originalText;
