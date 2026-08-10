@@ -283,6 +283,131 @@
       font-size: 0.95rem;
     }
 
+    .filter-bar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: var(--bg);
+      padding-block: 1rem;
+      margin-bottom: 1.5rem;
+      will-change: transform;
+      transform: translateZ(0);
+      isolation: isolate;
+    }
+    .filter-bar::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 1.5rem;
+      background: linear-gradient(to bottom, var(--bg) 0%, transparent 100%);
+      pointer-events: none;
+      transform: translateY(100%);
+    }
+
+    .filter-tabs {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.4rem;
+      border-radius: 100px;
+      background: rgba(28, 23, 41, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(108, 142, 245, 0.2);
+      width: 100%;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .filter-tabs::-webkit-scrollbar { display: none; }
+
+    .filter-tab {
+      flex: 1;
+      font-family: var(--font-display);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--muted);
+      padding: 0.55rem 1.35rem;
+      border-radius: 100px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      text-align: center;
+      transition: color 0.2s, background 0.2s;
+    }
+    .filter-tab:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+    .filter-tab.is-active { color: rgba(232,228,240,0.85); background: rgba(108,142,245,0.18); }
+
+    /* dropdown variant — swaps in once the pill row can no longer fit comfortably */
+    .filter-select { display: none; position: relative; width: 100%; }
+
+    .filter-select-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      width: 100%;
+      min-width: 11rem;
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: rgba(232,228,240,0.85);
+      padding: 0.65rem 1rem;
+      border-radius: 14px;
+      background: rgba(28, 23, 41, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(108, 142, 245, 0.3);
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .filter-select-trigger:hover { border-color: rgba(108,142,245,0.5); }
+    .filter-select-trigger svg { flex-shrink: 0; color: var(--violet-lt); transition: transform 0.2s ease; }
+    .filter-select.is-open .filter-select-trigger svg { transform: rotate(180deg); }
+
+    .filter-select-menu {
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      left: 0;
+      right: 0;
+      z-index: 20;
+      padding: 0.4rem;
+      border-radius: 14px;
+      background: rgba(19, 16, 28, 0.97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(108, 142, 245, 0.3);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+      display: none;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+    .filter-select.is-open .filter-select-menu { display: flex; }
+
+    .filter-select-option {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--muted);
+      padding: 0.6rem 0.85rem;
+      border-radius: 9px;
+      border: none;
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+      transition: color 0.2s, background 0.2s;
+    }
+    .filter-select-option:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+    .filter-select-option.is-active { color: rgba(232,228,240,0.85); background: rgba(108,142,245,0.18); }
+
+    @media (max-width: 640px) {
+      .filter-tabs { display: none; }
+      .filter-select { display: block; }
+    }
+
     .gallery {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
@@ -774,95 +899,116 @@
         <p class="subtitle">A collection of personal experiments, creative explorations, AI-assisted builds, and passion projects created outside of client work. This space allows me to explore new ideas, tools, and design approaches while continuously learning, experimenting, and growing as a designer.</p>
       </section>
 
+      <div id="filterBarAnchor"></div>
+      <div class="filter-bar">
+        <div class="filter-tabs" role="tablist" aria-label="Filter playground works">
+          <button type="button" class="filter-tab is-active" role="tab" aria-selected="true" data-filter="ui-concepts">UI Concepts</button>
+          <button type="button" class="filter-tab" role="tab" aria-selected="false" data-filter="brand-systems">Brand Systems</button>
+          <button type="button" class="filter-tab" role="tab" aria-selected="false" data-filter="graphic-design">Graphic Design</button>
+        </div>
+
+        <div class="filter-select" id="filterSelect">
+          <button type="button" class="filter-select-trigger" id="filterSelectTrigger" aria-haspopup="listbox" aria-expanded="false">
+            <span id="filterSelectLabel">UI Concepts</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="filter-select-menu" id="filterSelectMenu" role="listbox">
+            <button type="button" class="filter-select-option is-active" role="option" aria-selected="true" data-filter="ui-concepts">UI Concepts</button>
+            <button type="button" class="filter-select-option" role="option" aria-selected="false" data-filter="brand-systems">Brand Systems</button>
+            <button type="button" class="filter-select-option" role="option" aria-selected="false" data-filter="graphic-design">Graphic Design</button>
+          </div>
+        </div>
+      </div>
+
       <section class="gallery" aria-label="Hobby works gallery">
-        <article class="tile tile--a" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-1.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--a" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-1.jpg');background-size:cover;background-position:center;" data-category="ui-concepts">
           <div class="tile-body"><h2 class="tile-title">Workflow Builder</h2></div>
         </article>
-        <article class="tile tile--b" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-2.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--b" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-2.jpg');background-size:cover;background-position:center;" data-category="ui-concepts">
           <div class="tile-body"><h2 class="tile-title">Web Chat Assistant</h2></div>
         </article>
-        <article class="tile tile--c" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-3.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--c" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-3.jpg');background-size:cover;background-position:center;" data-category="ui-concepts">
           <div class="tile-body"><h2 class="tile-title">AI Chat Experience</h2></div>
         </article>
-        <article class="tile tile--d" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-4.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--d" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-4.jpg');background-size:cover;background-position:center;" data-category="ui-concepts">
           <div class="tile-body"><h2 class="tile-title">Voice AI Assistant</h2></div>
         </article>
-        <article class="tile tile--e" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-5.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--e" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-5.jpg');background-size:cover;background-position:center;" data-category="ui-concepts">
           <div class="tile-body"><h2 class="tile-title">Pricing & Plans</h2></div>
         </article>
-        <article class="tile tile--f" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-6.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--f" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-6.jpg');background-size:cover;background-position:center;" data-category="ui-concepts">
           <div class="tile-body"><h2 class="tile-title">Email Templates</h2></div>
         </article>
-        <article class="tile tile--g" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-7.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--g" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-7.jpg');background-size:cover;background-position:center;" data-category="ui-concepts">
           <div class="tile-body"><h2 class="tile-title">Fashion Hero Banner</h2></div>
         </article>
-        <article class="tile tile--a" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-8.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--a" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-8.jpg');background-size:cover;background-position:center;" data-category="ui-concepts">
           <div class="tile-body"><h2 class="tile-title">Mobile Puzzle Game UI</h2></div>
         </article>
-        <article class="tile tile--b" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-9.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--b" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-9.jpg');background-size:cover;background-position:center;" data-category="ui-concepts">
           <div class="tile-body"><h2 class="tile-title">Glassmorphism UI</h2></div>
         </article>
-        <article class="tile tile--c" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-10.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--c" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-10.jpg');background-size:cover;background-position:center;" data-category="brand-systems">
           <div class="tile-body"><h2 class="tile-title">Candle Craft Logo</h2></div>
         </article>
-        <article class="tile tile--d" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-11.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--d" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-11.jpg');background-size:cover;background-position:center;" data-category="brand-systems">
           <div class="tile-body"><h2 class="tile-title">Bunny Cone Branding</h2></div>
         </article>
-        <article class="tile tile--e" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-12.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--e" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-12.jpg');background-size:cover;background-position:center;" data-category="brand-systems">
           <div class="tile-body"><h2 class="tile-title">Coffee House Logo</h2></div>
         </article>
-        <article class="tile tile--f" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-13.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--f" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-13.jpg');background-size:cover;background-position:center;" data-category="brand-systems">
           <div class="tile-body"><h2 class="tile-title">Bloom Logo Concept</h2></div>
         </article>
-        <article class="tile tile--g" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-14.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--g" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-14.jpg');background-size:cover;background-position:center;" data-category="brand-systems">
           <div class="tile-body"><h2 class="tile-title">Study Abroad Branding</h2></div>
         </article>
-        <article class="tile tile--a" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-15.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--a" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-15.jpg');background-size:cover;background-position:center;" data-category="ui-concepts">
           <div class="tile-body"><h2 class="tile-title">Bento Beauty Store</h2></div>
         </article>
-        <article class="tile tile--b" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-16.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--b" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-16.jpg');background-size:cover;background-position:center;" data-category="ui-concepts">
           <div class="tile-body"><h2 class="tile-title">Golf Club Revamp</h2></div>
         </article>
-        <article class="tile tile--c" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-17.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--c" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-17.jpg');background-size:cover;background-position:center;" data-category="ui-concepts">
           <div class="tile-body"><h2 class="tile-title">Education Portal Revamp</h2></div>
         </article>
-        <article class="tile tile--d" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-18.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--d" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-18.jpg');background-size:cover;background-position:center;" data-category="ui-concepts">
           <div class="tile-body"><h2 class="tile-title">Recipe App</h2></div>
         </article>
-        <article class="tile tile--e" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-19.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--e" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-19.jpg');background-size:cover;background-position:center;" data-category="ui-concepts">
           <div class="tile-body"><h2 class="tile-title">Government Portal Revamp</h2></div>
         </article>
-        <article class="tile tile--f" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-20.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--f" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-20.jpg');background-size:cover;background-position:center;" data-category="ui-concepts">
           <div class="tile-body"><h2 class="tile-title">Floral Store Landing</h2></div>
         </article>
-        <article class="tile tile--g" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-21.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--g" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-21.jpg');background-size:cover;background-position:center;" data-category="ui-concepts">
           <div class="tile-body"><h2 class="tile-title">3D Button Concept</h2></div>
         </article>
-        <article class="tile tile--a" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-22.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--a" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-22.jpg');background-size:cover;background-position:center;" data-category="ui-concepts">
           <div class="tile-body"><h2 class="tile-title">Textile Landing Hero</h2></div>
         </article>
-        <article class="tile tile--b" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-23.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--b" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-23.jpg');background-size:cover;background-position:center;" data-category="ui-concepts">
           <div class="tile-body"><h2 class="tile-title">Mobile Blog Feed</h2></div>
         </article>
-        <article class="tile tile--c" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-24.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--c" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-24.jpg');background-size:cover;background-position:center;" data-category="brand-systems">
           <div class="tile-body"><h2 class="tile-title">Coffee Brand Logo</h2></div>
         </article>
-        <article class="tile tile--d" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-25.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--d" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-25.jpg');background-size:cover;background-position:center;" data-category="ui-concepts">
           <div class="tile-body"><h2 class="tile-title">Legal Document UI</h2></div>
         </article>
-        <article class="tile tile--e" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-26.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--e" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-26.jpg');background-size:cover;background-position:center;" data-category="graphic-design">
           <div class="tile-body"><h2 class="tile-title">Neon Alien</h2></div>
         </article>
-        <article class="tile tile--f" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-27.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--f" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-27.jpg');background-size:cover;background-position:center;" data-category="graphic-design">
           <div class="tile-body"><h2 class="tile-title">Devil Mask Illustration</h2></div>
         </article>
-        <article class="tile tile--g" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-28.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--g" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-28.jpg');background-size:cover;background-position:center;" data-category="ui-concepts">
           <div class="tile-body"><h2 class="tile-title">AI CRM Landing Page</h2></div>
         </article>
-        <article class="tile tile--a" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-29.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--a" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-29.jpg');background-size:cover;background-position:center;" data-category="graphic-design">
           <div class="tile-body"><h2 class="tile-title">Elephant Illustration</h2></div>
         </article>
-        <article class="tile tile--b" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-30.jpg');background-size:cover;background-position:center;">
+        <article class="tile tile--b" role="button" tabindex="0" style="background-image:url('assets/images/playground/playground-card-30.jpg');background-size:cover;background-position:center;" data-category="graphic-design">
           <div class="tile-body"><h2 class="tile-title">Sri Lankan Heritage Art</h2></div>
         </article>
       </section>
@@ -934,6 +1080,61 @@
   </footer>
 
   <script>
+    const allFilterControls = document.querySelectorAll('.filter-tab, .filter-select-option');
+    const filterSelectLabel = document.getElementById('filterSelectLabel');
+
+    function setActiveFilter(filterValue, label) {
+      allFilterControls.forEach((el) => {
+        const isMatch = el.getAttribute('data-filter') === filterValue;
+        el.classList.toggle('is-active', isMatch);
+        el.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+      });
+      if (filterSelectLabel && label) filterSelectLabel.textContent = label;
+      document.querySelectorAll('.tile').forEach((tile) => {
+        tile.style.display = tile.getAttribute('data-category') === filterValue ? '' : 'none';
+      });
+    }
+
+    allFilterControls.forEach((control) => {
+      control.addEventListener('click', () => {
+        setActiveFilter(control.getAttribute('data-filter'), control.textContent);
+        closeFilterSelect();
+        // deferred so the tile show/hide reflow finishes before we measure
+        // and scroll — otherwise the layout shift can cut a smooth-scroll short
+        setTimeout(() => {
+          const anchor = document.getElementById('filterBarAnchor');
+          if (anchor) {
+            const targetY = anchor.getBoundingClientRect().top + window.scrollY;
+            if (window.scrollY > targetY) {
+              window.scrollTo({ top: targetY, behavior: 'instant' });
+            }
+          }
+        }, 0);
+      });
+    });
+
+    const filterSelect = document.getElementById('filterSelect');
+    const filterSelectTrigger = document.getElementById('filterSelectTrigger');
+
+    function closeFilterSelect() {
+      filterSelect.classList.remove('is-open');
+      filterSelectTrigger.setAttribute('aria-expanded', 'false');
+    }
+
+    filterSelectTrigger.addEventListener('click', () => {
+      const isOpen = filterSelect.classList.toggle('is-open');
+      filterSelectTrigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!filterSelect.contains(event.target)) closeFilterSelect();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeFilterSelect();
+    });
+
+    setActiveFilter('ui-concepts', 'UI Concepts');
+
     const viewer = document.getElementById('playgroundViewer');
     const viewerClose = document.getElementById('viewerClose');
     const viewerImage = document.getElementById('viewerImage');
@@ -1061,21 +1262,23 @@
   </script>
 
   <script>
-    /* ── Nav fade on scroll ── */
+    /* ── Nav fade on scroll ──
+       Stays hidden for as long as the user is scrolled past the hero
+       (title + paragraph) section, regardless of scroll direction, so it
+       never re-appears mid-page and overlaps the sticky filter bar. Only
+       shows again once scrolled back up into the hero section. */
     (function() {
       var header     = document.querySelector('.site-header');
-      var lastScroll = 0;
       var threshold  = 60;
       var ticking    = false;
 
       function update() {
         var current = window.scrollY || window.pageYOffset;
-        if (current > threshold && current > lastScroll) {
+        if (current > threshold) {
           header.classList.add('nav-hidden');
         } else {
           header.classList.remove('nav-hidden');
         }
-        lastScroll = current <= 0 ? 0 : current;
         ticking = false;
       }
 
