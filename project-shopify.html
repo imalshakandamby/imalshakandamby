@@ -9,8 +9,30 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     :root { --bg:#0A0A0F; --white:#E8E4F0; --muted:#AFA9BD; --violet:#6c8ef5; --font-display:'Syne',sans-serif; --font-body:'Inter',sans-serif; --max-w:980px; }
+
+    /* ── Scrollbar ──────────────────────────────
+       Thin, theme-tinted thumb instead of the OS default. The 2px border
+       (colour-matched to the page bg) insets the visible bar so it reads
+       as a slim accent rather than a thick generic rail. */
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(120,130,220,0.45) transparent;
+    }
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(140,100,255,0.55), rgba(108,142,245,0.35));
+      border-radius: 100px;
+      border: 2px solid var(--bg);
+      background-clip: padding-box;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, rgba(140,100,255,0.75), rgba(108,142,245,0.55));
+      background-clip: padding-box;
+    }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    body{background:var(--bg);color:var(--white);font-family:var(--font-body);-webkit-font-smoothing:antialiased;min-height:100vh;position:relative;padding-top:7rem}
+    html{overflow-x:hidden;width:100%}
+    body{background:var(--bg);color:var(--white);font-family:var(--font-body);-webkit-font-smoothing:antialiased;min-height:100vh;position:relative;padding-top:7rem;overflow-x:hidden;width:100%}
     body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.5}
     a{color:inherit;text-decoration:none}
     .container{max-width:var(--max-w);margin:0 auto;padding:0 1.5rem;position:relative;z-index:1}
@@ -69,7 +91,7 @@
       align-items: start;
       gap: 2rem;
       padding-bottom: 2rem;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
+      border-bottom: 1px solid rgba(255,255,255,0.12);
     }
     .footer-brand { display: flex; flex-direction: column; gap: 0.35rem; }
     .footer-brand__name { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; color: var(--white); }
@@ -167,7 +189,7 @@
       display: inline-flex; align-items: center; justify-content: center;
       flex: 1;
       padding: 0.35rem 0.6rem; height: 32px; border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
       background: rgba(255,255,255,0.03);
       color: var(--muted); font-size: 0.75rem;
       font-family: var(--font-display); font-weight: 700;
@@ -201,7 +223,7 @@
       display: flex;
       flex-direction: column;
       gap: 0;
-      border-left: 1px solid rgba(255,255,255,0.08);
+      border-left: 1px solid rgba(255,255,255,0.13);
       padding-left: 1.75rem;
     }
     .intro-meta-item {
@@ -209,7 +231,7 @@
       flex-direction: column;
       gap: 0.2rem;
       padding: 0.75rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.10);
     }
     .intro-meta-item:last-child { border-bottom: none; }
     .intro-meta-label {
@@ -227,7 +249,7 @@
     }
     @media (max-width: 640px) {
       .intro-grid { grid-template-columns: 1fr; }
-      .intro-meta { border-left: none; padding-left: 0; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.25rem; }
+      .intro-meta { border-left: none; padding-left: 0; border-top: 1px solid rgba(255,255,255,0.13); padding-top: 1.25rem; }
     }
 
 
@@ -813,14 +835,32 @@
         margin-bottom: 2rem;
       }
     }
+    /* ── Page transition ─────────────────────────── */
+    /* fill-mode `both` supplies the opacity:0 start state, so if CSS
+       animations ever fail to run the page stays visible rather than blank */
+    body {
+      animation: pageIn 0.42s ease both;
+    }
+    body.is-leaving {
+      animation: pageOut 0.26s ease forwards;
+    }
+    @keyframes pageIn  { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes pageOut { from { opacity: 1; } to { opacity: 0; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      body,
+      body.is-leaving { animation: none; opacity: 1; }
+    }
   </style>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="367feb64-6bc2-4d86-9c91-c5d3bd3d553f"></script>
   <script defer src="assets/js/analytics.js"></script>
 </head>
 <body>
   <header class="site-header"><nav class="nav-pill" id="mainNav">
-      <a href="index.html" class="nav-link " data-umami-event="nav-click" data-umami-event-target="work">Work</a>
-      <a href="playground.html" class="nav-link " data-umami-event="nav-click" data-umami-event-target="playground">Playground</a>
+      <a href="index.html" class="nav-link" data-umami-event="nav-click" data-umami-event-target="home">Home</a>
+      <a href="index.html#work" class="nav-link" data-umami-event="nav-click" data-umami-event-target="work">Work</a>
+      <a href="playground.html" class="nav-link" data-umami-event="nav-click" data-umami-event-target="playground">Playground</a>
+      <a href="about.html" class="nav-link" data-umami-event="nav-click" data-umami-event-target="about">About</a>
       <a href="assets/resume/Imalsha-Kandamby-Resume-Product-Designer.pdf" target="_blank" rel="noopener" class="nav-link" data-umami-event="resume-view">Resume ↗</a>
       <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -830,8 +870,10 @@
     <!-- Mobile overlay -->
     <nav class="nav-mobile-menu" id="navMobileMenu" role="dialog" aria-label="Mobile navigation">
       <button class="nav-mobile-close" id="navMobileClose" aria-label="Close menu">&#x2715;</button>
-      <a href="index.html" class="nav-link " data-umami-event="nav-click" data-umami-event-target="work">Work</a>
-      <a href="playground.html" class="nav-link " data-umami-event="nav-click" data-umami-event-target="playground">Playground</a>
+      <a href="index.html" class="nav-link" data-umami-event="nav-click" data-umami-event-target="home">Home</a>
+      <a href="index.html#work" class="nav-link" data-umami-event="nav-click" data-umami-event-target="work">Work</a>
+      <a href="playground.html" class="nav-link" data-umami-event="nav-click" data-umami-event-target="playground">Playground</a>
+      <a href="about.html" class="nav-link" data-umami-event="nav-click" data-umami-event-target="about">About</a>
       <a href="assets/resume/Imalsha-Kandamby-Resume-Product-Designer.pdf" target="_blank" rel="noopener" class="nav-link" data-umami-event="resume-view">Resume ↗</a>
     </nav></header>
   <main class="container">
@@ -871,32 +913,32 @@
     <div class="reveal-left" style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.7rem;flex-wrap:wrap;">
       <span style="font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-right:0.25rem;">Live Product Links :</span>
 
-      <a href="https://app.noteworthyscents.com/scent-quiz" target="_blank" rel="noopener" aria-label="Noteworthy Scents" data-umami-event="live-demo-click" data-umami-event-client="noteworthy-scents" style="display:inline-flex;align-items:center;gap:0.45rem;padding:0.4rem 0.85rem;border-radius:999px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.03);color:var(--muted);font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.04em;transition:border-color 0.2s,color 0.2s,background 0.2s;" onmouseover="this.style.borderColor='rgba(108,142,245,0.6)';this.style.color='var(--white)';this.style.background='rgba(108,142,245,0.08)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='var(--muted)';this.style.background='rgba(255,255,255,0.03)';">
+      <a href="https://app.noteworthyscents.com/scent-quiz" target="_blank" rel="noopener" aria-label="Noteworthy Scents" data-umami-event="live-demo-click" data-umami-event-client="noteworthy-scents" style="display:inline-flex;align-items:center;gap:0.45rem;padding:0.4rem 0.85rem;border-radius:999px;border:1px solid rgba(255,255,255,0.11);background:rgba(255,255,255,0.03);color:var(--muted);font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.04em;transition:border-color 0.2s,color 0.2s,background 0.2s;" onmouseover="this.style.borderColor='rgba(108,142,245,0.6)';this.style.color='var(--white)';this.style.background='rgba(108,142,245,0.08)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='var(--muted)';this.style.background='rgba(255,255,255,0.03)';">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         Noteworthy Scents
       </a>
 
-      <a href="https://quiz.visualquizbuilder.com/?store=mypetchicken.myshopify.com&env=production&quiz=7949" target="_blank" rel="noopener" aria-label="My Pet Chicken" data-umami-event="live-demo-click" data-umami-event-client="my-pet-chicken" style="display:inline-flex;align-items:center;gap:0.45rem;padding:0.4rem 0.85rem;border-radius:999px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.03);color:var(--muted);font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.04em;transition:border-color 0.2s,color 0.2s,background 0.2s;" onmouseover="this.style.borderColor='rgba(108,142,245,0.6)';this.style.color='var(--white)';this.style.background='rgba(108,142,245,0.08)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='var(--muted)';this.style.background='rgba(255,255,255,0.03)';">
+      <a href="https://quiz.visualquizbuilder.com/?store=mypetchicken.myshopify.com&env=production&quiz=7949" target="_blank" rel="noopener" aria-label="My Pet Chicken" data-umami-event="live-demo-click" data-umami-event-client="my-pet-chicken" style="display:inline-flex;align-items:center;gap:0.45rem;padding:0.4rem 0.85rem;border-radius:999px;border:1px solid rgba(255,255,255,0.11);background:rgba(255,255,255,0.03);color:var(--muted);font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.04em;transition:border-color 0.2s,color 0.2s,background 0.2s;" onmouseover="this.style.borderColor='rgba(108,142,245,0.6)';this.style.color='var(--white)';this.style.background='rgba(108,142,245,0.08)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='var(--muted)';this.style.background='rgba(255,255,255,0.03)';">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         My Pet Chicken
       </a>
 
-      <a href="https://www.plumdeluxe.com/pages/tea-quiz" target="_blank" rel="noopener" aria-label="Plum Deluxe" data-umami-event="live-demo-click" data-umami-event-client="plum-deluxe" style="display:inline-flex;align-items:center;gap:0.45rem;padding:0.4rem 0.85rem;border-radius:999px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.03);color:var(--muted);font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.04em;transition:border-color 0.2s,color 0.2s,background 0.2s;" onmouseover="this.style.borderColor='rgba(108,142,245,0.6)';this.style.color='var(--white)';this.style.background='rgba(108,142,245,0.08)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='var(--muted)';this.style.background='rgba(255,255,255,0.03)';">
+      <a href="https://www.plumdeluxe.com/pages/tea-quiz" target="_blank" rel="noopener" aria-label="Plum Deluxe" data-umami-event="live-demo-click" data-umami-event-client="plum-deluxe" style="display:inline-flex;align-items:center;gap:0.45rem;padding:0.4rem 0.85rem;border-radius:999px;border:1px solid rgba(255,255,255,0.11);background:rgba(255,255,255,0.03);color:var(--muted);font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.04em;transition:border-color 0.2s,color 0.2s,background 0.2s;" onmouseover="this.style.borderColor='rgba(108,142,245,0.6)';this.style.color='var(--white)';this.style.background='rgba(108,142,245,0.08)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='var(--muted)';this.style.background='rgba(255,255,255,0.03)';">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         Plum Deluxe
       </a>
 
-      <a href="https://roomlift.com/" target="_blank" rel="noopener" aria-label="RoomLift" data-umami-event="live-demo-click" data-umami-event-client="roomlift" style="display:inline-flex;align-items:center;gap:0.45rem;padding:0.4rem 0.85rem;border-radius:999px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.03);color:var(--muted);font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.04em;transition:border-color 0.2s,color 0.2s,background 0.2s;" onmouseover="this.style.borderColor='rgba(108,142,245,0.6)';this.style.color='var(--white)';this.style.background='rgba(108,142,245,0.08)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='var(--muted)';this.style.background='rgba(255,255,255,0.03)';">
+      <a href="https://roomlift.com/" target="_blank" rel="noopener" aria-label="RoomLift" data-umami-event="live-demo-click" data-umami-event-client="roomlift" style="display:inline-flex;align-items:center;gap:0.45rem;padding:0.4rem 0.85rem;border-radius:999px;border:1px solid rgba(255,255,255,0.11);background:rgba(255,255,255,0.03);color:var(--muted);font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.04em;transition:border-color 0.2s,color 0.2s,background 0.2s;" onmouseover="this.style.borderColor='rgba(108,142,245,0.6)';this.style.color='var(--white)';this.style.background='rgba(108,142,245,0.08)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='var(--muted)';this.style.background='rgba(255,255,255,0.03)';">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         RoomLift
       </a>
 
-      <a href="https://doralarsen.com/#finder-quiz-10693" target="_blank" rel="noopener" aria-label="Dora Larsen" data-umami-event="live-demo-click" data-umami-event-client="dora-larsen" style="display:inline-flex;align-items:center;gap:0.45rem;padding:0.4rem 0.85rem;border-radius:999px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.03);color:var(--muted);font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.04em;transition:border-color 0.2s,color 0.2s,background 0.2s;" onmouseover="this.style.borderColor='rgba(108,142,245,0.6)';this.style.color='var(--white)';this.style.background='rgba(108,142,245,0.08)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='var(--muted)';this.style.background='rgba(255,255,255,0.03)';">
+      <a href="https://doralarsen.com/#finder-quiz-10693" target="_blank" rel="noopener" aria-label="Dora Larsen" data-umami-event="live-demo-click" data-umami-event-client="dora-larsen" style="display:inline-flex;align-items:center;gap:0.45rem;padding:0.4rem 0.85rem;border-radius:999px;border:1px solid rgba(255,255,255,0.11);background:rgba(255,255,255,0.03);color:var(--muted);font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.04em;transition:border-color 0.2s,color 0.2s,background 0.2s;" onmouseover="this.style.borderColor='rgba(108,142,245,0.6)';this.style.color='var(--white)';this.style.background='rgba(108,142,245,0.08)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='var(--muted)';this.style.background='rgba(255,255,255,0.03)';">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         Dora Larsen
       </a>
 
-      <a href="https://sweatandmilk.com/#finder-quiz-9840" target="_blank" rel="noopener" aria-label="Sweat & Milk" data-umami-event="live-demo-click" data-umami-event-client="sweat-and-milk" style="display:inline-flex;align-items:center;gap:0.45rem;padding:0.4rem 0.85rem;border-radius:999px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.03);color:var(--muted);font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.04em;transition:border-color 0.2s,color 0.2s,background 0.2s;" onmouseover="this.style.borderColor='rgba(108,142,245,0.6)';this.style.color='var(--white)';this.style.background='rgba(108,142,245,0.08)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='var(--muted)';this.style.background='rgba(255,255,255,0.03)';">
+      <a href="https://sweatandmilk.com/#finder-quiz-9840" target="_blank" rel="noopener" aria-label="Sweat & Milk" data-umami-event="live-demo-click" data-umami-event-client="sweat-and-milk" style="display:inline-flex;align-items:center;gap:0.45rem;padding:0.4rem 0.85rem;border-radius:999px;border:1px solid rgba(255,255,255,0.11);background:rgba(255,255,255,0.03);color:var(--muted);font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.04em;transition:border-color 0.2s,color 0.2s,background 0.2s;" onmouseover="this.style.borderColor='rgba(108,142,245,0.6)';this.style.color='var(--white)';this.style.background='rgba(108,142,245,0.08)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='var(--muted)';this.style.background='rgba(255,255,255,0.03)';">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         Sweat &amp; Milk
       </a>
@@ -1237,19 +1279,30 @@
         var close = document.getElementById('navMobileClose');
         if (!btn || !menu) return;
 
+        function trackNav(name) {
+          if (window.umami && typeof window.umami.track === 'function') {
+            window.umami.track(name);
+          }
+        }
+
         btn.addEventListener('click', function(e) {
           e.stopPropagation();
           menu.classList.add('is-open');
           btn.classList.add('is-open');
           btn.setAttribute('aria-expanded', 'true');
           document.body.style.overflow = 'hidden';
+          trackNav('mobile-menu-open');
         });
 
         function closeMenu() {
+          // Escape fires this even when the menu is already shut, so only
+          // report a close that actually closed something
+          var wasOpen = menu.classList.contains('is-open');
           menu.classList.remove('is-open');
           btn.classList.remove('is-open');
           btn.setAttribute('aria-expanded', 'false');
           document.body.style.overflow = '';
+          if (wasOpen) trackNav('mobile-menu-close');
         }
 
         if (close) close.addEventListener('click', closeMenu);
@@ -1415,6 +1468,55 @@
         try { document.execCommand('copy'); } catch (e) {}
         document.body.removeChild(ta);
       }
+    })();
+  </script>
+
+  <script>
+    /* ── Page transitions: fade out before navigating to another page ── */
+    (function() {
+      var DUR = 260;
+
+      /* coming back via bfcache / back button must never leave the page faded out */
+      window.addEventListener('pageshow', function() {
+        document.body.classList.remove('is-leaving');
+      });
+
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) return;
+
+      function closestLink(node) {
+        while (node && node !== document) {
+          if (node.tagName && node.tagName.toLowerCase() === 'a') return node;
+          node = node.parentNode;
+        }
+        return null;
+      }
+
+      document.addEventListener('click', function(e) {
+        if (e.defaultPrevented || e.button !== 0) return;
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+        var a = closestLink(e.target);
+        if (!a) return;
+
+        var href = a.getAttribute('href');
+        if (!href || href.charAt(0) === '#') return;          /* in-page anchor */
+        if (a.hasAttribute('download')) return;
+        if (a.target && a.target !== '_self') return;          /* new tab (resume PDF) */
+
+        var url;
+        try { url = new URL(href, window.location.href); } catch (err) { return; }
+
+        if (url.origin !== window.location.origin) return;     /* external */
+        if (/\.(pdf|zip|jpe?g|png|gif|svg|webp|mp4)$/i.test(url.pathname)) return;
+
+        /* same document, only a hash change -> let the browser scroll natively */
+        if (url.pathname === window.location.pathname && url.hash) return;
+
+        e.preventDefault();
+        document.body.classList.add('is-leaving');
+        setTimeout(function() { window.location.href = url.href; }, DUR);
+      });
     })();
   </script>
 

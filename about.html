@@ -1,0 +1,3172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Imalsha K. | About</title>
+  <link rel="icon" type="image/png" href="assets/images/favicon/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #0A0A0F;
+      --surface: #13101C;
+      --surface-2: #1C1729;
+      --violet: #6c8ef5;
+      --violet-lt: #8fa8f8;
+      --white: #E8E4F0;
+      --muted: #AFA9BD;
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --max-w: 1152px;
+      --radius: 16px;
+    }
+
+    /* ── Scrollbar ──────────────────────────────
+       Thin, theme-tinted thumb instead of the OS default. The 2px border
+       (colour-matched to the page bg) insets the visible bar so it reads
+       as a slim accent rather than a thick generic rail. */
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(120,130,220,0.45) transparent;
+    }
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(140,100,255,0.55), rgba(108,142,245,0.35));
+      border-radius: 100px;
+      border: 2px solid var(--bg);
+      background-clip: padding-box;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, rgba(140,100,255,0.75), rgba(108,142,245,0.55));
+      background-clip: padding-box;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; width: 100%; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    .container {
+      max-width: var(--max-w);
+      margin-inline: auto;
+      padding-inline: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .site-header {
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      position: fixed;
+      top: 1.5rem;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      padding-inline: 1rem;
+      z-index: 50;
+    }
+
+    .nav-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.5rem;
+      border-radius: 100px;
+      background: rgba(28, 23, 41, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(108, 142, 245, 0.2);
+    }
+
+    .nav-link {
+      font-family: var(--font-display);
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--muted);
+      padding: 0.5rem 1.25rem;
+      border-radius: 100px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-link:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+    .nav-link--active { color: rgba(232,228,240,0.85); background: rgba(108,142,245,0.15); }
+    /* ─── Creative Footer ─── */
+    .site-footer { position: relative; z-index: 1; padding: 3.5rem 0 2rem; }
+    .site-footer::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(108,142,245,0.5) 50%,
+        transparent 100%);
+    }
+    .site-footer::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 40%; height: 2px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(160,150,255,0.95) 50%,
+        transparent 100%);
+      filter: blur(0.5px);
+      animation: footerEdgeShine 6s ease-in-out infinite;
+    }
+    @keyframes footerEdgeShine {
+      0%   { left: -40%; opacity: 0; }
+      15%  { opacity: 1; }
+      50%  { left: 60%; opacity: 1; }
+      85%  { opacity: 1; }
+      100% { left: 100%; opacity: 0; }
+    }
+    .footer-glow {
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 520px; height: 160px;
+      background: radial-gradient(ellipse at center, rgba(108,142,245,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: start;
+      gap: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+    .footer-brand { display: flex; flex-direction: column; gap: 0.35rem; }
+    .footer-brand__name { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; color: var(--white); }
+    .footer-brand__sub { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.03em; }
+    .footer-brand__tagline {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(110,231,160,0.9);
+      border: 1px solid rgba(110,231,160,0.3);
+      background: rgba(110,231,160,0.08);
+      border-radius: 100px;
+      padding: 0.25rem 0.7rem;
+      width: fit-content;
+    }
+    .footer-center { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+    .footer-logo-mark {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      background: rgba(108,142,245,0.1);
+      border: 1px solid rgba(108,142,245,0.25);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(108,142,245,0.8);
+    }
+    .footer-divider-v {
+      width: 1px; height: 32px;
+      background: linear-gradient(to bottom, transparent, rgba(108,142,245,0.3), transparent);
+    }
+    .footer-contact { display: flex; flex-direction: column; align-items: flex-end; gap: 0.55rem; }
+    .footer-contact-row {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      width: 300px;
+      max-width: 100%;
+      padding: 0.42rem 0.55rem 0.42rem 0.7rem;
+      border-radius: 10px;
+      border: none;
+      background: rgba(255,255,255,0.035);
+      transition: background 0.2s;
+    }
+    .footer-contact-row:hover {
+      background: rgba(255,255,255,0.06);
+    }
+    .footer-contact-row__icon {
+      flex-shrink: 0;
+      color: rgba(167,155,214,0.85);
+    }
+    .footer-contact-row__text {
+      flex: 1;
+      min-width: 0;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-decoration: none;
+      white-space: nowrap;
+      text-align: left;
+      transition: color 0.2s;
+    }
+    .footer-contact-row__text:hover { color: var(--white); }
+    .footer-copy-btn {
+      flex-shrink: 0;
+      position: relative;
+      min-width: 58px;
+      padding: 0.24rem 0.6rem;
+      border-radius: 999px;
+      background: transparent;
+      border: 1px solid rgba(108,142,245,0.45);
+      color: var(--violet-lt);
+      font-family: var(--font-display);
+      font-size: 0.64rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+    .footer-copy-btn:hover {
+      background: rgba(108,142,245,0.15);
+      border-color: rgba(108,142,245,0.7);
+      color: var(--white);
+    }
+    .footer-copy-btn.is-copied {
+      border-color: rgba(110,231,160,0.55);
+      color: #6ee7a0;
+      background: rgba(110,231,160,0.08);
+    }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 1.5rem; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-socials { display: flex; align-items: center; gap: 0.5rem; width: 300px; max-width: 100%; }
+    .footer-social-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      flex: 1;
+      padding: 0.35rem 0.6rem; height: 32px; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted); font-size: 0.75rem;
+      font-family: var(--font-display); font-weight: 700;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      text-decoration: none;
+    }
+    .footer-social-btn:hover { border-color: rgba(108,142,245,0.5); color: var(--white); background: rgba(108,142,245,0.08); }
+    .footer-copy { font-size: 0.65rem; color: rgba(195,190,210,0.75); letter-spacing: 0.08em; }
+    @media (max-width: 640px) {
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-center { align-items: flex-start; flex-direction: row; }
+      .footer-divider-v { width: 32px; height: 1px; background: linear-gradient(to right, transparent, rgba(108,142,245,0.3), transparent); }
+      .footer-contact { align-items: flex-start; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+
+    .page {
+      padding-top: 7.25rem;
+      padding-bottom: 4rem;
+    }
+
+    .hero-copy {
+      margin-bottom: 2rem;
+    }
+
+    .eyebrow {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--violet-lt);
+      margin-bottom: 0.75rem;
+    }
+
+    .title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3.8vw, 3rem);
+      line-height: 1.06;
+      letter-spacing: -0.01em;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin-top: 0.85rem;
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+
+    .section-label {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--violet);
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      color: var(--white);
+      line-height: 1.15;
+    }
+
+    /* ─── Scroll reveal ─────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── Reduced motion ────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .project-card { transition: none; }
+      /* the chart is drawn statically instead of animating in */
+      .reveal.visible .dt-node,
+      .reveal.visible .dt-node__halo,
+      .reveal.visible .dt-arrow,
+      .reveal.visible .dt-loop,
+      .reveal.visible .dt-loop-label { animation: none; }
+    }
+
+    /* ── Mobile hamburger nav ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      border-radius: 0;
+      transition: none;
+      z-index: 200;
+      margin-left: 0;
+    }
+    .nav-hamburger:hover { background: none; }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+      transform-origin: center;
+    }
+    .nav-hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.is-open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav-mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 150;
+      background: rgba(10,8,18,0.97);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      padding: 2rem;
+    }
+    .nav-mobile-menu.is-open { display: flex; }
+    .nav-mobile-menu .nav-link {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.5rem 1.5rem;
+      border-radius: 12px;
+      transition: color 0.2s, background 0.2s;
+      text-align: center;
+    }
+    .nav-mobile-menu .nav-link:hover,
+    .nav-mobile-menu .nav-link--active {
+      color: var(--white);
+      background: rgba(108,142,245,0.12);
+    }
+    .nav-mobile-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+    }
+    .nav-mobile-close:hover { color: var(--white); background: rgba(255,255,255,0.06); }
+
+    @media (max-width: 640px) {
+      .nav-pill {
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        border-radius: 50%;
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background 0.2s, border-color 0.2s;
+      }
+      .nav-pill:hover {
+        background: rgba(108,142,245,0.12);
+        border-color: rgba(108,142,245,0.4);
+      }
+      .nav-pill .nav-link { display: none; }
+      .nav-hamburger { display: flex; margin-left: 0; }
+      /* Footer mobile */
+      .footer-top {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem;
+        text-align: center;
+      }
+      .footer-brand { align-items: center !important; }
+      .footer-brand__tagline { align-self: center !important; }
+      .footer-center {
+        align-items: center !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        gap: 0.75rem;
+      }
+      .footer-divider-v {
+        width: 24px !important;
+        height: 1px !important;
+        background: linear-gradient(to right, transparent, rgba(108,142,245,0.3), transparent) !important;
+      }
+      .footer-contact {
+        align-items: center !important;
+        width: 100%;
+      }
+      .footer-contact-row {
+        width: 100%;
+        max-width: 300px;
+        justify-content: flex-start;
+      }
+      .footer-bottom {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 0.75rem;
+        text-align: center;
+      }
+      .footer-copy { text-align: center; }
+      .footer-socials { gap: 0.4rem; justify-content: center; margin-inline: auto; }
+      .footer-social-btn { font-size: 0.68rem; padding: 0.3rem 0.5rem; }
+    }
+
+    /* ── Global safe padding — prevents any content touching screen edges ── */
+    :root {
+      --side-pad: clamp(1rem, 5vw, 1.5rem);
+    }
+
+    /* Container safe padding on all widths */
+    .container {
+      padding-inline: var(--side-pad) !important;
+    }
+
+    /* Hero section */
+    .hero {
+      padding-left: var(--side-pad) !important;
+      padding-right: var(--side-pad) !important;
+    }
+    .hero__inner {
+      padding-inline: 0 !important;
+    }
+
+    /* Nav pill safe sides */
+    .site-header {
+      padding-inline: var(--side-pad) !important;
+    }
+
+    /* Footer safe sides */
+    .site-footer .container,
+    .site-footer > .container {
+      padding-inline: var(--side-pad) !important;
+    }
+
+    /* Extra-small screens (≤ 400px) — tighter headline, more breathing room */
+    @media (max-width: 400px) {
+      .hero__headline {
+        font-size: clamp(1.55rem, 9vw, 2.2rem) !important;
+        line-height: 1.05 !important;
+      }
+      .hero__bio {
+        font-size: 0.88rem !important;
+      }
+      .case-section h2 {
+        font-size: 1.1rem !important;
+      }
+      h1.case-title {
+        font-size: clamp(1.4rem, 7vw, 2rem) !important;
+      }
+    }
+
+    /* Small screens (≤ 480px) */
+    @media (max-width: 480px) {
+      .hero__headline {
+        font-size: clamp(1.65rem, 8.5vw, 2.4rem) !important;
+      }
+      /* Playground grid: 1 column */
+      .tile-grid {
+        grid-template-columns: 1fr !important;
+      }
+      /* Project intro meta stack */
+      .intro-meta-bar {
+        flex-direction: column !important;
+        gap: 0.75rem !important;
+      }
+    }
+
+    /* Medium-small (≤ 640px) — already handled but reinforce padding */
+    @media (max-width: 640px) {
+      .hero {
+        padding-top: 5.5rem !important;
+        padding-bottom: 3rem !important;
+      }
+      .project-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    /* ── Footer tablet (641px – 900px): keep two-column layout ── */
+    @media (min-width: 641px) and (max-width: 900px) {
+      .footer-top {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 1.5rem;
+      }
+      .footer-center {
+        display: none !important;
+      }
+      .footer-brand {
+        align-items: flex-start !important;
+      }
+      .footer-contact {
+        align-items: flex-end !important;
+      }
+      .footer-bottom {
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+      }
+      .footer-copy {
+        text-align: left !important;
+      }
+      .footer-socials {
+        justify-content: flex-end;
+      }
+    }
+
+    /* ── Nav fade on scroll ── */
+    .site-header {
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    .site-header.nav-hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-8px);
+    }
+
+    /* ── Custom cursor: violet arrow + "You" tag ── */
+    * { cursor: none !important; }
+    #customCursor {
+      position: fixed;
+      top: 0; left: 0;
+      width: 0; height: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-2px, -2px);
+      will-change: transform;
+    }
+    #customCursor svg {
+      display: block;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35));
+    }
+    #customCursor .cursor-tag {
+      position: absolute;
+      top: 22px;
+      left: 14px;
+      background: var(--violet);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      padding: 0.22rem 0.65rem;
+      border-radius: 999px;
+      white-space: nowrap;
+      box-shadow: 0 4px 10px rgba(108,142,245,0.35);
+    }
+    @media (hover: none), (pointer: coarse) {
+      * { cursor: auto !important; }
+      #customCursor { display: none; }
+    }
+
+    /* ═══════════════════════════════════════════
+       ABOUT PAGE
+       ═══════════════════════════════════════════ */
+
+    /* No padding-top here: the hero section must start at y=0 so its grid
+       reaches the top edge (behind the nav), exactly like the home hero.
+       The offset lives in .about-hero-sec's own padding instead. */
+    .about-page { padding-top: 0; padding-bottom: 0; }
+
+    .about-sec { padding-block: clamp(3rem, 6vw, 5rem); position: relative; z-index: 1; }
+    .about-sec--tight { padding-block: clamp(2rem, 4vw, 3rem); }
+
+    /* ── Tinted bands ──────────────────────────────
+       Full-bleed colour wash on selected sections so the scroll isn't one
+       unbroken black. No grid overlay here - that stays unique to the hero.
+       The wash fades out at its own top and bottom edges, so the band melts
+       into the page instead of butting against it with a seam. */
+    .about-sec--wash::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 65% 85% at 12% 12%,  rgba(108,142,245,0.13), transparent 62%),
+        radial-gradient(ellipse 55% 75% at 88% 92%,  rgba(140,100,255,0.10), transparent 64%),
+        linear-gradient(180deg, rgba(28,23,41,0)   0%,
+                                rgba(28,23,41,0.55) 22%,
+                                rgba(28,23,41,0.55) 78%,
+                                rgba(28,23,41,0)  100%);
+    }
+    /* mirrored so two washed sections don't read as the same slab twice */
+    .about-sec--wash-alt::before {
+      background:
+        radial-gradient(ellipse 65% 85% at 88% 10%, rgba(140,100,255,0.12), transparent 62%),
+        radial-gradient(ellipse 58% 78% at 10% 90%, rgba(108,142,245,0.11), transparent 64%),
+        linear-gradient(180deg, rgba(28,23,41,0)   0%,
+                                rgba(28,23,41,0.5)  22%,
+                                rgba(28,23,41,0.5)  78%,
+                                rgba(28,23,41,0)  100%);
+    }
+    /* the container already carries z-index 1; full-bleed children need it too */
+    .about-sec--wash > .testi-marquee { position: relative; z-index: 1; }
+
+    .sec-head { margin-bottom: 2.5rem; }
+    .sec-head__label {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--violet);
+      font-weight: 500;
+      margin-bottom: 0.6rem;
+    }
+    .sec-head__title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(1.5rem, 3vw, 2.1rem);
+      color: var(--white);
+      line-height: 1.15;
+    }
+    .sec-head__sub {
+      margin-top: 0.75rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.7;
+    }
+
+    /* ── 1. HERO ───────────────────────────────── */
+    /* background treatment mirrored from the home hero */
+    .about-hero-sec {
+      position: relative;
+      overflow: hidden;
+      /* carries what used to be .about-page's padding-top, so the section
+         box itself starts at the top edge and the grid can paint there */
+      padding-top: calc(8.5rem + clamp(1.5rem, 3vw, 2.5rem));
+      padding-bottom: clamp(4rem, 7vw, 6rem);
+    }
+    .about-hero-sec::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(108,142,245,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(108,142,245,0.07) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 40%, transparent 90%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 40%, transparent 90%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero__glow {
+      position: absolute;
+      top: 33%;
+      left: 50%;
+      translate: -50% -50%;
+      width: 600px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(108,142,245,0.10) 0%, transparent 68%);
+      filter: blur(60px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .blob-glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(70px);
+      pointer-events: none;
+      opacity: 0;
+      z-index: 0;
+      animation: blobPulse 5s ease-in-out infinite;
+    }
+    .blob-glow--1 {
+      width: 420px; height: 420px;
+      right: 8%; top: 10%;
+      background: radial-gradient(circle, rgba(108,142,245,0.18) 0%, transparent 70%);
+      animation-delay: 0s;
+      opacity: 0.7;
+    }
+    .blob-glow--2 {
+      width: 300px; height: 300px;
+      right: 18%; top: 30%;
+      background: radial-gradient(circle, rgba(140,100,255,0.12) 0%, transparent 70%);
+      animation: blobDrift 7s ease-in-out infinite;
+      animation-delay: 1s;
+      opacity: 0.5;
+    }
+    .blob-glow--3 {
+      width: 200px; height: 200px;
+      right: 5%; top: 50%;
+      background: radial-gradient(circle, rgba(108,142,245,0.1) 0%, transparent 70%);
+      animation: blobDrift 9s ease-in-out infinite;
+      animation-delay: 2s;
+      opacity: 0.4;
+    }
+    @keyframes blobPulse {
+      0%, 100% { transform: scale(1);   opacity: 0.7; }
+      50%      { transform: scale(1.12); opacity: 0.4; }
+    }
+    @keyframes blobDrift {
+      0%, 100% { transform: translate(0, 0)      scale(1); }
+      33%      { transform: translate(12px,-18px) scale(1.05); }
+      66%      { transform: translate(-8px, 10px) scale(0.96); }
+    }
+
+    .about-hero {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: clamp(2rem, 5vw, 4.5rem);
+      align-items: stretch;
+    }
+    .about-hero__eyebrow {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--violet-lt);
+      margin-bottom: 1rem;
+    }
+    .about-hero__title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(1.75rem, 3.4vw, 2.65rem);
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.35rem;
+    }
+    .about-hero__title .accent { color: var(--violet); }
+    .about-hero__text {
+      color: var(--muted);
+      font-size: 0.97rem;
+      font-weight: 300;
+      line-height: 1.8;
+      max-width: 34rem;
+    }
+    .about-hero__text + .about-hero__text { margin-top: 1rem; }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 1rem;
+      height: 100%;
+      min-height: 17rem;
+    }
+    .stat-card {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      border-radius: 18px;
+      padding: 1.6rem 1.35rem;
+      background: linear-gradient(150deg, rgba(28,23,41,0.92), rgba(19,16,28,0.92));
+      border: 1px solid rgba(108,142,245,0.18);
+      /* `translate` (not `transform`) on hover so it composes with the
+         entrance animation's transform instead of being overridden by it */
+      transition: border-color 0.25s ease, translate 0.25s ease, box-shadow 0.25s ease;
+      opacity: 0;
+      animation: statIn 0.62s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .stat-card:nth-child(1) { animation-delay: 0.10s; }
+    .stat-card:nth-child(2) { animation-delay: 0.20s; }
+    .stat-card:nth-child(3) { animation-delay: 0.30s; }
+    .stat-card:nth-child(4) { animation-delay: 0.40s; }
+
+    @keyframes statIn {
+      from { opacity: 0; transform: translateY(20px) scale(0.96); }
+      to   { opacity: 1; transform: translateY(0)    scale(1); }
+    }
+
+    /* drifting orb */
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: -40%; right: -30%;
+      width: 140px; height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(108,142,245,0.18) 0%, transparent 70%);
+      pointer-events: none;
+      animation: statOrb 7s ease-in-out infinite;
+    }
+    .stat-card:nth-child(2)::before { animation-delay: 1.2s; }
+    .stat-card:nth-child(3)::before { animation-delay: 2.4s; }
+    .stat-card:nth-child(4)::before { animation-delay: 3.6s; }
+    @keyframes statOrb {
+      0%, 100% { transform: translate(0, 0)      scale(1);    opacity: 1; }
+      50%      { transform: translate(-14px, 12px) scale(1.22); opacity: 0.65; }
+    }
+
+    /* sheen sweep on hover */
+    .stat-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(115deg, transparent 42%, rgba(108,142,245,0.13) 50%, transparent 58%);
+      translate: -110% 0;
+      pointer-events: none;
+    }
+    .stat-card:hover::after {
+      translate: 110% 0;
+      transition: translate 0.75s ease;
+    }
+    .stat-card:hover {
+      border-color: rgba(108,142,245,0.45);
+      translate: 0 -4px;
+      box-shadow: 0 14px 34px rgba(0,0,0,0.35);
+    }
+    .stat-card__num {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(2.25rem, 4.2vw, 3.15rem);
+      line-height: 1;
+      color: var(--white);
+      margin-bottom: 0.6rem;
+    }
+    .stat-card__label {
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .stat-card__caption {
+      font-size: 0.68rem;
+      letter-spacing: 0.01em;
+      text-transform: none;
+      color: var(--muted);
+      opacity: 0.65;
+      line-height: 1.4;
+      margin-top: 0.35rem;
+      font-style: italic;
+    }
+
+    /* ── 3. WORK EXPERIENCE ────────────────────── */
+    .exp-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.15rem;
+    }
+    .exp-card {
+      display: flex;
+      flex-direction: column;
+      border-radius: var(--radius);
+      padding: 1.6rem 1.4rem;
+      background: rgba(19,16,28,0.75);
+      border: 1px solid rgba(255,255,255,0.13);
+      transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease;
+    }
+    .exp-card:hover {
+      border-color: rgba(108,142,245,0.4);
+      background: rgba(28,23,41,0.85);
+      transform: translateY(-4px);
+    }
+    .exp-card__top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1.1rem;
+    }
+    .exp-card__dur {
+      display: flex;
+      align-items: baseline;
+      gap: 0.35rem;
+      font-family: var(--font-display);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--violet-lt);
+      background: rgba(108,142,245,0.12);
+      border: 1px solid rgba(108,142,245,0.3);
+      border-radius: 100px;
+      padding: 0.4rem 0.95rem;
+      white-space: nowrap;
+    }
+    .exp-card__dur-num {
+      font-size: 1.15rem;
+    }
+    .exp-card__dur-label {
+      font-size: 0.7rem;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      opacity: 0.85;
+    }
+    .exp-card__period {
+      font-size: 0.7rem;
+      color: rgba(175,169,189,0.8);
+      white-space: nowrap;
+    }
+    .exp-card__co-desc {
+      display: block;
+      font-size: 0.75rem;
+      color: rgba(175,169,189,0.75);
+      margin-top: 0.2rem;
+      margin-bottom: 0.8rem;
+      letter-spacing: 0.02em;
+    }
+    .exp-card__role {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.02rem;
+      color: var(--white);
+      line-height: 1.3;
+      margin-bottom: 0.35rem;
+    }
+    .exp-card__co {
+      font-size: 0.82rem;
+      color: var(--violet-lt);
+      margin-bottom: 0.2rem;
+    }
+    .exp-card__loc {
+      display: flex;
+      align-items: center;
+      gap: 0.32rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-bottom: 1.1rem;
+    }
+    .exp-card__list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      padding-top: 1.1rem;
+      border-top: 1px solid rgba(255,255,255,0.12);
+    }
+    .exp-card__list li {
+      position: relative;
+      padding-left: 1rem;
+      font-size: 0.8rem;
+      line-height: 1.65;
+      color: var(--muted);
+      font-weight: 300;
+    }
+    .exp-card__list li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0.62em;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: rgba(108,142,245,0.7);
+    }
+
+    /* ── 3b. DOMAIN MAP ────────────────────────── */
+    .dom-block {
+      margin-top: 3.5rem;
+      padding-top: 3rem;
+      border-top: 1px solid rgba(255,255,255,0.12);
+    }
+    .dom-head { margin-bottom: 2rem; }
+    .dom-head__label {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--violet);
+      margin-bottom: 0.6rem;
+    }
+    .dom-head__title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(1.35rem, 2.6vw, 1.75rem);
+      color: var(--white);
+      line-height: 1.25;
+      /* runs the full width of the section instead of wrapping under itself */
+      white-space: nowrap;
+    }
+    /* asymmetric 6-col rail: three cards up top, two wider ones beneath */
+    .dom-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 1.15rem;
+    }
+    .dom-card {
+      position: relative;
+      overflow: hidden;
+      grid-column: span 2;
+      display: flex;
+      flex-direction: column;
+      border-radius: var(--radius);
+      padding: 1.5rem 1.35rem 1.45rem;
+      background: rgba(19,16,28,0.75);
+      border: 1px solid rgba(255,255,255,0.13);
+      transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease;
+    }
+    .dom-card:nth-child(4),
+    .dom-card:nth-child(5) { grid-column: span 3; }
+    .dom-card:hover {
+      border-color: color-mix(in srgb, var(--acc) 45%, transparent);
+      background: rgba(28,23,41,0.85);
+      transform: translateY(-4px);
+    }
+    /* accent rule that runs out across the card top on hover */
+    .dom-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      height: 2px;
+      width: 3.25rem;
+      background: linear-gradient(90deg, var(--acc), transparent);
+      transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .dom-card:hover::before { width: 100%; }
+    .dom-card__idx {
+      position: absolute;
+      top: 0.55rem; right: 1rem;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 2.9rem;
+      line-height: 1;
+      color: var(--acc);
+      opacity: 0.13;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .dom-card:hover .dom-card__idx { opacity: 0.22; }
+    .dom-card__title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.98rem;
+      color: var(--white);
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+      padding-right: 2.5rem;
+    }
+    .dom-card__desc {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.65;
+      margin-bottom: 1.1rem;
+    }
+    .dom-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: auto;
+      padding-top: 0.9rem;
+      border-top: 1px solid rgba(255,255,255,0.12);
+    }
+    .dom-chips span {
+      font-size: 0.72rem;
+      color: rgba(232,228,240,0.72);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 100px;
+      padding: 0.32rem 0.72rem;
+      white-space: nowrap;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .dom-chips span:hover {
+      border-color: color-mix(in srgb, var(--acc) 50%, transparent);
+      background: color-mix(in srgb, var(--acc) 12%, transparent);
+      color: var(--white);
+    }
+
+    /* ── 4. EDUCATION ──────────────────────────── */
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: clamp(2rem, 5vw, 4rem);
+      align-items: start;
+    }
+    .edu-degree {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+      color: var(--white);
+      line-height: 1.3;
+      margin-bottom: 0.3rem;
+    }
+    .edu-meta { font-size: 0.86rem; color: var(--muted); line-height: 1.7; margin-bottom: 0.5rem; }
+    .edu-year {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--violet-lt);
+      border: 1px solid rgba(108,142,245,0.35);
+      background: rgba(108,142,245,0.1);
+      border-radius: 100px;
+      padding: 0.32rem 0.85rem;
+      margin-bottom: 1.6rem;
+    }
+    .edu-note { font-size: 0.9rem; color: var(--muted); font-weight: 300; line-height: 1.8; }
+
+    .module-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--violet);
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .module-chips { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.5rem; }
+    .module-chips span {
+      font-size: 0.75rem;
+      color: rgba(232,228,240,0.72);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 100px;
+      padding: 0.4rem 0.85rem;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .module-chips span:hover {
+      border-color: rgba(108,142,245,0.45);
+      color: var(--white);
+      background: rgba(108,142,245,0.1);
+    }
+
+    /* ── 5. PROCESS / SKILLS / TOOLS ───────────── */
+    .how-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+    }
+    .panel {
+      border-radius: var(--radius);
+      padding: 1.7rem 1.5rem;
+      background: rgba(19,16,28,0.72);
+      border: 1px solid rgba(255,255,255,0.13);
+    }
+    /* Header reads as a titled band across the top of the panel rather than
+       a floating icon+label. Negative margins pull it back out to the panel
+       edges, cancelling the panel's own padding. */
+    .panel__head {
+      margin: -1.7rem -1.5rem 1.6rem;
+      padding: 1.05rem 1.5rem;
+      background: linear-gradient(180deg, rgba(108,142,245,0.10), rgba(108,142,245,0.02));
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      /* inner radius: panel radius minus its 1px border, so the band's
+         corners sit flush inside the panel's rounded top */
+      border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.86rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    /* ── Design-thinking process chart ─────────── */
+    /* the chart keeps a legible minimum size and scrolls inside its own
+       box on narrow screens rather than squashing the labels */
+    .dt-scroll {
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+    .dt-chart {
+      display: block;
+      width: 100%;
+      min-width: 660px;
+      height: auto;
+    }
+    .dt-hint {
+      display: none;
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(175,169,189,0.65);
+      margin-top: 0.6rem;
+    }
+    @media (max-width: 780px) {
+      .dt-hint { display: block; }
+    }
+
+    .dt-node__disc {
+      fill: url(#dtNodeFill);
+      stroke: rgba(143,168,248,0.55);
+      stroke-width: 1.6;
+      transition: stroke 0.25s, filter 0.25s;
+    }
+    .dt-node__halo {
+      fill: none;
+      stroke: rgba(108,142,245,0.5);
+      stroke-width: 1.4;
+      opacity: 0;
+    }
+    .dt-node__label {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 20px;
+      fill: #F2F0F8;
+      letter-spacing: 0.01em;
+      transition: fill 0.25s;
+    }
+    .dt-node:hover .dt-node__disc { stroke: rgba(180,200,255,0.95); filter: url(#dtGlow); }
+    .dt-node:hover .dt-node__label { fill: #FFFFFF; }
+
+    .dt-arrow {
+      fill: none;
+      stroke: rgba(108,142,245,0.85);
+      stroke-width: 2.4;
+      stroke-linecap: round;
+      stroke-dasharray: 6 7;
+    }
+    .dt-loop {
+      fill: none;
+      stroke: rgba(175,169,189,0.42);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-dasharray: 9 9;
+    }
+    .dt-loop-label {
+      font-family: var(--font-body);
+      font-size: 17px;
+      font-weight: 400;
+      fill: rgba(175,169,189,0.9);
+      letter-spacing: 0.01em;
+    }
+
+    /* Entrance: staggered, played once the section scrolls into view.
+       The hidden start state comes from each animation's `both` fill rather
+       than a blanket opacity:0, so if the reveal observer never runs the
+       chart is drawn in full instead of staying blank. */
+    .reveal.visible .dt-node {
+      animation: dtNodeIn 0.6s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+    }
+    .reveal.visible .dt-node__halo {
+      animation: dtHalo 3.4s ease-in-out infinite;
+    }
+    .reveal.visible .dt-arrow {
+      animation: dtFade 0.4s ease both, dtFlowFast 2.2s linear infinite;
+    }
+    .reveal.visible .dt-loop {
+      animation: dtFade 0.5s ease both, dtFlow 6s linear infinite;
+    }
+    .reveal.visible .dt-loop-label { animation: dtFade 0.5s ease both; }
+
+    .dt-node--1 { transform-origin: 105px 320px; animation-delay: 0.05s; }
+    .dt-node--2 { transform-origin: 353px 320px; animation-delay: 0.15s; }
+    .dt-node--3 { transform-origin: 601px 320px; animation-delay: 0.25s; }
+    .dt-node--4 { transform-origin: 849px 320px; animation-delay: 0.35s; }
+    .dt-node--5 { transform-origin: 1097px 320px; animation-delay: 0.45s; }
+    .reveal.visible .dt-node--1 .dt-node__halo { animation-delay: 0.7s; }
+    .reveal.visible .dt-node--2 .dt-node__halo { animation-delay: 1.4s; }
+    .reveal.visible .dt-node--3 .dt-node__halo { animation-delay: 2.1s; }
+    .reveal.visible .dt-node--4 .dt-node__halo { animation-delay: 2.8s; }
+    .reveal.visible .dt-node--5 .dt-node__halo { animation-delay: 3.5s; }
+
+    .dt-arrow--1 { animation-delay: 0.5s, 0s; }
+    .dt-arrow--2 { animation-delay: 0.6s, 0s; }
+    .dt-arrow--3 { animation-delay: 0.7s, 0s; }
+    .dt-arrow--4 { animation-delay: 0.8s, 0s; }
+
+    .dt-loop--1 { animation-delay: 0.95s, 0s; }
+    .dt-loop--2 { animation-delay: 1.05s, 0s; }
+    .dt-loop--3 { animation-delay: 1.15s, 0s; }
+    .dt-loop--4 { animation-delay: 1.25s, 0s; }
+    .dt-loop--5 { animation-delay: 1.35s, 0s; }
+    .dt-loop-label--1 { animation-delay: 1.15s; }
+    .dt-loop-label--2 { animation-delay: 1.25s; }
+    .dt-loop-label--3 { animation-delay: 1.35s; }
+    .dt-loop-label--4 { animation-delay: 1.45s; }
+    .dt-loop-label--5 { animation-delay: 1.55s; }
+
+    @keyframes dtNodeIn {
+      from { opacity: 0; transform: scale(0.55); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    @keyframes dtFade { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes dtFlow     { to { stroke-dashoffset: -180; } }
+    @keyframes dtFlowFast { to { stroke-dashoffset: -130; } }
+    @keyframes dtHalo {
+      0%, 100% { opacity: 0.3; stroke-width: 1.4; r: 66; }
+      50%      { opacity: 0;   stroke-width: 0.8; r: 82; }
+    }
+
+    /* ── Core skills: numbered nodes strung on a single spine ── */
+    .cs-spine { list-style: none; display: flex; flex-direction: column; }
+    .cs-item {
+      position: relative;
+      display: grid;
+      grid-template-columns: 2.4rem minmax(10rem, 15rem) 1fr;
+      align-items: start;
+      gap: 0 1.5rem;
+      padding-bottom: 1.75rem;
+    }
+    .cs-item:last-child { padding-bottom: 0; }
+    /* the connecting run of spine, drawn from under one node to the next */
+    .cs-item::before {
+      content: '';
+      position: absolute;
+      left: 1.2rem;
+      top: 2.75rem;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(180deg, rgba(108,142,245,0.35), rgba(108,142,245,0.08));
+    }
+    .cs-item:last-child::before { display: none; }
+    .cs-item__node {
+      position: relative;
+      z-index: 1;
+      width: 2.4rem;
+      height: 2.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: var(--violet-lt);
+      background: rgba(19,16,28,0.95);
+      border: 1px solid rgba(108,142,245,0.35);
+      transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+    }
+    /* icons inherit the node's colour, so they invert with it on hover */
+    .cs-item__node svg { width: 1.05rem; height: 1.05rem; }
+    .cs-item:hover .cs-item__node {
+      background: linear-gradient(145deg, #a8bcfb 0%, #6c8ef5 48%, #4257c4 100%);
+      border-color: rgba(168,188,251,0.75);
+      color: #0A0A0F;
+      box-shadow: 0 0 0 5px rgba(108,142,245,0.12), 0 6px 18px rgba(108,142,245,0.32);
+    }
+    .cs-item__title {
+      grid-column: 2;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--white);
+      line-height: 1.45;
+      padding-top: 0.42rem;
+      transition: color 0.25s ease;
+    }
+    .cs-item:hover .cs-item__title { color: var(--violet-lt); }
+    .cs-item__body {
+      grid-column: 3;
+      font-size: 0.81rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.7;
+      padding-top: 0.5rem;
+      max-width: 74ch;
+    }
+    /* every one of these lines opens with the claim and then qualifies it,
+       so the opening clause carries the weight */
+    .cs-item__claim {
+      color: rgba(232,228,240,0.92);
+      font-weight: 400;
+    }
+
+    /* ── Toolkit: grouped by the job each tool does ── */
+    .tk-stack { display: flex; flex-direction: column; }
+    /* each group is a band: intent on the left, the tools it covers on the right */
+    .tk-group {
+      display: grid;
+      grid-template-columns: 15.5rem 1fr;
+      gap: 1.25rem 2.25rem;
+      padding: 1.5rem 0;
+      border-top: 1px solid rgba(255,255,255,0.12);
+    }
+    .tk-group:first-child { padding-top: 0; border-top: 0; }
+    .tk-group:last-child  { padding-bottom: 0; }
+    .tk-group__idx {
+      display: block;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      color: var(--violet);
+      opacity: 0.7;
+      margin-bottom: 0.5rem;
+    }
+    .tk-group__title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--white);
+      line-height: 1.35;
+      margin-bottom: 0.4rem;
+    }
+    .tk-group__desc {
+      font-size: 0.76rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.6;
+    }
+    /* tools flow into as many columns as fit; the hero group stays full width */
+    .tk-group__tools {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+      gap: 0.6rem;
+      align-content: start;
+    }
+    .tk-group--hero .tk-group__tools { grid-template-columns: 1fr; }
+
+    /* No stroke border: the box is defined by its own fill plus a thin
+       shadow, so the edge reads as depth rather than an outline. */
+    .tk-tool {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.75rem 0.9rem;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.055);
+      border: 0;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.35), 0 1px 6px rgba(0,0,0,0.18);
+      transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+    .tk-tool:hover {
+      background: rgba(108,142,245,0.11);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.4), 0 6px 16px rgba(108,142,245,0.14);
+      transform: translateY(-2px);
+    }
+    .tk-tool__logo {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+    /* the Adobe trio reads as one entry, so its marks overlap into a cluster */
+    .tk-tool__cluster {
+      display: flex;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+    .tk-tool__cluster img {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
+    .tk-tool__cluster img + img { margin-left: -9px; }
+    .tk-tool__body { display: flex; flex-direction: column; gap: 0.2rem; min-width: 0; }
+    .tk-tool__name {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.83rem;
+      color: var(--white);
+      line-height: 1.3;
+    }
+    .tk-tool__detail {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.55;
+    }
+    /* the one tool everything else orbits gets the accent treatment */
+    .tk-group--hero .tk-tool {
+      background: linear-gradient(120deg, rgba(108,142,245,0.18), rgba(108,142,245,0.06));
+      /* accent lift comes from the shadow now that the outline is gone */
+      box-shadow: 0 1px 2px rgba(0,0,0,0.35), 0 4px 14px rgba(108,142,245,0.16);
+      align-items: center;
+      padding: 1rem 1.1rem;
+    }
+    .tk-group--hero .tk-tool__logo { width: 34px; height: 34px; margin-top: 0; }
+    .tk-group--hero .tk-tool__name { font-size: 1rem; }
+    .tk-group--hero .tk-tool__detail { font-size: 0.76rem; }
+
+    /* ── 6. TESTIMONIALS ───────────────────────── */
+    /* ── Testimonials: a rail that parks under the cursor ── */
+    /* Edges dissolve so cards enter and leave rather than clip. This is a
+       mask, not a pair of --bg-coloured overlays: the rail sits on a tinted
+       band, and a solid fade-to-black would stamp dark patches over it. */
+    .testi-marquee {
+      position: relative;
+      overflow: hidden;
+      padding-block: 0.4rem;
+      --testi-fade: clamp(36px, 8vw, 150px);
+      -webkit-mask-image: linear-gradient(90deg,
+        transparent 0, #000 var(--testi-fade),
+        #000 calc(100% - var(--testi-fade)), transparent 100%);
+      mask-image: linear-gradient(90deg,
+        transparent 0, #000 var(--testi-fade),
+        #000 calc(100% - var(--testi-fade)), transparent 100%);
+    }
+
+    .testi-row { display: flex; width: max-content; }
+    .testi-track {
+      display: flex;
+      align-items: stretch;
+      gap: 1.15rem;
+      padding-right: 1.15rem;
+      flex-shrink: 0;
+      animation: testiScroll 78s linear infinite;
+    }
+    @keyframes testiScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-100%); }
+    }
+    /* the whole point: park the rail so a quote can actually be read */
+    .testi-marquee:hover .testi-track,
+    .testi-marquee:focus-within .testi-track { animation-play-state: paused; }
+
+    .testi-hint {
+      font-size: 0.72rem;
+      color: var(--muted);
+      opacity: 0.7;
+      margin-top: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .testi-hint svg { color: var(--violet); flex-shrink: 0; }
+    .testi-hint__touch { display: none; }
+
+    .testi-card {
+      position: relative;
+      /* the upper bound also keeps one track wider than an ultrawide
+         viewport, which is what makes the loop seamless */
+      flex: 0 0 clamp(16.5rem, 25vw, 24rem);
+      display: flex;
+      flex-direction: column;
+      border-radius: var(--radius);
+      padding: 1.5rem 1.4rem;
+      background: rgba(19,16,28,0.72);
+      border: 1px solid rgba(255,255,255,0.13);
+      transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease;
+    }
+    .testi-card:hover {
+      border-color: rgba(108,142,245,0.4);
+      background: rgba(28,23,41,0.9);
+      transform: translateY(-4px);
+    }
+    /* quote glyph and the company it came from share the top line */
+    .testi-card__top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .testi-card__mark {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 700;
+      line-height: 0.7;
+      color: rgba(108,142,245,0.35);
+    }
+    .testi-card__org {
+      font-size: 0.66rem;
+      color: rgba(175,169,189,0.85);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 100px;
+      padding: 0.28rem 0.7rem;
+      white-space: nowrap;
+      letter-spacing: 0.02em;
+    }
+    .testi-card__quote {
+      font-size: 0.85rem;
+      line-height: 1.75;
+      color: rgba(232,228,240,0.82);
+      font-weight: 300;
+      margin-bottom: 1.3rem;
+      flex: 1;
+    }
+    .testi-card__by {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.12);
+    }
+    .testi-card__avatar {
+      width: 34px; height: 34px;
+      border-radius: 10px;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--violet-lt);
+      background: rgba(108,142,245,0.14);
+      border: 1px solid rgba(108,142,245,0.28);
+    }
+    .testi-card__id { display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; }
+    .testi-card__name {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.84rem;
+      color: var(--white);
+      line-height: 1.3;
+    }
+    .testi-card__role { font-size: 0.7rem; color: var(--muted); line-height: 1.4; }
+
+    /* ── 7. HOBBIES ────────────────────────────── */
+    .hobby-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.15rem;
+    }
+    .hobby-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius);
+      padding: 1.8rem 1.4rem;
+      /* tonal wash rather than a flat fill, so the corner illustration has
+         something to sit against the way the reference cards do */
+      background: linear-gradient(155deg, rgba(34,28,52,0.85) 0%, rgba(19,16,28,0.72) 55%);
+      border: 1px solid rgba(255,255,255,0.13);
+      transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease;
+    }
+    /* corner illustration: tonal shapes built from gradients, no outlines */
+    .hobby-card__art {
+      position: absolute;
+      right: 0; bottom: 0;
+      width: 132px; height: 132px;
+      pointer-events: none;
+      z-index: 0;
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .hobby-card:hover .hobby-card__art { transform: scale(1.09); }
+    .hobby-card::after {
+      content: '';
+      position: absolute;
+      bottom: -50%; right: -35%;
+      width: 150px; height: 150px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(108,142,245,0.14) 0%, transparent 70%);
+      pointer-events: none;
+      transition: transform 0.4s ease;
+    }
+    .hobby-card:hover {
+      border-color: rgba(108,142,245,0.4);
+      background: rgba(28,23,41,0.85);
+      transform: translateY(-4px);
+    }
+    .hobby-card:hover::after { transform: scale(1.35); }
+    /* text rides above both the illustration and the ambient glow */
+    .hobby-card__name {
+      position: relative;
+      z-index: 1;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--white);
+      margin-bottom: 0.45rem;
+    }
+    .hobby-card__desc {
+      position: relative;
+      z-index: 1;
+      font-size: 0.79rem;
+      color: var(--muted);
+      line-height: 1.65;
+      font-weight: 300;
+      /* keeps copy clear of the artwork in the bottom-right */
+      padding-bottom: 3.25rem;
+    }
+
+    /* ── Playground cross-link ─────────────────── */
+    .pg-link-row { margin-top: 2rem; }
+    .pg-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--violet-lt);
+      border: 1px solid rgba(108,142,245,0.35);
+      background: rgba(108,142,245,0.08);
+      border-radius: 100px;
+      padding: 0.6rem 1.3rem;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+    }
+    .pg-link:hover {
+      border-color: rgba(108,142,245,0.7);
+      background: rgba(108,142,245,0.16);
+      color: var(--white);
+    }
+
+    /* ── About responsive ──────────────────────── */
+    @media (max-width: 960px) {
+      .about-hero    { grid-template-columns: 1fr; gap: 2.5rem; }
+      .exp-grid      { grid-template-columns: 1fr; }
+      .hobby-grid    { grid-template-columns: repeat(2, 1fr); }
+      .edu-grid      { grid-template-columns: 1fr; gap: 2rem; }
+      .dom-head      { grid-template-columns: 1fr; align-items: start; }
+      /* 6-col rail collapses to two even columns, last card runs full width */
+      .dom-grid      { grid-template-columns: repeat(2, 1fr); }
+      .dom-card,
+      .dom-card:nth-child(4),
+      .dom-card:nth-child(5) { grid-column: span 1; }
+      .dom-card:nth-child(5) { grid-column: span 2; }
+      /* the intent column stacks above its tools instead of sitting beside them */
+      .tk-group      { grid-template-columns: 1fr; gap: 0.9rem; }
+      /* title drops above its own body, both still hanging off the spine */
+      .cs-item       { grid-template-columns: 2.4rem 1fr; }
+      .cs-item__body { grid-column: 2; padding-top: 0.4rem; max-width: none; }
+    }
+    @media (max-width: 640px) {
+      .about-hero-sec { padding-top: calc(7rem + clamp(1.5rem, 3vw, 2.5rem)); }
+      /* narrow viewports can't guarantee the room nowrap assumes */
+      .dom-head__title { white-space: normal; }
+      .dom-grid    { grid-template-columns: 1fr; }
+      .dom-card:nth-child(5) { grid-column: span 1; }
+      .hobby-grid  { grid-template-columns: 1fr; }
+      .stat-card   { padding: 1.25rem 1rem; }
+      /* tighter gutter so the copy column keeps its measure */
+      .cs-item     { grid-template-columns: 2rem 1fr; gap: 0 1rem; }
+      .cs-item::before { left: 1rem; top: 2.35rem; }
+      .cs-item__node   { width: 2rem; height: 2rem; font-size: 0.66rem; }
+      .cs-item__title  { padding-top: 0.3rem; }
+    }
+    @media (max-width: 400px) {
+      .stat-grid { gap: 0.7rem; }
+    }
+
+    /* ── Page transition ─────────────────────────── */
+    /* fill-mode `both` supplies the opacity:0 start state, so if CSS
+       animations ever fail to run the page stays visible rather than blank */
+    body {
+      animation: pageIn 0.42s ease both;
+    }
+    body.is-leaving {
+      animation: pageOut 0.26s ease forwards;
+    }
+    @keyframes pageIn  { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes pageOut { from { opacity: 1; } to { opacity: 0; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      body,
+      body.is-leaving { animation: none; opacity: 1; }
+    }
+
+    /* Without a pointer there is no way to pause a moving rail, so on touch
+       (and under reduced motion) it becomes a plain swipeable row instead.
+       The loop clone would only repeat every quote, so it is dropped. */
+    @media (prefers-reduced-motion: reduce), (hover: none) {
+      .testi-track { animation: none; }
+      .testi-track[aria-hidden="true"] { display: none; }
+      .testi-row {
+        width: 100%;
+        overflow-x: auto;
+        padding-inline: var(--side-pad);
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .testi-row::-webkit-scrollbar { display: none; }
+      .testi-card { scroll-snap-align: start; }
+      /* no fade when swiping - it would dim the card at the scroll edge */
+      .testi-marquee { -webkit-mask-image: none; mask-image: none; }
+      .testi-hint__pointer { display: none; }
+      .testi-hint__touch   { display: inline; }
+    }
+  </style>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="367feb64-6bc2-4d86-9c91-c5d3bd3d553f"></script>
+  <script defer src="assets/js/analytics.js"></script>
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav-pill" id="mainNav">
+      <a href="index.html" class="nav-link" data-umami-event="nav-click" data-umami-event-target="home">Home</a>
+      <a href="index.html#work" class="nav-link" data-umami-event="nav-click" data-umami-event-target="work">Work</a>
+      <a href="playground.html" class="nav-link" data-umami-event="nav-click" data-umami-event-target="playground">Playground</a>
+      <a href="about.html" class="nav-link nav-link--active" data-umami-event="nav-click" data-umami-event-target="about">About</a>
+      <a href="assets/resume/Imalsha-Kandamby-Resume-Product-Designer.pdf" target="_blank" rel="noopener" class="nav-link" data-umami-event="resume-view">Resume ↗</a>
+      <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <!-- Mobile overlay -->
+    <nav class="nav-mobile-menu" id="navMobileMenu" role="dialog" aria-label="Mobile navigation">
+      <button class="nav-mobile-close" id="navMobileClose" aria-label="Close menu">&#x2715;</button>
+      <a href="index.html" class="nav-link" data-umami-event="nav-click" data-umami-event-target="home">Home</a>
+      <a href="index.html#work" class="nav-link" data-umami-event="nav-click" data-umami-event-target="work">Work</a>
+      <a href="playground.html" class="nav-link" data-umami-event="nav-click" data-umami-event-target="playground">Playground</a>
+      <a href="about.html" class="nav-link nav-link--active" data-umami-event="nav-click" data-umami-event-target="about">About</a>
+      <a href="assets/resume/Imalsha-Kandamby-Resume-Product-Designer.pdf" target="_blank" rel="noopener" class="nav-link" data-umami-event="resume-view">Resume ↗</a>
+    </nav>
+  </header>
+
+  <main class="about-page">
+
+    <!-- ══════════════════════════════
+         1 · HERO
+    ══════════════════════════════ -->
+    <section class="about-sec about-hero-sec" aria-labelledby="aboutHeroTitle">
+      <div class="hero__glow" aria-hidden="true"></div>
+      <div class="blob-glow blob-glow--1" aria-hidden="true"></div>
+      <div class="blob-glow blob-glow--2" aria-hidden="true"></div>
+      <div class="blob-glow blob-glow--3" aria-hidden="true"></div>
+
+      <div class="container">
+        <div class="about-hero">
+          <div>
+            <p class="about-hero__eyebrow">About Me</p>
+            <h1 class="about-hero__title" id="aboutHeroTitle">
+              Designing with <span class="accent">intent</span>,<br>not just intuition.
+            </h1>
+            <p class="about-hero__text">
+              I'm Imalsha – a Product Designer based in the Netherlands who believes the best design is the kind
+              people never have to think about.
+            </p>
+            <p class="about-hero__text">
+              For the past four years I've worked end to end across SaaS, B2B, D2C, AI-powered platforms,
+              e-Commerce, web and mobile from the first user interview through to post-handoff design review.
+              I've owned products solo and collaborated within larger teams, always with the same goal: close the
+              gap between what a product promises and what a person actually experiences. I close that gap with
+              research, clear information architecture, and design systems that survive contact with real
+              engineering teams.
+            </p>
+          </div>
+
+          <div class="stat-grid" role="list" aria-label="Career highlights">
+            <div class="stat-card" role="listitem">
+              <div class="stat-card__num" data-count="35" data-suffix="+">35+</div>
+              <div class="stat-card__label">Design Projects</div>
+              <div class="stat-card__caption">No two the same, all delivered.</div>
+            </div>
+            <div class="stat-card" role="listitem">
+              <div class="stat-card__num" data-count="18" data-suffix="+">18+</div>
+              <div class="stat-card__label">Domains &amp; Industries</div>
+              <div class="stat-card__caption">New domain, same standard.</div>
+            </div>
+            <div class="stat-card" role="listitem">
+              <div class="stat-card__num" data-count="4" data-suffix="">4</div>
+              <div class="stat-card__label">Years Experience</div>
+              <div class="stat-card__caption">End-to-end, every time.</div>
+            </div>
+            <div class="stat-card" role="listitem">
+              <div class="stat-card__num" data-count="2" data-suffix="&times;">2&times;</div>
+              <div class="stat-card__label">Promoted</div>
+              <div class="stat-card__caption">Recognised for ownership, not just output.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         3 · WORK EXPERIENCE
+    ══════════════════════════════ -->
+    <section class="about-sec" aria-labelledby="expTitle">
+      <div class="container">
+        <div class="sec-head reveal">
+          <p class="sec-head__label">Where I've Worked</p>
+          <h2 class="sec-head__title" id="expTitle">Experience that shipped</h2>
+          <p class="sec-head__sub">
+            Four years across product design and frontend-adjacent engineering - building for real users,
+            real deadlines and real teams.
+          </p>
+        </div>
+
+        <div class="exp-grid">
+        <article class="exp-card reveal">
+          <div class="exp-card__top">
+            <span class="exp-card__dur"><span class="exp-card__dur-num">3</span><span class="exp-card__dur-label">Years</span></span>
+            <span class="exp-card__period">2023 – 2026</span>
+          </div>
+          <h3 class="exp-card__role">UX Designer</h3>
+          <span class="exp-card__co">Swivel Tech Pvt Ltd</span>
+          <span class="exp-card__co-desc">Serving Australian & Global Clients</span>
+          <span class="exp-card__loc">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Colombo 03, Sri Lanka
+          </span>
+          <ul class="exp-card__list">
+            <li>Promoted based on KPI performance for consistent ownership and delivery across a project-based environment</li>
+            <li>Shipped 28+ projects across 15+ domains simultaneously without losing speed or quality - including complex consumer apps and internal operational tools.</li>
+            <li>Built a token-driven design system of 48 components from scratch, adopted across 4 products, cutting handoff time by 40%</li>
+            <li>Owned the full design lifecycle end-to-end - from discovery and research through to post-handoff design review - across web, mobile, and AI-powered platforms</li>
+            <li>Collaborated with Product Managers, Developers, Test Engineers, Stakeholders, and Marketing teams to deliver UI/UX, branding assets, campaign materials, and social media content.</li>
+          </ul>
+        </article>
+        <article class="exp-card reveal">
+          <div class="exp-card__top">
+            <span class="exp-card__dur"><span class="exp-card__dur-num">1</span><span class="exp-card__dur-label">Year</span></span>
+            <span class="exp-card__period">2022 – 2023</span>
+          </div>
+          <h3 class="exp-card__role">UI/UX Engineer</h3>
+          <span class="exp-card__co">Akvasoft Pvt Ltd</span>
+          <span class="exp-card__co-desc">Serving Indian & Global Clients</span>
+          <span class="exp-card__loc">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Galle, Sri Lanka
+          </span>
+          <ul class="exp-card__list">
+            <li>Promoted within 3 months for switching between unrelated client domains quickly - learning each business context, adapting design decisions, and maintaining quality without losing speed.</li>
+            <li>Designed and shipped Shopify product recommendation quizzes across 5+ e-commerce domains - sitting directly in the purchase funnel, where better UX translates into measurable gains in discovery, personalization, and conversion.</li>
+            <li>Bridged design and development by building in Figma and implementing in HTML, CSS, and Shopify Liquid - fewer lost-in-translation moments, faster iterations, and a final product that actually matched the design intent.</li>
+            <li>Collaborated with Developers, Test Engineers, Project Managers, and Clients across multiple Shopify stores to ensure seamless implementation, design consistency, and high-quality delivery throughout.</li>
+          </ul>
+        </article>
+        <article class="exp-card reveal">
+          <div class="exp-card__top">
+            <span class="exp-card__dur"><span class="exp-card__dur-num">6</span><span class="exp-card__dur-label">Months</span></span>
+            <span class="exp-card__period">2020 – 2021</span>
+          </div>
+          <h3 class="exp-card__role">Trainee Software Engineer</h3>
+          <span class="exp-card__co">Inova Labs Pvt Ltd</span>
+          <span class="exp-card__co-desc">Internship during University</span>
+          <span class="exp-card__loc">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Sri Lanka
+          </span>
+          <ul class="exp-card__list">
+            <li>Built responsive interfaces using React, Bootstrap, and Ant Design during a 6-month front-end internship.</li>
+            <li>Gained hands-on understanding of how design decisions behave in real code - spacing, component states, responsive breakpoints, and rendering constraints.</li>
+            <li>That early technical grounding has made every developer conversation since faster, more precise, and less likely to end in "that's not possible."</li>
+            <li>Applied UI/UX principles directly in front-end implementation, not just in design files.</li>
+            <li>Developed early fluency across both design and engineering - understanding how the two disciplines speak differently about the same problem.</li>
+            <li>The result: cleaner handoffs, shorter feedback loops, and a significantly smaller gap between what gets designed and what actually gets shipped.</li>
+          </ul>
+        </article>
+        </div>
+
+        <!-- Domain map -->
+        <div class="dom-block">
+          <div class="dom-head reveal">
+            <p class="dom-head__label">Domains &amp; Industries</p>
+            <h3 class="dom-head__title">Five kinds of problem, one standard</h3>
+          </div>
+
+          <div class="dom-grid">
+            <article class="dom-card reveal" style="--acc:#6c8ef5">
+              <span class="dom-card__idx" aria-hidden="true">01</span>
+              <h4 class="dom-card__title">High-Stakes &amp; Regulated</h4>
+              <p class="dom-card__desc">Domains where a wrong default costs the user real money, time, or trust.</p>
+              <div class="dom-chips">
+                <span>FinTech AI</span>
+                <span>Legal Technology</span>
+                <span>Healthcare</span>
+                <span>Analytics &amp; Stats</span>
+              </div>
+            </article>
+
+            <article class="dom-card reveal" style="--acc:#8a7cf0">
+              <span class="dom-card__idx" aria-hidden="true">02</span>
+              <h4 class="dom-card__title">AI-Native Products</h4>
+              <p class="dom-card__desc">Designing for systems that think - where clarity, trust, and explainability are the interface.</p>
+              <div class="dom-chips">
+                <span>AI-Powered Solutions</span>
+                <span>SportsTech AI</span>
+                <span>HR Technology</span>
+                <span>FinTech AI</span>
+              </div>
+            </article>
+
+            <article class="dom-card reveal" style="--acc:#6fa8ee">
+              <span class="dom-card__idx" aria-hidden="true">03</span>
+              <h4 class="dom-card__title">Growth &amp; Conversion</h4>
+              <p class="dom-card__desc">Domains where design decisions live or die by the numbers.</p>
+              <div class="dom-chips">
+                <span>E-Commerce</span>
+                <span>Lead Generation</span>
+                <span>Marketing</span>
+              </div>
+            </article>
+
+            <article class="dom-card reveal" style="--acc:#7fb6e8">
+              <span class="dom-card__idx" aria-hidden="true">04</span>
+              <h4 class="dom-card__title">Consumer &amp; Lifestyle</h4>
+              <p class="dom-card__desc">Products that need to feel effortless for people who aren't thinking about UX at all.</p>
+              <div class="dom-chips">
+                <span>Fashion &amp; Apparel</span>
+                <span>Beauty &amp; Personal Care</span>
+                <span>Food &amp; Beverage</span>
+                <span>Home &amp; Interior Design</span>
+                <span>Furniture &amp; Home</span>
+                <span>Property</span>
+              </div>
+            </article>
+
+            <article class="dom-card reveal" style="--acc:#6fc3d6">
+              <span class="dom-card__idx" aria-hidden="true">05</span>
+              <h4 class="dom-card__title">Operational &amp; Niche</h4>
+              <p class="dom-card__desc">Domains most designers haven't touched - which means fewer assumptions and sharper research.</p>
+              <div class="dom-chips">
+                <span>Agriculture &amp; Farming</span>
+                <span>HR Technology</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         4 · EDUCATION
+    ══════════════════════════════ -->
+    <section class="about-sec about-sec--wash" aria-labelledby="eduTitle">
+      <div class="container">
+        <div class="sec-head reveal">
+          <p class="sec-head__label">Education</p>
+          <h2 class="sec-head__title" id="eduTitle">Where the foundation was built</h2>
+        </div>
+
+        <div class="edu-grid">
+          <div class="reveal">
+            <h3 class="edu-degree">B.Sc. (Hons) in Information Technology &amp; Management</h3>
+            <p class="edu-meta">Faculty of Information Technology · University of Moratuwa, Sri Lanka</p>
+            <span class="edu-year">2017 – 2022</span>
+            <p class="edu-note">
+              A degree that sat deliberately between engineering, design, and business, exactly where product
+              design lives. It gave me the vocabulary to talk to developers about feasibility, to designers
+              about experience, and to stakeholders about value, without needing a translator in any room.
+            </p>
+          </div>
+
+          <div class="reveal">
+            <p class="module-label">Key Modules</p>
+            <div class="module-chips">
+              <span>Essentials of Multimedia and Web Technologies</span>
+              <span>Information Systems Management</span>
+              <span>Computer Graphics and Animation</span>
+              <span>Human Computer Interaction</span>
+              <span>Innovation Management</span>
+              <span>Object Oriented Analysis and Design</span>
+              <span>Principles of Marketing</span>
+              <span>IT Project Management</span>
+              <span>Management Information Systems</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         5 · PROCESS · SKILLS · TOOLS
+    ══════════════════════════════ -->
+    <section class="about-sec" aria-labelledby="howTitle">
+      <div class="container">
+        <div class="sec-head reveal">
+          <p class="sec-head__label">How I Work</p>
+          <h2 class="sec-head__title" id="howTitle">Process, skills &amp; the tools behind them</h2>
+        </div>
+
+        <div class="how-stack">
+
+          <div class="panel panel--wide reveal">
+            <div class="panel__head">
+              UX Process
+            </div>
+            <div class="dt-scroll">
+              <!-- name comes from aria-label, not a <title> element: <title>
+                   renders as a native browser tooltip on hover, which we don't want -->
+              <svg class="dt-chart" viewBox="0 60 1200 555" role="img"
+                   aria-label="Design thinking: a non-linear process" aria-describedby="dtDesc">
+                <desc id="dtDesc">Five stages run in order: Empathize, Define, Ideate, Prototype and Test. Dashed feedback loops run backwards between them, showing that testing feeds new ideas, redefines the problem and returns to user understanding.</desc>
+
+                <defs>
+                  <linearGradient id="dtNodeFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%"   stop-color="#7d9df7" />
+                    <stop offset="100%" stop-color="#5570d8" />
+                  </linearGradient>
+                  <filter id="dtGlow" x="-60%" y="-60%" width="220%" height="220%">
+                    <feGaussianBlur stdDeviation="9" result="b" />
+                    <feMerge>
+                      <feMergeNode in="b" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                  <marker id="dtTipAccent" viewBox="0 0 10 10" refX="8.5" refY="5"
+                          markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+                    <path d="M0 0 L10 5 L0 10 Z" fill="rgba(108,142,245,0.9)" />
+                  </marker>
+                  <marker id="dtTipMuted" viewBox="0 0 10 10" refX="8.5" refY="5"
+                          markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+                    <path d="M0 0 L10 5 L0 10 Z" fill="rgba(175,169,189,0.6)" />
+                  </marker>
+                </defs>
+
+                <!-- feedback loops (drawn under the nodes) -->
+                <path class="dt-loop dt-loop--1" d="M 1144 273 C 1130 70, 300 30, 58 268"
+                      marker-end="url(#dtTipMuted)" />
+                <path class="dt-loop dt-loop--2" d="M 152 273 C 160 165, 298 165, 306 273"
+                      marker-start="url(#dtTipMuted)" marker-end="url(#dtTipMuted)" />
+                <path class="dt-loop dt-loop--3" d="M 1050 273 C 1030 140, 700 140, 648 268"
+                      marker-end="url(#dtTipMuted)" />
+                <path class="dt-loop dt-loop--4" d="M 802 367 C 838 505, 612 505, 648 367"
+                      marker-start="url(#dtTipMuted)" marker-end="url(#dtTipMuted)" />
+                <path class="dt-loop dt-loop--5" d="M 1050 367 C 1010 635, 520 645, 400 372"
+                      marker-end="url(#dtTipMuted)" />
+
+                <!-- loop captions -->
+                <text class="dt-loop-label dt-loop-label--1" text-anchor="middle">
+                  <tspan x="430" y="152">Learn about users</tspan>
+                  <tspan x="430" y="176">through testing</tspan>
+                </text>
+                <text class="dt-loop-label dt-loop-label--2" text-anchor="middle">
+                  <tspan x="229" y="216">Empathize to define</tspan>
+                  <tspan x="229" y="240">the problem</tspan>
+                </text>
+                <text class="dt-loop-label dt-loop-label--3" text-anchor="middle">
+                  <tspan x="861" y="196">Test creates</tspan>
+                  <tspan x="861" y="220">new ideas for</tspan>
+                  <tspan x="861" y="244">the project</tspan>
+                </text>
+                <text class="dt-loop-label dt-loop-label--4" text-anchor="middle">
+                  <tspan x="725" y="396">Learn from</tspan>
+                  <tspan x="725" y="417">prototypes to</tspan>
+                  <tspan x="725" y="438">spark new ideas</tspan>
+                </text>
+                <text class="dt-loop-label dt-loop-label--5" text-anchor="middle">
+                  <tspan x="640" y="502">Test reveals insights that</tspan>
+                  <tspan x="640" y="524">redefine the problem</tspan>
+                </text>
+
+                <!-- forward arrows -->
+                <path class="dt-arrow dt-arrow--1" d="M 185 320 L 269 320" marker-end="url(#dtTipAccent)" />
+                <path class="dt-arrow dt-arrow--2" d="M 433 320 L 517 320" marker-end="url(#dtTipAccent)" />
+                <path class="dt-arrow dt-arrow--3" d="M 681 320 L 765 320" marker-end="url(#dtTipAccent)" />
+                <path class="dt-arrow dt-arrow--4" d="M 929 320 L 1013 320" marker-end="url(#dtTipAccent)" />
+
+                <!-- stages -->
+                <g class="dt-node dt-node--1">
+                  <circle class="dt-node__halo" cx="105" cy="320" r="66" />
+                  <circle class="dt-node__disc" cx="105" cy="320" r="66" />
+                  <text class="dt-node__label" x="105" y="320" text-anchor="middle" dominant-baseline="central">Empathize</text>
+                </g>
+                <g class="dt-node dt-node--2">
+                  <circle class="dt-node__halo" cx="353" cy="320" r="66" />
+                  <circle class="dt-node__disc" cx="353" cy="320" r="66" />
+                  <text class="dt-node__label" x="353" y="320" text-anchor="middle" dominant-baseline="central">Define</text>
+                </g>
+                <g class="dt-node dt-node--3">
+                  <circle class="dt-node__halo" cx="601" cy="320" r="66" />
+                  <circle class="dt-node__disc" cx="601" cy="320" r="66" />
+                  <text class="dt-node__label" x="601" y="320" text-anchor="middle" dominant-baseline="central">Ideate</text>
+                </g>
+                <g class="dt-node dt-node--4">
+                  <circle class="dt-node__halo" cx="849" cy="320" r="66" />
+                  <circle class="dt-node__disc" cx="849" cy="320" r="66" />
+                  <text class="dt-node__label" x="849" y="320" text-anchor="middle" dominant-baseline="central">Prototype</text>
+                </g>
+                <g class="dt-node dt-node--5">
+                  <circle class="dt-node__halo" cx="1097" cy="320" r="66" />
+                  <circle class="dt-node__disc" cx="1097" cy="320" r="66" />
+                  <text class="dt-node__label" x="1097" y="320" text-anchor="middle" dominant-baseline="central">Test</text>
+                </g>
+              </svg>
+            </div>
+            <p class="dt-hint">Swipe the chart to see the full process &rarr;</p>
+          </div>
+
+          <div class="panel reveal">
+            <div class="panel__head">
+              Tools
+            </div>
+
+            <div class="tk-stack">
+
+              <div class="tk-group tk-group--hero">
+                <div class="tk-group__side">
+                  <span class="tk-group__idx">01</span>
+                  <h4 class="tk-group__title">Where I Live</h4>
+                  <p class="tk-group__desc">The tool I think in, build in, and hand off from.</p>
+                </div>
+                <div class="tk-group__tools">
+                  <div class="tk-tool">
+                    <img class="tk-tool__logo" src="assets/images/index/toolkit/figma.png" alt="Figma" width="34" height="34" loading="lazy" />
+                    <div class="tk-tool__body">
+                      <span class="tk-tool__name">Figma</span>
+                      <span class="tk-tool__detail">Tokens, Variables, Components, Auto Layout</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tk-group">
+                <div class="tk-group__side">
+                  <span class="tk-group__idx">02</span>
+                  <h4 class="tk-group__title">How I Think Before I Design</h4>
+                  <p class="tk-group__desc">Early-stage tools that help me map problems before committing to pixels.</p>
+                </div>
+                <div class="tk-group__tools">
+                  <div class="tk-tool">
+                    <img class="tk-tool__logo" src="assets/images/index/toolkit/figjam.png" alt="FigJam" width="24" height="24" loading="lazy" />
+                    <div class="tk-tool__body">
+                      <span class="tk-tool__name">FigJam</span>
+                      <span class="tk-tool__detail">Information architecture, research synthesis, lo-fi wireframing, user flow mapping</span>
+                    </div>
+                  </div>
+                  <div class="tk-tool">
+                    <img class="tk-tool__logo" src="assets/images/index/toolkit/miro.png" alt="Miro" width="24" height="24" loading="lazy" />
+                    <div class="tk-tool__body">
+                      <span class="tk-tool__name">Miro</span>
+                      <span class="tk-tool__detail">Collaborative workshops, journey mapping, ideation sessions</span>
+                    </div>
+                  </div>
+                  <div class="tk-tool">
+                    <img class="tk-tool__logo" src="assets/images/index/toolkit/figma-make.png" alt="Figma Make" width="24" height="24" loading="lazy" />
+                    <div class="tk-tool__body">
+                      <span class="tk-tool__name">Figma Make</span>
+                      <span class="tk-tool__detail">AI-assisted early exploration and rapid wireframe generation</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tk-group">
+                <div class="tk-group__side">
+                  <span class="tk-group__idx">03</span>
+                  <h4 class="tk-group__title">How I Build Beyond Figma</h4>
+                  <p class="tk-group__desc">No-code and low-code tools that let me take designs closer to the real thing.</p>
+                </div>
+                <div class="tk-group__tools">
+                  <div class="tk-tool">
+                    <img class="tk-tool__logo" src="assets/images/index/toolkit/framer.png" alt="Framer" width="24" height="24" loading="lazy" />
+                    <div class="tk-tool__body">
+                      <span class="tk-tool__name">Framer</span>
+                      <span class="tk-tool__detail">Interactive prototypes and marketing site builds</span>
+                    </div>
+                  </div>
+                  <div class="tk-tool">
+                    <img class="tk-tool__logo" src="assets/images/index/toolkit/webflow.png" alt="Webflow" width="24" height="24" loading="lazy" />
+                    <div class="tk-tool__body">
+                      <span class="tk-tool__name">Webflow</span>
+                      <span class="tk-tool__detail">Responsive web builds without developer dependency</span>
+                    </div>
+                  </div>
+                  <div class="tk-tool">
+                    <img class="tk-tool__logo" src="assets/images/index/toolkit/html-css.png" alt="HTML / CSS" width="24" height="24" loading="lazy" />
+                    <div class="tk-tool__body">
+                      <span class="tk-tool__name">HTML / CSS</span>
+                      <span class="tk-tool__detail">Enough to implement, verify builds, and close the gap with engineering</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tk-group">
+                <div class="tk-group__side">
+                  <span class="tk-group__idx">04</span>
+                  <h4 class="tk-group__title">How I Work with AI</h4>
+                  <p class="tk-group__desc">Not occasional use - built into the process.</p>
+                </div>
+                <div class="tk-group__tools">
+                  <div class="tk-tool">
+                    <img class="tk-tool__logo" src="assets/images/index/toolkit/claude.png" alt="Claude" width="24" height="24" loading="lazy" />
+                    <div class="tk-tool__body">
+                      <span class="tk-tool__name">Claude</span>
+                      <span class="tk-tool__detail">Design thinking, copy, research synthesis, and workflow acceleration</span>
+                    </div>
+                  </div>
+                  <div class="tk-tool">
+                    <img class="tk-tool__logo" src="assets/images/index/toolkit/figma-make.png" alt="Figma Make" width="24" height="24" loading="lazy" />
+                    <div class="tk-tool__body">
+                      <span class="tk-tool__name">Figma Make</span>
+                      <span class="tk-tool__detail">AI-assisted design exploration</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tk-group">
+                <div class="tk-group__side">
+                  <span class="tk-group__idx">05</span>
+                  <h4 class="tk-group__title">How I Manage Work</h4>
+                  <p class="tk-group__desc">Keeping projects moving across teams and timelines.</p>
+                </div>
+                <div class="tk-group__tools">
+                  <div class="tk-tool">
+                    <img class="tk-tool__logo" src="assets/images/index/toolkit/jira.png" alt="Jira" width="24" height="24" loading="lazy" />
+                    <div class="tk-tool__body">
+                      <span class="tk-tool__name">Jira</span>
+                      <span class="tk-tool__detail">Sprint tracking, task management, cross-functional coordination</span>
+                    </div>
+                  </div>
+                  <div class="tk-tool">
+                    <img class="tk-tool__logo" src="assets/images/index/toolkit/confluence.png" alt="Confluence" width="24" height="24" loading="lazy" />
+                    <div class="tk-tool__body">
+                      <span class="tk-tool__name">Confluence</span>
+                      <span class="tk-tool__detail">Documentation, design decisions, handoff notes</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tk-group">
+                <div class="tk-group__side">
+                  <span class="tk-group__idx">06</span>
+                  <h4 class="tk-group__title">How I Communicate Visually Beyond Product</h4>
+                  <p class="tk-group__desc">Brand, marketing, and content design when the work goes beyond screens.</p>
+                </div>
+                <div class="tk-group__tools">
+                  <div class="tk-tool">
+                    <img class="tk-tool__logo" src="assets/images/index/toolkit/canva.png" alt="Canva" width="24" height="24" loading="lazy" />
+                    <div class="tk-tool__body">
+                      <span class="tk-tool__name">Canva</span>
+                      <span class="tk-tool__detail">Branding assets, campaign materials, social media content</span>
+                    </div>
+                  </div>
+                  <div class="tk-tool">
+                    <span class="tk-tool__cluster" aria-hidden="true">
+                      <img src="assets/images/index/toolkit/adobe-xd.png" alt="" width="24" height="24" loading="lazy" />
+                      <img src="assets/images/index/toolkit/photoshop.png" alt="" width="24" height="24" loading="lazy" />
+                      <img src="assets/images/index/toolkit/illustrator.png" alt="" width="24" height="24" loading="lazy" />
+                    </span>
+                    <div class="tk-tool__body">
+                      <span class="tk-tool__name">Adobe Suite</span>
+                      <span class="tk-tool__detail">XD, Photoshop, Illustrator - graphic design foundation from earlier career</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="panel reveal">
+            <div class="panel__head">
+              Core Skills
+            </div>
+            <ul class="cs-spine">
+              <li class="cs-item">
+                <span class="cs-item__node" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+                <h4 class="cs-item__title">Sole Designer Ownership</h4>
+                <p class="cs-item__body">
+                  <span class="cs-item__claim">I've taken products from zero to shipped entirely
+                  alone</span> - discovery, research, design system, UI, developer handoff and
+                  post-handoff review - without a safety net.
+                </p>
+              </li>
+              <li class="cs-item">
+                <span class="cs-item__node" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg></span>
+                <h4 class="cs-item__title">Systems Thinking at Scale</h4>
+                <p class="cs-item__body">
+                  <span class="cs-item__claim">I design components, not screens</span> - building
+                  token-driven systems that give engineering teams a foundation they can extend
+                  without breaking consistency.
+                </p>
+              </li>
+              <li class="cs-item">
+                <span class="cs-item__node" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
+                <h4 class="cs-item__title">Research-to-Pixel Ownership</h4>
+                <p class="cs-item__body">
+                  <span class="cs-item__claim">I run my own discovery, synthesize findings, and
+                  translate them into interfaces</span> - without needing a researcher to hand me
+                  insights before I can start.
+                </p>
+              </li>
+              <li class="cs-item">
+                <span class="cs-item__node" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg></span>
+                <h4 class="cs-item__title">AI-Native Product Design</h4>
+                <p class="cs-item__body">
+                  <span class="cs-item__claim">I design the interfaces where AI does the work</span>
+                  - conversational flows, agentic interfaces, and trust-building interaction
+                  patterns across 10+ AI-powered platforms.
+                </p>
+              </li>
+              <li class="cs-item">
+                <span class="cs-item__node" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></span>
+                <h4 class="cs-item__title">Cross-Domain Adaptability</h4>
+                <p class="cs-item__body">
+                  <span class="cs-item__claim">I've shipped across 18+ domains without a learning
+                  curve that costs the team</span> - healthcare one sprint, fintech the next, same
+                  delivery standard throughout.
+                </p>
+              </li>
+              <li class="cs-item">
+                <span class="cs-item__node" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg></span>
+                <h4 class="cs-item__title">Design-Engineering Bridge</h4>
+                <p class="cs-item__body">
+                  <span class="cs-item__claim">I write HTML and CSS, speak developer fluently, and
+                  stay involved post-handoff</span> - which means what gets designed and what gets
+                  shipped are usually the same thing.
+                </p>
+              </li>
+              <li class="cs-item">
+                <span class="cs-item__node" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg></span>
+                <h4 class="cs-item__title">UX Writing Embedded in Design</h4>
+                <p class="cs-item__body">
+                  <span class="cs-item__claim">The words inside a product are a design decision</span>
+                  - I write conversational AI copy, onboarding flows, microcopy, and error states as
+                  part of the design process - not after it.
+                </p>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         6 · TESTIMONIALS
+    ══════════════════════════════ -->
+    <section class="about-sec about-sec--wash about-sec--wash-alt" aria-labelledby="testiTitle">
+      <div class="container">
+        <div class="sec-head reveal">
+          <p class="sec-head__label">Kind Words</p>
+          <h2 class="sec-head__title" id="testiTitle">What it's like to work with me</h2>
+          <p class="sec-head__sub">
+            From the engineers who built my designs, the managers who shipped them,
+            and the clients who lived with the result.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="testi-marquee">
+        <div class="testi-row">
+          <div class="testi-track">
+            <article class="testi-card">
+              <div class="testi-card__top">
+                <span class="testi-card__mark" aria-hidden="true">&ldquo;</span>
+                <span class="testi-card__org">Swivel Tech</span>
+              </div>
+              <p class="testi-card__quote">She demonstrated a strong sense of ownership over her work, was dependable in execution, receptive to feedback, and showed clear progression in both design thinking and delivery maturity. Her growth mindset, combined with her consistency and reliability, makes her a valuable asset for teams building strong UI/UX capabilities.</p>
+              <div class="testi-card__by">
+                <span class="testi-card__avatar" aria-hidden="true">RR</span>
+                <span class="testi-card__id">
+                  <span class="testi-card__name">Romani Rupasinghe</span>
+                  <span class="testi-card__role">VP of Engineering</span>
+                </span>
+              </div>
+            </article>
+            <article class="testi-card">
+              <div class="testi-card__top">
+                <span class="testi-card__mark" aria-hidden="true">&ldquo;</span>
+                <span class="testi-card__org">Swivel Tech</span>
+              </div>
+              <p class="testi-card__quote">She has a keen eye for detail and a solid understanding of user-centered design principles. The way she took ownership of her tasks and delivered quality work played an important role in the team's success.</p>
+              <div class="testi-card__by">
+                <span class="testi-card__avatar" aria-hidden="true">SK</span>
+                <span class="testi-card__id">
+                  <span class="testi-card__name">Suranga Kumarage</span>
+                  <span class="testi-card__role">Tech Lead</span>
+                </span>
+              </div>
+            </article>
+            <article class="testi-card">
+              <div class="testi-card__top">
+                <span class="testi-card__mark" aria-hidden="true">&ldquo;</span>
+                <span class="testi-card__org">Swivel Tech</span>
+              </div>
+              <p class="testi-card__quote">She is able to translate complex requirements into intuitive and visually appealing interfaces, ensuring a seamless user experience across products. She actively seeks feedback, adapts quickly, and brings fresh ideas to the table.</p>
+              <div class="testi-card__by">
+                <span class="testi-card__avatar" aria-hidden="true">VG</span>
+                <span class="testi-card__id">
+                  <span class="testi-card__name">Varuna Galabda</span>
+                  <span class="testi-card__role">Engineering Manager</span>
+                </span>
+              </div>
+            </article>
+            <article class="testi-card">
+              <div class="testi-card__top">
+                <span class="testi-card__mark" aria-hidden="true">&ldquo;</span>
+                <span class="testi-card__org">Swivel Tech</span>
+              </div>
+              <p class="testi-card__quote">She approaches design challenges with curiosity and rigor - she takes time to understand user needs, iterates thoughtfully, and delivers work that is both visually polished and well-reasoned. Over the time we worked together, I watched her confidence and capability grow considerably.</p>
+              <div class="testi-card__by">
+                <span class="testi-card__avatar" aria-hidden="true">TJ</span>
+                <span class="testi-card__id">
+                  <span class="testi-card__name">Thilina Jayawardana</span>
+                  <span class="testi-card__role">Senior Designer / Mentor</span>
+                </span>
+              </div>
+            </article>
+            <article class="testi-card">
+              <div class="testi-card__top">
+                <span class="testi-card__mark" aria-hidden="true">&ldquo;</span>
+                <span class="testi-card__org">Swivel Tech</span>
+              </div>
+              <p class="testi-card__quote">She effectively incorporates AI-driven flows into her UI/UX work, creating smarter and more efficient user experiences. She collaborates well with cross-functional teams and communicates her ideas clearly.</p>
+              <div class="testi-card__by">
+                <span class="testi-card__avatar" aria-hidden="true">IL</span>
+                <span class="testi-card__id">
+                  <span class="testi-card__name">Ishara Lakshan</span>
+                  <span class="testi-card__role">Design Team Lead</span>
+                </span>
+              </div>
+            </article>
+            <article class="testi-card">
+              <div class="testi-card__top">
+                <span class="testi-card__mark" aria-hidden="true">&ldquo;</span>
+                <span class="testi-card__org">Swivel Tech</span>
+              </div>
+              <p class="testi-card__quote">She communicates ideas clearly, takes feedback constructively, and is always willing to go the extra mile to improve the overall user experience. Reliable, easy to work with, and maintains a positive approach even under pressure.</p>
+              <div class="testi-card__by">
+                <span class="testi-card__avatar" aria-hidden="true">LG</span>
+                <span class="testi-card__id">
+                  <span class="testi-card__name">Lihini Galagedara</span>
+                  <span class="testi-card__role">Project Collaborator</span>
+                </span>
+              </div>
+            </article>
+            <article class="testi-card">
+              <div class="testi-card__top">
+                <span class="testi-card__mark" aria-hidden="true">&ldquo;</span>
+                <span class="testi-card__org">Akvasoft</span>
+              </div>
+              <p class="testi-card__quote">Her ability to combine creativity with functionality resulted in impressive and engaging designs that pleased our clients' expectations. Her professionalism and willingness to cooperate made the process seamless and enjoyable.</p>
+              <div class="testi-card__by">
+                <span class="testi-card__avatar" aria-hidden="true">SJ</span>
+                <span class="testi-card__id">
+                  <span class="testi-card__name">Sajeewa Jayarathna</span>
+                  <span class="testi-card__role">Associate Tech Lead</span>
+                </span>
+              </div>
+            </article>
+            <article class="testi-card">
+              <div class="testi-card__top">
+                <span class="testi-card__mark" aria-hidden="true">&ldquo;</span>
+                <span class="testi-card__org">Akvasoft</span>
+              </div>
+              <p class="testi-card__quote">She demonstrated a remarkable ability to grasp new concepts swiftly and seamlessly incorporate industry standards into her work.</p>
+              <div class="testi-card__by">
+                <span class="testi-card__avatar" aria-hidden="true">EI</span>
+                <span class="testi-card__id">
+                  <span class="testi-card__name">Eminda Ishan</span>
+                  <span class="testi-card__role">CTO</span>
+                </span>
+              </div>
+            </article>
+            <article class="testi-card">
+              <div class="testi-card__top">
+                <span class="testi-card__mark" aria-hidden="true">&ldquo;</span>
+                <span class="testi-card__org">Akvasoft</span>
+              </div>
+              <p class="testi-card__quote">Her passion for UI/UX and the ability to think fast and conceptualize ideas with a keen eye for designing and implementing processes from initial sketch to prototype makes her a valuable asset to any team.</p>
+              <div class="testi-card__by">
+                <span class="testi-card__avatar" aria-hidden="true">HD</span>
+                <span class="testi-card__id">
+                  <span class="testi-card__name">Hashan Dharmapriya</span>
+                  <span class="testi-card__role">Software Engineer</span>
+                </span>
+              </div>
+            </article>
+          </div>
+          <div class="testi-track" aria-hidden="true">
+            <article class="testi-card">
+              <div class="testi-card__top">
+                <span class="testi-card__mark" aria-hidden="true">&ldquo;</span>
+                <span class="testi-card__org">Swivel Tech</span>
+              </div>
+              <p class="testi-card__quote">She demonstrated a strong sense of ownership over her work, was dependable in execution, receptive to feedback, and showed clear progression in both design thinking and delivery maturity. Her growth mindset, combined with her consistency and reliability, makes her a valuable asset for teams building strong UI/UX capabilities.</p>
+              <div class="testi-card__by">
+                <span class="testi-card__avatar" aria-hidden="true">RR</span>
+                <span class="testi-card__id">
+                  <span class="testi-card__name">Romani Rupasinghe</span>
+                  <span class="testi-card__role">VP of Engineering</span>
+                </span>
+              </div>
+            </article>
+            <article class="testi-card">
+              <div class="testi-card__top">
+                <span class="testi-card__mark" aria-hidden="true">&ldquo;</span>
+                <span class="testi-card__org">Swivel Tech</span>
+              </div>
+              <p class="testi-card__quote">She has a keen eye for detail and a solid understanding of user-centered design principles. The way she took ownership of her tasks and delivered quality work played an important role in the team's success.</p>
+              <div class="testi-card__by">
+                <span class="testi-card__avatar" aria-hidden="true">SK</span>
+                <span class="testi-card__id">
+                  <span class="testi-card__name">Suranga Kumarage</span>
+                  <span class="testi-card__role">Tech Lead</span>
+                </span>
+              </div>
+            </article>
+            <article class="testi-card">
+              <div class="testi-card__top">
+                <span class="testi-card__mark" aria-hidden="true">&ldquo;</span>
+                <span class="testi-card__org">Swivel Tech</span>
+              </div>
+              <p class="testi-card__quote">She is able to translate complex requirements into intuitive and visually appealing interfaces, ensuring a seamless user experience across products. She actively seeks feedback, adapts quickly, and brings fresh ideas to the table.</p>
+              <div class="testi-card__by">
+                <span class="testi-card__avatar" aria-hidden="true">VG</span>
+                <span class="testi-card__id">
+                  <span class="testi-card__name">Varuna Galabda</span>
+                  <span class="testi-card__role">Engineering Manager</span>
+                </span>
+              </div>
+            </article>
+            <article class="testi-card">
+              <div class="testi-card__top">
+                <span class="testi-card__mark" aria-hidden="true">&ldquo;</span>
+                <span class="testi-card__org">Swivel Tech</span>
+              </div>
+              <p class="testi-card__quote">She approaches design challenges with curiosity and rigor - she takes time to understand user needs, iterates thoughtfully, and delivers work that is both visually polished and well-reasoned. Over the time we worked together, I watched her confidence and capability grow considerably.</p>
+              <div class="testi-card__by">
+                <span class="testi-card__avatar" aria-hidden="true">TJ</span>
+                <span class="testi-card__id">
+                  <span class="testi-card__name">Thilina Jayawardana</span>
+                  <span class="testi-card__role">Senior Designer / Mentor</span>
+                </span>
+              </div>
+            </article>
+            <article class="testi-card">
+              <div class="testi-card__top">
+                <span class="testi-card__mark" aria-hidden="true">&ldquo;</span>
+                <span class="testi-card__org">Swivel Tech</span>
+              </div>
+              <p class="testi-card__quote">She effectively incorporates AI-driven flows into her UI/UX work, creating smarter and more efficient user experiences. She collaborates well with cross-functional teams and communicates her ideas clearly.</p>
+              <div class="testi-card__by">
+                <span class="testi-card__avatar" aria-hidden="true">IL</span>
+                <span class="testi-card__id">
+                  <span class="testi-card__name">Ishara Lakshan</span>
+                  <span class="testi-card__role">Design Team Lead</span>
+                </span>
+              </div>
+            </article>
+            <article class="testi-card">
+              <div class="testi-card__top">
+                <span class="testi-card__mark" aria-hidden="true">&ldquo;</span>
+                <span class="testi-card__org">Swivel Tech</span>
+              </div>
+              <p class="testi-card__quote">She communicates ideas clearly, takes feedback constructively, and is always willing to go the extra mile to improve the overall user experience. Reliable, easy to work with, and maintains a positive approach even under pressure.</p>
+              <div class="testi-card__by">
+                <span class="testi-card__avatar" aria-hidden="true">LG</span>
+                <span class="testi-card__id">
+                  <span class="testi-card__name">Lihini Galagedara</span>
+                  <span class="testi-card__role">Project Collaborator</span>
+                </span>
+              </div>
+            </article>
+            <article class="testi-card">
+              <div class="testi-card__top">
+                <span class="testi-card__mark" aria-hidden="true">&ldquo;</span>
+                <span class="testi-card__org">Akvasoft</span>
+              </div>
+              <p class="testi-card__quote">Her ability to combine creativity with functionality resulted in impressive and engaging designs that pleased our clients' expectations. Her professionalism and willingness to cooperate made the process seamless and enjoyable.</p>
+              <div class="testi-card__by">
+                <span class="testi-card__avatar" aria-hidden="true">SJ</span>
+                <span class="testi-card__id">
+                  <span class="testi-card__name">Sajeewa Jayarathna</span>
+                  <span class="testi-card__role">Associate Tech Lead</span>
+                </span>
+              </div>
+            </article>
+            <article class="testi-card">
+              <div class="testi-card__top">
+                <span class="testi-card__mark" aria-hidden="true">&ldquo;</span>
+                <span class="testi-card__org">Akvasoft</span>
+              </div>
+              <p class="testi-card__quote">She demonstrated a remarkable ability to grasp new concepts swiftly and seamlessly incorporate industry standards into her work.</p>
+              <div class="testi-card__by">
+                <span class="testi-card__avatar" aria-hidden="true">EI</span>
+                <span class="testi-card__id">
+                  <span class="testi-card__name">Eminda Ishan</span>
+                  <span class="testi-card__role">CTO</span>
+                </span>
+              </div>
+            </article>
+            <article class="testi-card">
+              <div class="testi-card__top">
+                <span class="testi-card__mark" aria-hidden="true">&ldquo;</span>
+                <span class="testi-card__org">Akvasoft</span>
+              </div>
+              <p class="testi-card__quote">Her passion for UI/UX and the ability to think fast and conceptualize ideas with a keen eye for designing and implementing processes from initial sketch to prototype makes her a valuable asset to any team.</p>
+              <div class="testi-card__by">
+                <span class="testi-card__avatar" aria-hidden="true">HD</span>
+                <span class="testi-card__id">
+                  <span class="testi-card__name">Hashan Dharmapriya</span>
+                  <span class="testi-card__role">Software Engineer</span>
+                </span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <p class="testi-hint">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+          <span class="testi-hint__pointer">Hover any card to pause the rail and read it.</span>
+          <span class="testi-hint__touch">Swipe through the quotes.</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         7 · HOBBIES
+    ══════════════════════════════ -->
+    <section class="about-sec" aria-labelledby="hobbyTitle">
+      <div class="container">
+        <div class="sec-head reveal">
+          <p class="sec-head__label">Outside The Work</p>
+          <h2 class="sec-head__title" id="hobbyTitle">What keeps the eye sharp</h2>
+        </div>
+
+        <div class="hobby-grid">
+          <article class="hobby-card reveal">
+              <svg class="hobby-card__art" viewBox="0 0 160 160" aria-hidden="true" focusable="false">
+                <defs><linearGradient id="hbRead1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#a8bcfb" stop-opacity="0.34"/><stop offset="100%" stop-color="#6c8ef5" stop-opacity="0.03"/></linearGradient><linearGradient id="hbRead2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#a8bcfb" stop-opacity="0.20"/><stop offset="100%" stop-color="#6c8ef5" stop-opacity="0.02"/></linearGradient></defs>
+                <g fill="url(#hbRead1)">
+                  <ellipse cx="132" cy="88" rx="8.5" ry="32" transform="rotate(0 132 132)"/>
+                  <ellipse cx="132" cy="88" rx="8.5" ry="32" transform="rotate(-30 132 132)"/>
+                  <ellipse cx="132" cy="88" rx="8.5" ry="32" transform="rotate(-60 132 132)"/>
+                  <ellipse cx="132" cy="88" rx="8.5" ry="32" transform="rotate(-90 132 132)"/>
+                </g>
+                <g fill="url(#hbRead2)">
+                  <ellipse cx="132" cy="104" rx="6" ry="21" transform="rotate(-15 132 132)"/>
+                  <ellipse cx="132" cy="104" rx="6" ry="21" transform="rotate(-45 132 132)"/>
+                  <ellipse cx="132" cy="104" rx="6" ry="21" transform="rotate(-75 132 132)"/>
+                </g>
+              </svg>
+            <h3 class="hobby-card__name">Reading</h3>
+            <p class="hobby-card__desc">Design writing, psychology and the occasional long-form essay that reframes how I think about people.</p>
+          </article>
+          <article class="hobby-card reveal">
+              <svg class="hobby-card__art" viewBox="0 0 160 160" aria-hidden="true" focusable="false">
+                <defs><linearGradient id="hbMus1" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#a8bcfb" stop-opacity="0.30"/><stop offset="100%" stop-color="#6c8ef5" stop-opacity="0.03"/></linearGradient><linearGradient id="hbMus2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#a8bcfb" stop-opacity="0.36"/><stop offset="100%" stop-color="#6c8ef5" stop-opacity="0.10"/></linearGradient></defs>
+                <g fill="none" stroke="url(#hbMus1)" stroke-linecap="round">
+                  <circle cx="146" cy="146" r="34" stroke-width="7"/>
+                  <circle cx="146" cy="146" r="58" stroke-width="6"/>
+                  <circle cx="146" cy="146" r="82" stroke-width="5"/>
+                  <circle cx="146" cy="146" r="106" stroke-width="4"/>
+                </g>
+                <circle cx="146" cy="146" r="13" fill="url(#hbMus2)"/>
+              </svg>
+            <h3 class="hobby-card__name">Music</h3>
+            <p class="hobby-card__desc">Always something playing while I design - it sets the pace for deep focus sessions.</p>
+          </article>
+          <article class="hobby-card reveal">
+              <svg class="hobby-card__art" viewBox="0 0 160 160" aria-hidden="true" focusable="false">
+                <defs><linearGradient id="hbPho1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#a8bcfb" stop-opacity="0.30"/><stop offset="100%" stop-color="#6c8ef5" stop-opacity="0.03"/></linearGradient><linearGradient id="hbPho2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#a8bcfb" stop-opacity="0.26"/><stop offset="100%" stop-color="#6c8ef5" stop-opacity="0.05"/></linearGradient>
+                  <radialGradient id="hbPho3"><stop offset="0%" stop-color="#a8bcfb" stop-opacity="0.32"/><stop offset="100%" stop-color="#6c8ef5" stop-opacity="0"/></radialGradient>
+                </defs>
+                <circle cx="108" cy="112" r="52" fill="none" stroke="url(#hbPho1)" stroke-width="7"/>
+                <circle cx="108" cy="112" r="34" fill="none" stroke="url(#hbPho2)" stroke-width="5"/>
+                <circle cx="108" cy="112" r="18" fill="url(#hbPho2)"/>
+                <circle cx="92" cy="96" r="20" fill="url(#hbPho3)"/>
+              </svg>
+            <h3 class="hobby-card__name">Photography</h3>
+            <p class="hobby-card__desc">Framing everyday moments - the same eye for composition I bring to a layout.</p>
+          </article>
+          <article class="hobby-card reveal">
+              <svg class="hobby-card__art" viewBox="0 0 160 160" aria-hidden="true" focusable="false">
+                <defs><linearGradient id="hbTrv1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a8bcfb" stop-opacity="0.26"/><stop offset="100%" stop-color="#6c8ef5" stop-opacity="0.04"/></linearGradient><linearGradient id="hbTrv2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a8bcfb" stop-opacity="0.34"/><stop offset="100%" stop-color="#6c8ef5" stop-opacity="0.08"/></linearGradient>
+                  <radialGradient id="hbTrv3"><stop offset="0%" stop-color="#a8bcfb" stop-opacity="0.30"/><stop offset="100%" stop-color="#6c8ef5" stop-opacity="0"/></radialGradient>
+                </defs>
+                <circle cx="118" cy="58" r="17" fill="url(#hbTrv3)"/>
+                <path d="M6 150 L52 84 L84 124 L104 98 L156 150 Z" fill="url(#hbTrv1)"/>
+                <path d="M74 150 L112 96 L156 150 Z" fill="url(#hbTrv2)"/>
+                <path d="M2 92 Q56 36 152 50" fill="none" stroke="url(#hbTrv1)" stroke-width="3"
+                      stroke-dasharray="4 8" stroke-linecap="round"/>
+              </svg>
+            <h3 class="hobby-card__name">Traveling</h3>
+            <p class="hobby-card__desc">New places, new people, new interfaces - the best research is lived, not read.</p>
+          </article>
+        </div>
+
+        <div class="pg-link-row reveal">
+          <a href="playground.html" class="pg-link" data-umami-event="nav-click" data-umami-event-target="playground">
+            See my creative playground
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-glow" aria-hidden="true"></div>
+    <div class="container">
+
+      <div class="footer-top">
+        <!-- Brand -->
+        <div class="footer-brand">
+          <span class="footer-brand__name">Imalsha Kandamby</span>
+          <span class="footer-brand__sub">Product Designer · 's-Hertogenbosch, Netherlands</span>
+          <span class="footer-brand__tagline">Available for opportunities</span>
+        </div>
+
+        <!-- Center mark -->
+        <div class="footer-center">
+          <div class="footer-divider-v"></div>
+          <div class="footer-logo-mark" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <div class="footer-divider-v"></div>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-contact">
+          <div class="footer-contact-row" data-copy="imalshakandamby@gmail.com" data-copy-label="Email">
+            <svg class="footer-contact-row__icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <a href="mailto:imalshakandamby@gmail.com" class="footer-contact-row__text" data-umami-event="contact-click" data-umami-event-type="email">imalshakandamby@gmail.com</a>
+            <button type="button" class="footer-copy-btn">
+              <span class="footer-copy-btn__label">Copy</span>
+            </button>
+          </div>
+          <div class="footer-contact-row" data-copy="+31 6 3828 6152" data-copy-label="Phone number">
+            <svg class="footer-contact-row__icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:+31638286152" class="footer-contact-row__text" data-umami-event="contact-click" data-umami-event-type="phone">+31 6 3828 6152</a>
+            <button type="button" class="footer-copy-btn">
+              <span class="footer-copy-btn__label">Copy</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 Imalsha Kandamby · Designed &amp; built with intention</p>
+        <div class="footer-socials">
+          <a href="https://linkedin.com/in/imalsha-kandamby" target="_blank" rel="noopener" class="footer-social-btn" aria-label="LinkedIn" data-umami-event="social-click" data-umami-event-platform="linkedin">LinkedIn</a>
+          <a href="https://behance.net/imalshakandamby_gihk" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Behance" data-umami-event="social-click" data-umami-event-platform="behance">Behance</a>
+          <a href="https://dribbble.com/gihKandamby" target="_blank" rel="noopener" class="footer-social-btn" aria-label="Dribbble" data-umami-event="social-click" data-umami-event-platform="dribbble">Dribbble</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      function initNav() {
+        var btn   = document.getElementById('navHamburger');
+        var menu  = document.getElementById('navMobileMenu');
+        var close = document.getElementById('navMobileClose');
+        if (!btn || !menu) return;
+
+        function trackNav(name) {
+          if (window.umami && typeof window.umami.track === 'function') {
+            window.umami.track(name);
+          }
+        }
+
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          menu.classList.add('is-open');
+          btn.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+          document.body.style.overflow = 'hidden';
+          trackNav('mobile-menu-open');
+        });
+
+        function closeMenu() {
+          // Escape fires this even when the menu is already shut, so only
+          // report a close that actually closed something
+          var wasOpen = menu.classList.contains('is-open');
+          menu.classList.remove('is-open');
+          btn.classList.remove('is-open');
+          btn.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+          if (wasOpen) trackNav('mobile-menu-close');
+        }
+
+        if (close) close.addEventListener('click', closeMenu);
+
+        menu.addEventListener('click', function(e) {
+          if (e.target === menu) closeMenu();
+        });
+
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') closeMenu();
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initNav);
+      } else {
+        initNav();
+      }
+    })();
+  </script>
+
+  <script>
+    /* ── Scroll Reveal ── */
+    (function() {
+      var classes = ['reveal', 'reveal-scale', 'reveal-left', 'reveal-fade', 'reveal-stagger'];
+      function revealAll() {
+        classes.forEach(function(cls) {
+          document.querySelectorAll('.' + cls).forEach(function(el) {
+            el.classList.add('visible');
+          });
+        });
+      }
+
+      if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+        classes.forEach(function(cls) {
+          document.querySelectorAll('.' + cls).forEach(function(el) {
+            observer.observe(el);
+          });
+        });
+      } else {
+        revealAll();
+      }
+    })();
+  </script>
+
+  <script>
+    /* ── Stat count-up ── */
+    (function() {
+      var nums = document.querySelectorAll('.stat-card__num[data-count]');
+      if (!nums.length) return;
+
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) return;
+
+      function countUp(el) {
+        if (el.dataset.counted) return;
+        el.dataset.counted = '1';
+
+        var target = parseInt(el.getAttribute('data-count'), 10);
+        var suffix = el.getAttribute('data-suffix') || '';
+        var final  = target + suffix;
+        var dur    = 1100;
+        var start  = Date.now();
+        var done   = false;
+
+        function finish() {
+          if (done) return;
+          done = true;
+          el.textContent = final;
+        }
+
+        /* progress is driven off the wall clock, so a throttled/resumed rAF
+           still resolves correctly instead of resuming from a stale frame */
+        function step() {
+          if (done) return;
+          var p = Math.min((Date.now() - start) / dur, 1);
+          if (p >= 1) { finish(); return; }
+          var eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(target * eased) + suffix;
+          window.requestAnimationFrame(step);
+        }
+        window.requestAnimationFrame(step);
+
+        /* safety net: if rAF never fires (background tab), snap to the final value.
+           `done` guards against a late frame overwriting it afterwards. */
+        setTimeout(finish, dur + 400);
+      }
+
+      /* hero sits at the top of the page, so start once the entrance animation is under way */
+      setTimeout(function() {
+        nums.forEach(function(el, i) {
+          setTimeout(function() { countUp(el); }, i * 100);
+        });
+      }, 250);
+    })();
+  </script>
+
+  <script>
+    /* ── Nav fade on scroll ── */
+    (function() {
+      var header     = document.querySelector('.site-header');
+      var lastScroll = 0;
+      var threshold  = 60;
+      var ticking    = false;
+
+      function update() {
+        var current = window.scrollY || window.pageYOffset;
+        if (current > threshold && current > lastScroll) {
+          header.classList.add('nav-hidden');
+        } else {
+          header.classList.remove('nav-hidden');
+        }
+        lastScroll = current <= 0 ? 0 : current;
+        ticking = false;
+      }
+
+      if (header) {
+        window.addEventListener('scroll', function() {
+          if (!ticking) {
+            window.requestAnimationFrame(update);
+            ticking = true;
+          }
+        }, { passive: true });
+      }
+    })();
+  </script>
+
+  <!-- Custom cursor -->
+  <div id="customCursor" aria-hidden="true">
+    <svg width="22" height="26" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 1.5L20 12.8L11.7 14.6L8 23.5L2 1.5Z" fill="#6c8ef5" stroke="#0A0812" stroke-width="1.2" stroke-linejoin="round"/>
+    </svg>
+    <span class="cursor-tag">You</span>
+  </div>
+
+  <script>
+    /* ── Custom cursor follow ── */
+    (function() {
+      var cursor = document.getElementById('customCursor');
+      if (!cursor) return;
+      var isCoarse = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+      if (isCoarse) return;
+
+      document.addEventListener('mousemove', function(e) {
+        cursor.style.transform = 'translate(' + e.clientX + 'px, ' + e.clientY + 'px)';
+      });
+
+      document.addEventListener('mouseleave', function() {
+        cursor.style.opacity = '0';
+      });
+      document.addEventListener('mouseenter', function() {
+        cursor.style.opacity = '1';
+      });
+    })();
+  </script>
+
+  <script>
+    /* ── Footer copy-to-clipboard ── */
+    (function() {
+      document.querySelectorAll('.footer-contact-row').forEach(function(row) {
+        var btn = row.querySelector('.footer-copy-btn');
+        var labelEl = btn ? btn.querySelector('.footer-copy-btn__label') : null;
+        var value = row.getAttribute('data-copy');
+        if (!btn || !labelEl || !value) return;
+
+        var originalText = labelEl.textContent;
+        var resetTimer;
+
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          function showFeedback() {
+            clearTimeout(resetTimer);
+            btn.classList.add('is-copied');
+            labelEl.textContent = 'Copied!';
+            if (window.umami && typeof window.umami.track === 'function') {
+              window.umami.track('contact-copy', { type: row.getAttribute('data-copy-label') });
+            }
+            resetTimer = setTimeout(function() {
+              btn.classList.remove('is-copied');
+              labelEl.textContent = originalText;
+            }, 1600);
+          }
+
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(value).then(showFeedback).catch(function() {
+              fallbackCopy(value);
+              showFeedback();
+            });
+          } else {
+            fallbackCopy(value);
+            showFeedback();
+          }
+        });
+      });
+
+      function fallbackCopy(text) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+      }
+    })();
+  </script>
+
+  <script>
+    /* ── Page transitions: fade out before navigating to another page ── */
+    (function() {
+      var DUR = 260;
+
+      /* coming back via bfcache / back button must never leave the page faded out */
+      window.addEventListener('pageshow', function() {
+        document.body.classList.remove('is-leaving');
+      });
+
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) return;
+
+      function closestLink(node) {
+        while (node && node !== document) {
+          if (node.tagName && node.tagName.toLowerCase() === 'a') return node;
+          node = node.parentNode;
+        }
+        return null;
+      }
+
+      document.addEventListener('click', function(e) {
+        if (e.defaultPrevented || e.button !== 0) return;
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+        var a = closestLink(e.target);
+        if (!a) return;
+
+        var href = a.getAttribute('href');
+        if (!href || href.charAt(0) === '#') return;          /* in-page anchor */
+        if (a.hasAttribute('download')) return;
+        if (a.target && a.target !== '_self') return;          /* new tab (resume PDF) */
+
+        var url;
+        try { url = new URL(href, window.location.href); } catch (err) { return; }
+
+        if (url.origin !== window.location.origin) return;     /* external */
+        if (/\.(pdf|zip|jpe?g|png|gif|svg|webp|mp4)$/i.test(url.pathname)) return;
+
+        /* same document, only a hash change -> let the browser scroll natively */
+        if (url.pathname === window.location.pathname && url.hash) return;
+
+        e.preventDefault();
+        document.body.classList.add('is-leaving');
+        setTimeout(function() { window.location.href = url.href; }, DUR);
+      });
+    })();
+  </script>
+
+</body>
+</html>

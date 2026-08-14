@@ -25,10 +25,38 @@
       --radius-card:  20px;
     }
 
+    /* ── Scrollbar ──────────────────────────────
+       Thin, theme-tinted thumb instead of the OS default. The 2px border
+       (colour-matched to the page bg) insets the visible bar so it reads
+       as a slim accent rather than a thick generic rail. */
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(120,130,220,0.45) transparent;
+    }
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(140,100,255,0.55), rgba(108,142,245,0.35));
+      border-radius: 100px;
+      border: 2px solid var(--bg);
+      background-clip: padding-box;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, rgba(140,100,255,0.75), rgba(108,142,245,0.55));
+      background-clip: padding-box;
+    }
+
     /* ─── Reset / base ──────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      width: 100%;
+    }
 
+    /* keeps oversized descendants (e.g. the marquee's un-clipped track)
+       from inflating the page width and dragging position:fixed elements
+       (like the nav) off past the right edge on mobile */
     body {
       background: var(--bg);
       color: var(--white);
@@ -36,6 +64,8 @@
       -webkit-font-smoothing: antialiased;
       min-height: 100vh;
       position: relative;
+      overflow-x: hidden;
+      width: 100%;
     }
 
     /* noise texture overlay */
@@ -99,7 +129,12 @@
     /* ─── HERO ──────────────────────────────────── */
     .hero {
       position: relative;
-      min-height: 100vh;
+      /* shorter than the full viewport so the marquee below is already
+         peeking into view on first load, with no scroll cue needed.
+         The hero's own content height is fixed regardless of screen size,
+         so a bigger reduction here keeps the empty margin around it from
+         growing (and looking top-heavy) on tall viewports. */
+      min-height: calc(100vh - 14rem);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -144,6 +179,9 @@
       align-items: center;
       justify-content: space-between;
       gap: clamp(2.5rem, 4vw, 4.25rem);
+      /* nudges the content block down within the (unchanged) hero height,
+         away from the nav/top edge and closer to the marquee below */
+      margin-top: 4.5rem;
     }
 
     .hero__content { max-width: 40rem; position: relative; z-index: 1; flex: 1; }
@@ -373,29 +411,85 @@
       50%       { transform: translateY(-10px); }
     }
 
-    /* scroll cue */
-    .scroll-cue {
+
+    /* ── 2. MARQUEE ────────────────────────────── */
+    .marquee-wrap {
+      position: relative;
+      padding-block: clamp(2rem, 4vw, 3rem);
+      border-top: 1px solid rgba(255,255,255,0.11);
+      border-bottom: 1px solid rgba(255,255,255,0.11);
+      overflow: hidden;
+    }
+    .marquee-wrap::before,
+    .marquee-wrap::after {
+      content: '';
       position: absolute;
-      bottom: 2rem; left: 50%;
-      translate: -50% 0;
-      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-      opacity: 0.3;
+      top: 0; bottom: 0;
+      width: clamp(48px, 10vw, 160px);
+      z-index: 2;
+      pointer-events: none;
     }
-    .scroll-cue__label {
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--white);
+    .marquee-wrap::before { left: 0;  background: linear-gradient(to right, var(--bg), transparent); }
+    .marquee-wrap::after  { right: 0; background: linear-gradient(to left,  var(--bg), transparent); }
+
+    .marquee-row {
+      display: flex;
+      width: max-content;
+      gap: 0;
+      margin-block: 0.42rem;
     }
-    .scroll-cue__line {
-      width: 1px; height: 40px;
-      background: linear-gradient(to bottom, var(--violet), transparent);
+    .marquee-track {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding-right: 1.5rem;
+      flex-shrink: 0;
+      animation: marqueeL 42s linear infinite;
+    }
+    .marquee-row--rev .marquee-track { animation-name: marqueeR; }
+    .marquee-row:nth-child(1) .marquee-track { animation-duration: 46s; }
+    .marquee-row:nth-child(2) .marquee-track { animation-duration: 54s; }
+    .marquee-row:nth-child(3) .marquee-track { animation-duration: 40s; }
+    .marquee-row:nth-child(4) .marquee-track { animation-duration: 50s; }
+    .marquee-row:nth-child(5) .marquee-track { animation-duration: 44s; }
+    .marquee-row:nth-child(6) .marquee-track { animation-duration: 56s; }
+
+    @keyframes marqueeL { from { transform: translateX(0); }    to { transform: translateX(-100%); } }
+    @keyframes marqueeR { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+
+    .marquee-wrap:hover .marquee-track { animation-play-state: paused; }
+
+    .mq-item {
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: rgba(232,228,240,0.62);
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .marquee-row--accent .mq-item { color: rgba(108,142,245,0.78); }
+    .mq-dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: rgba(108,142,245,0.5);
+      flex-shrink: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .marquee-track { animation: none; }
+      .marquee-row { width: 100%; overflow-x: auto; }
+    }
+
+    @media (max-width: 640px) {
+      .mq-item { font-size: 0.72rem; }
     }
 
     /* ─── WORK SECTION ──────────────────────────── */
     .work-section {
       position: relative;
       z-index: 1;
+      padding-top: clamp(3rem, 6vw, 5rem);
       padding-bottom: 6rem;
     }
 
@@ -440,7 +534,7 @@
     .project-card {
       border-radius: var(--radius-card);
       overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.11);
       transition: transform 0.3s ease, border-color 0.3s ease;
       position: relative;
       cursor: pointer;
@@ -576,7 +670,7 @@
       align-items: start;
       gap: 2rem;
       padding-bottom: 2rem;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
+      border-bottom: 1px solid rgba(255,255,255,0.12);
     }
     .footer-brand { display: flex; flex-direction: column; gap: 0.35rem; }
     .footer-brand__name { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; color: var(--white); }
@@ -674,7 +768,7 @@
       display: inline-flex; align-items: center; justify-content: center;
       flex: 1;
       padding: 0.35rem 0.6rem; height: 32px; border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
       background: rgba(255,255,255,0.03);
       color: var(--muted); font-size: 0.75rem;
       font-family: var(--font-display); font-weight: 700;
@@ -1473,6 +1567,22 @@
       * { cursor: auto !important; }
       #customCursor { display: none; }
     }
+    /* ── Page transition ─────────────────────────── */
+    /* fill-mode `both` supplies the opacity:0 start state, so if CSS
+       animations ever fail to run the page stays visible rather than blank */
+    body {
+      animation: pageIn 0.42s ease both;
+    }
+    body.is-leaving {
+      animation: pageOut 0.26s ease forwards;
+    }
+    @keyframes pageIn  { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes pageOut { from { opacity: 1; } to { opacity: 0; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      body,
+      body.is-leaving { animation: none; opacity: 1; }
+    }
   </style>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="367feb64-6bc2-4d86-9c91-c5d3bd3d553f"></script>
   <script defer src="assets/js/analytics.js"></script>
@@ -1485,8 +1595,10 @@
   ══════════════════════════════ -->
   <header class="site-header">
     <nav class="nav-pill" id="mainNav">
+      <a href="#hero" class="nav-link" data-umami-event="nav-click" data-umami-event-target="home">Home</a>
       <a href="#work" class="nav-link" id="navWorkLink" data-umami-event="nav-click" data-umami-event-target="work">Work</a>
       <a href="playground.html" class="nav-link" data-umami-event="nav-click" data-umami-event-target="playground">Playground</a>
+      <a href="about.html" class="nav-link" data-umami-event="nav-click" data-umami-event-target="about">About</a>
       <a href="assets/resume/Imalsha-Kandamby-Resume-Product-Designer.pdf" target="_blank" rel="noopener" class="nav-link" data-umami-event="resume-view">Resume ↗</a>
       <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -1496,8 +1608,10 @@
     <!-- Mobile overlay -->
     <nav class="nav-mobile-menu" id="navMobileMenu" role="dialog" aria-label="Mobile navigation">
       <button class="nav-mobile-close" id="navMobileClose" aria-label="Close menu">&#x2715;</button>
+      <a href="#hero" class="nav-link" data-umami-event="nav-click" data-umami-event-target="home">Home</a>
       <a href="#work" class="nav-link" id="navWorkLinkMobile" data-umami-event="nav-click" data-umami-event-target="work">Work</a>
       <a href="playground.html" class="nav-link" data-umami-event="nav-click" data-umami-event-target="playground">Playground</a>
+      <a href="about.html" class="nav-link" data-umami-event="nav-click" data-umami-event-target="about">About</a>
       <a href="assets/resume/Imalsha-Kandamby-Resume-Product-Designer.pdf" target="_blank" rel="noopener" class="nav-link" data-umami-event="resume-view">Resume ↗</a>
     </nav>
   </header>
@@ -1573,153 +1687,176 @@
 
     </div><!-- /hero__inner -->
 
-    <!-- scroll cue -->
-    <div class="scroll-cue" aria-hidden="true">
-      <span class="scroll-cue__label">Scroll</span>
-      <div class="scroll-cue__line"></div>
-    </div>
-
   </section>
 
-
   <!-- ══════════════════════════════
-       ABOUT SNAPSHOT
+       2 · SKILLS MARQUEE
   ══════════════════════════════ -->
-  <section class="about-snapshot reveal" id="about">
-    <div class="container">
-
-      <div class="bento">
-
-        <!-- ── WORK EXPERIENCE ── -->
-        <div class="bento-cell bento-cell--exp">
-          <div class="about-section-label">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
-            Work Experience
-          </div>
-
-          <div class="bento-exp-grid">
-
-            <div class="bento-exp-card">
-              <span class="bento-exp-card__duration">3 yrs</span>
-              <span class="bento-exp-card__role">UX Designer</span>
-              <span class="bento-exp-card__co">Swivel Tech Pvt Ltd<br>Colombo 03, Sri Lanka</span>
-              <span class="bento-exp-card__period">Mar 2023 – Apr 2026</span>
-            </div>
-
-            <div class="bento-exp-card">
-              <span class="bento-exp-card__duration">1 yr</span>
-              <span class="bento-exp-card__role">UI/UX Engineer</span>
-              <span class="bento-exp-card__co">Akvasoft Pvt Ltd<br>Galle, Sri Lanka</span>
-              <span class="bento-exp-card__period">Mar 2022 – Mar 2023</span>
-            </div>
-
-            <div class="bento-exp-card">
-              <span class="bento-exp-card__duration">6 mo</span>
-              <span class="bento-exp-card__role">Trainee Software Engineer</span>
-              <span class="bento-exp-card__co">Inova Labs Pvt Ltd<br>Sri Lanka</span>
-              <span class="bento-exp-card__period">Jul 2020 – Jan 2021</span>
-            </div>
-
-          </div>
-
-          <!-- Domains -->
-          <div class="bento-domains">
-            <span class="bento-domains__label">Domains Covered</span>
-            <div class="bento-domains__pills">
-              <span>E-Commerce</span><span>FinTech AI</span><span>Healthcare</span>
-              <span>AI-Powered Solutions</span><span>HR Technology</span><span>Marketing</span>
-              <span>Analytics &amp; Stats</span><span>Legal Technology</span><span>Lead Generation</span>
-              <span>Property</span><span>Fashion &amp; Apparel</span><span>Beauty &amp; Personal Care</span>
-              <span>Food &amp; Beverage</span><span>Home &amp; Interior Design</span>
-              <span>Furniture &amp; Home</span><span>SportsTech AI</span>
-              <span>Agriculture &amp; Farming</span>
-            </div>
-          </div>
+  <section class="marquee-wrap" aria-label="Core skills">
+      <div class="marquee-row">
+        <div class="marquee-track">
+          <span class="mq-item">User Research</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Usability Testing</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Competitive Analysis</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Information Architecture</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">UX Strategy</span>
+          <span class="mq-dot" aria-hidden="true"></span>
         </div>
-
-        <!-- ── TOOL KIT ── -->
-        <div class="bento-cell bento-cell--edu">
-          <div class="about-section-label">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-            Tool Kit
-          </div>
-                    <div class="toolkit-grid">
-            <div class="toolkit-item">
-              <img src="assets/images/index/toolkit/figma.png" alt="Figma" class="toolkit-icon" width="48" height="48" />
-              <span>Figma</span>
-            </div>
-            <div class="toolkit-item">
-              <img src="assets/images/index/toolkit/figjam.png" alt="FigJam" class="toolkit-icon" width="48" height="48" />
-              <span>FigJam</span>
-            </div>
-            <div class="toolkit-item">
-              <img src="assets/images/index/toolkit/figma-make.png" alt="Figma Make" class="toolkit-icon" width="48" height="48" />
-              <span>Figma Make</span>
-            </div>
-            <div class="toolkit-item">
-              <img src="assets/images/index/toolkit/claude.png" alt="Claude" class="toolkit-icon" width="48" height="48" />
-              <span>Claude</span>
-            </div>
-            <div class="toolkit-item">
-              <img src="assets/images/index/toolkit/framer.png" alt="Framer" class="toolkit-icon" width="48" height="48" />
-              <span>Framer</span>
-            </div>
-            <div class="toolkit-item">
-              <img src="assets/images/index/toolkit/webflow.png" alt="Webflow" class="toolkit-icon" width="48" height="48" />
-              <span>Webflow</span>
-            </div>
-            <div class="toolkit-item">
-              <img src="assets/images/index/toolkit/miro.png" alt="Miro" class="toolkit-icon" width="48" height="48" />
-              <span>Miro</span>
-            </div>
-            <div class="toolkit-item">
-              <img src="assets/images/index/toolkit/jira.png" alt="Jira" class="toolkit-icon" width="48" height="48" />
-              <span>Jira</span>
-            </div>
-            <div class="toolkit-item">
-              <img src="assets/images/index/toolkit/adobe-xd.png" alt="Adobe XD" class="toolkit-icon" width="48" height="48" />
-              <span>Adobe XD</span>
-            </div>
-            <div class="toolkit-item">
-              <img src="assets/images/index/toolkit/photoshop.png" alt="Photoshop" class="toolkit-icon" width="48" height="48" />
-              <span>Photoshop</span>
-            </div>
-            <div class="toolkit-item">
-              <img src="assets/images/index/toolkit/illustrator.png" alt="Illustrator" class="toolkit-icon" width="48" height="48" />
-              <span>Illustrator</span>
-            </div>
-            <div class="toolkit-item">
-              <img src="assets/images/index/toolkit/html-css.png" alt="HTML / CSS" class="toolkit-icon" width="48" height="48" />
-              <span>HTML / CSS</span>
-            </div>
-            <div class="toolkit-item">
-              <img src="assets/images/index/toolkit/copilot.png" alt="Copilot" class="toolkit-icon" width="48" height="48" />
-              <span>Copilot</span>
-            </div>
-            <div class="toolkit-item">
-              <img src="assets/images/index/toolkit/gemini.png" alt="Gemini" class="toolkit-icon" width="48" height="48" />
-              <span>Gemini</span>
-            </div>
-          </div>
+        <div class="marquee-track" aria-hidden="true">
+          <span class="mq-item">User Research</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Usability Testing</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Competitive Analysis</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Information Architecture</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">UX Strategy</span>
+          <span class="mq-dot" aria-hidden="true"></span>
         </div>
-
-        <!-- ── EDUCATION (full width below) ── -->
-        <div class="bento-cell bento-cell--edu-full">
-          <div class="about-section-label">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-            Education
-          </div>
-          <div class="bento-edu-row">
-            <div class="bento-edu__body">
-              <div class="bento-edu__degree">B.Sc. (Hons) in Information Technology &amp; Management</div>
-              <div class="bento-edu__meta">Faculty of Information Technology · University of Moratuwa, Sri Lanka</div>
-            </div>
-            <span class="bento-edu__year">2017 – 2022</span>
-          </div>
+      </div>
+      <div class="marquee-row marquee-row--rev marquee-row--accent">
+        <div class="marquee-track">
+          <span class="mq-item">Wireframing</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Prototyping</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">High-Fidelity UI Design</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Interaction Design</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Visual Design</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Responsive Design</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Accessibility (WCAG)</span>
+          <span class="mq-dot" aria-hidden="true"></span>
         </div>
-
-      </div><!-- /bento -->
-    </div>
+        <div class="marquee-track" aria-hidden="true">
+          <span class="mq-item">Wireframing</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Prototyping</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">High-Fidelity UI Design</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Interaction Design</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Visual Design</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Responsive Design</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Accessibility (WCAG)</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+        </div>
+      </div>
+      <div class="marquee-row">
+        <div class="marquee-track">
+          <span class="mq-item">Design Systems</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Component Libraries</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Developer Handoff</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Design Documentation</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Agile &amp; Scrum</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+        </div>
+        <div class="marquee-track" aria-hidden="true">
+          <span class="mq-item">Design Systems</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Component Libraries</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Developer Handoff</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Design Documentation</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Agile &amp; Scrum</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+        </div>
+      </div>
+      <div class="marquee-row marquee-row--rev">
+        <div class="marquee-track">
+          <span class="mq-item">UX Writing</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Microcopy</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Conversational AI Copy</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Onboarding Flow Copy</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Error State Writing</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+        </div>
+        <div class="marquee-track" aria-hidden="true">
+          <span class="mq-item">UX Writing</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Microcopy</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Conversational AI Copy</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Onboarding Flow Copy</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Error State Writing</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+        </div>
+      </div>
+      <div class="marquee-row marquee-row--accent">
+        <div class="marquee-track">
+          <span class="mq-item">AI-Assisted Design</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Figma (Expert)</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Adobe Creative Suite</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Framer</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Webflow</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Claude</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+        </div>
+        <div class="marquee-track" aria-hidden="true">
+          <span class="mq-item">AI-Assisted Design</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Figma (Expert)</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Adobe Creative Suite</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Framer</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Webflow</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Claude</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+        </div>
+      </div>
+      <div class="marquee-row marquee-row--rev">
+        <div class="marquee-track">
+          <span class="mq-item">Cross-functional Collaboration</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Stakeholder Management</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Remote Team Collaboration</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Client Communication</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+        </div>
+        <div class="marquee-track" aria-hidden="true">
+          <span class="mq-item">Cross-functional Collaboration</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Stakeholder Management</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Remote Team Collaboration</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+          <span class="mq-item">Client Communication</span>
+          <span class="mq-dot" aria-hidden="true"></span>
+        </div>
+      </div>
   </section>
 
 
@@ -1908,19 +2045,30 @@
         var close = document.getElementById('navMobileClose');
         if (!btn || !menu) return;
 
+        function trackNav(name) {
+          if (window.umami && typeof window.umami.track === 'function') {
+            window.umami.track(name);
+          }
+        }
+
         btn.addEventListener('click', function(e) {
           e.stopPropagation();
           menu.classList.add('is-open');
           btn.classList.add('is-open');
           btn.setAttribute('aria-expanded', 'true');
           document.body.style.overflow = 'hidden';
+          trackNav('mobile-menu-open');
         });
 
         function closeMenu() {
+          // Escape fires this even when the menu is already shut, so only
+          // report a close that actually closed something
+          var wasOpen = menu.classList.contains('is-open');
           menu.classList.remove('is-open');
           btn.classList.remove('is-open');
           btn.setAttribute('aria-expanded', 'false');
           document.body.style.overflow = '';
+          if (wasOpen) trackNav('mobile-menu-close');
         }
 
         if (close) close.addEventListener('click', closeMenu);
@@ -1972,6 +2120,64 @@
       } else {
         revealAll();
       }
+    })();
+  </script>
+
+  <script>
+    /* ── Marquee: keep every row wider than the viewport ──
+       Each track animates translateX(0 → -100%) of its OWN width, and the row
+       holds two copies. That only stays gap-free while a single track is at
+       least as wide as the viewport — short rows (e.g. the UX-writing one)
+       otherwise run out of content and expose empty space. So repeat each
+       row's items until one track covers the viewport, then mirror it. */
+    (function() {
+      var wrap = document.querySelector('.marquee-wrap');
+      var rows = document.querySelectorAll('.marquee-row');
+      if (!wrap || !rows.length) return;
+
+      /* remember the original item markup for each row */
+      rows.forEach(function(row) {
+        var track = row.querySelector('.marquee-track');
+        if (track && !row.dataset.mqBase) row.dataset.mqBase = track.innerHTML;
+      });
+
+      function fill() {
+        var need = wrap.clientWidth + 8; /* small buffer for sub-pixel rounding */
+
+        rows.forEach(function(row) {
+          var base = row.dataset.mqBase;
+          if (!base) return;
+
+          var tracks = row.querySelectorAll('.marquee-track');
+          var first  = tracks[0];
+          if (!first) return;
+
+          first.innerHTML = base;
+
+          /* scrollWidth is a layout value, so the running transform doesn't skew it */
+          var guard = 0;
+          while (first.scrollWidth < need && guard < 30) {
+            first.insertAdjacentHTML('beforeend', base);
+            guard++;
+          }
+
+          for (var i = 1; i < tracks.length; i++) tracks[i].innerHTML = first.innerHTML;
+        });
+      }
+
+      fill();
+
+      /* web fonts change text width, so re-measure once they're ready */
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(fill).catch(function() {});
+      }
+      window.addEventListener('load', fill);
+
+      var resizeTimer;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(fill, 200);
+      });
     })();
   </script>
 
@@ -2150,4 +2356,54 @@
     })();
   </script>
 
+  <script>
+    /* ── Page transitions: fade out before navigating to another page ── */
+    (function() {
+      var DUR = 260;
+
+      /* coming back via bfcache / back button must never leave the page faded out */
+      window.addEventListener('pageshow', function() {
+        document.body.classList.remove('is-leaving');
+      });
+
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) return;
+
+      function closestLink(node) {
+        while (node && node !== document) {
+          if (node.tagName && node.tagName.toLowerCase() === 'a') return node;
+          node = node.parentNode;
+        }
+        return null;
+      }
+
+      document.addEventListener('click', function(e) {
+        if (e.defaultPrevented || e.button !== 0) return;
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+        var a = closestLink(e.target);
+        if (!a) return;
+
+        var href = a.getAttribute('href');
+        if (!href || href.charAt(0) === '#') return;          /* in-page anchor */
+        if (a.hasAttribute('download')) return;
+        if (a.target && a.target !== '_self') return;          /* new tab (resume PDF) */
+
+        var url;
+        try { url = new URL(href, window.location.href); } catch (err) { return; }
+
+        if (url.origin !== window.location.origin) return;     /* external */
+        if (/\.(pdf|zip|jpe?g|png|gif|svg|webp|mp4)$/i.test(url.pathname)) return;
+
+        /* same document, only a hash change -> let the browser scroll natively */
+        if (url.pathname === window.location.pathname && url.hash) return;
+
+        e.preventDefault();
+        document.body.classList.add('is-leaving');
+        setTimeout(function() { window.location.href = url.href; }, DUR);
+      });
+    })();
+  </script>
+
+</body>
 </html>
