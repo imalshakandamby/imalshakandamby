@@ -55,7 +55,11 @@
       -webkit-font-smoothing: antialiased;
       min-height: 100vh;
       position: relative;
-      overflow-x: hidden;
+      /* NOT overflow-x: hidden here - html's rule above already blocks
+         horizontal scroll for the whole page. Repeating it on body turns
+         body into its own scroll container, which breaks position:sticky
+         on .filter-bar (it starts sticking to body's box instead of the
+         viewport, and scrolls away with the page). */
       width: 100%;
     }
 
