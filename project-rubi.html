@@ -344,40 +344,44 @@
       .intro-meta { border-left: none; padding-left: 0; border-top: 1px solid rgba(255,255,255,0.13); padding-top: 1.25rem; }
     }
 
-    /* ─── Challenge two-column layout ─── */
-    .challenge-grid {
-      display: grid;
-      grid-template-columns: 1fr 3fr;
-      gap: 2.5rem;
-      align-items: center;
-    }
-    .challenge-illustration {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      aspect-ratio: 1;
-      border-radius: 16px;
-      background: rgba(108,142,245,0.05);
-      border: 1px solid rgba(108,142,245,0.12);
-    }
+    /* ─── The Problem section ─── */
     .challenge-para {
       color: var(--muted);
       line-height: 1.8;
       font-size: 0.95rem;
     }
-    /* marker-style highlight: the tint sits only on the lower part of the
-       line so it reads as emphasis without blocking out the text */
-    .challenge-hl {
+    .challenge-para + .challenge-para { margin-top: 1.1rem; }
+
+    .problem-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 1.15rem 0 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .problem-list li {
+      position: relative;
+      padding-left: 1.15rem;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 0.95rem;
+    }
+    .problem-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.72em;
+      width: 6px;
+      height: 6px;
+      border-radius: 2px;
+      background: rgba(108,142,245,0.75);
+    }
+    /* each item opens with the failure, then explains it - so the opening
+       clause carries the weight and the list stays scannable */
+    .problem-list__lead {
       color: var(--white);
       font-weight: 500;
-      background: linear-gradient(180deg, transparent 60%, rgba(108,142,245,0.26) 60%);
-      padding: 0 0.12em;
-      border-radius: 2px;
-    }
-    .problem-art { width: 86%; height: auto; }
-    @media (max-width: 640px) {
-      .challenge-grid { grid-template-columns: 1fr; }
-      .challenge-illustration { aspect-ratio: 2/1; }
     }
 
 
@@ -688,7 +692,6 @@
 
       /* Intro meta bar (2fr 1fr split) → stack */
       .intro-grid,
-      .challenge-grid,
       .intro-meta-bar {
         grid-template-columns: 1fr !important;
       }
@@ -1038,51 +1041,18 @@
     </section>
     <section class="case-section reveal">
       <h2>The Problem</h2>
-      <div class="challenge-grid">
-        <div class="challenge-illustration" aria-hidden="true">
-          <!-- Tonal gradient illustration (same approach as the About page
-               hobby cards): gradient-filled shapes, no hard outlines.
-               Misaligned blocks with one piece drifted off and the gap it
-               left behind — pieces that don't fit yet. -->
-          <svg class="problem-art" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="rbProbA" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#a8bcfb" stop-opacity="0.36"/>
-                <stop offset="100%" stop-color="#6c8ef5" stop-opacity="0.06"/>
-              </linearGradient>
-              <linearGradient id="rbProbB" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#a8bcfb" stop-opacity="0.24"/>
-                <stop offset="100%" stop-color="#6c8ef5" stop-opacity="0.04"/>
-              </linearGradient>
-              <linearGradient id="rbProbC" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#a8bcfb" stop-opacity="0.30"/>
-                <stop offset="100%" stop-color="#6c8ef5" stop-opacity="0.05"/>
-              </linearGradient>
-              <radialGradient id="rbProbGlow">
-                <stop offset="0%" stop-color="#a8bcfb" stop-opacity="0.26"/>
-                <stop offset="100%" stop-color="#6c8ef5" stop-opacity="0"/>
-              </radialGradient>
-            </defs>
+      <p class="challenge-para">The existing Chrome extension had an 8-step stepper meant to guide recruiters through candidate evaluation, but the steps mixed user actions with AI-automated ones with no distinction between them. Recruiters couldn't tell which steps needed their input and which the system handled on its own.</p>
 
-            <circle cx="80" cy="80" r="60" fill="url(#rbProbGlow)"/>
+      <p class="challenge-para">Beyond the flow itself, the interface worked against clarity at almost every level:</p>
 
-            <!-- two blocks that almost line up, but don't -->
-            <rect x="34" y="44" width="62" height="42" rx="11" fill="url(#rbProbA)"
-                  transform="rotate(-8 65 65)"/>
-            <rect x="64" y="74" width="62" height="42" rx="11" fill="url(#rbProbB)"
-                  transform="rotate(7 95 95)"/>
+      <ul class="problem-list">
+        <li><span class="problem-list__lead">No progress feedback.</span> Users had no sense of what was happening or what came next.</li>
+        <li><span class="problem-list__lead">Overused primary color.</span> Rubi's brand color appeared everywhere on screen, so nothing stood out as the actual priority.</li>
+        <li><span class="problem-list__lead">Missing guidance.</span> No clear prompts like &ldquo;upload job description here&rdquo; or &ldquo;upload CVs here,&rdquo; leaving users to guess what each step required.</li>
+        <li><span class="problem-list__lead">No structural pattern for new surfaces.</span> The Admin Portal, User Portal, and subscription and payment screens didn't exist yet, meaning features, user journeys, and information architecture had to be defined from scratch, not adapted from something that already worked.</li>
+      </ul>
 
-            <!-- the piece that broke away -->
-            <rect x="98" y="24" width="36" height="26" rx="9" fill="url(#rbProbC)"
-                  transform="rotate(17 116 37)"/>
-
-            <!-- and the gap it left -->
-            <rect x="40" y="100" width="36" height="26" rx="9" fill="none"
-                  stroke="rgba(168,188,251,0.22)" stroke-width="1.5" stroke-dasharray="4 5"/>
-          </svg>
-        </div>
-        <p class="challenge-para">Designing an AI-powered recruitment solution required quickly understanding complex recruiter workflows, candidate evaluation processes, and subscription-based user management. The existing Chrome extension had <span class="challenge-hl">limited functionality</span>, <span class="challenge-hl">unclear user flows</span>, and <span class="challenge-hl">usability issues</span>, requiring a complete UX overhaul. Additionally, the Admin and User Portals were entirely new concepts, <span class="challenge-hl">demanding the definition of features, user journeys, and workflows from scratch</span>. Ensuring a <span class="challenge-hl">seamless experience across all three platforms</span> while establishing a <span class="challenge-hl">scalable design system</span> was a key challenge.</p>
-      </div>
+      <p class="challenge-para">The result was a product that asked users to trust an AI-driven process without ever showing them what the AI was doing, spread across three surfaces with no shared design language to hold them together.</p>
     </section>
     <section class="case-section reveal">
                   <h2>My Role &amp; Responsibility</h2>
