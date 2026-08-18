@@ -365,6 +365,16 @@
       line-height: 1.8;
       font-size: 0.95rem;
     }
+    /* marker-style highlight: the tint sits only on the lower part of the
+       line so it reads as emphasis without blocking out the text */
+    .challenge-hl {
+      color: var(--white);
+      font-weight: 500;
+      background: linear-gradient(180deg, transparent 60%, rgba(108,142,245,0.26) 60%);
+      padding: 0 0.12em;
+      border-radius: 2px;
+    }
+    .problem-art { width: 86%; height: auto; }
     @media (max-width: 640px) {
       .challenge-grid { grid-template-columns: 1fr; }
       .challenge-illustration { aspect-ratio: 2/1; }
@@ -1027,55 +1037,51 @@
       </div>
     </section>
     <section class="case-section reveal">
-      <h2>The Challenge</h2>
+      <h2>The Problem</h2>
       <div class="challenge-grid">
         <div class="challenge-illustration" aria-hidden="true">
-          <svg width="86%" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <style>
-              @keyframes untangle-drift { 0%,100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
-              @keyframes thread-pull-l  { 0%,100% { transform: translateX(0); } 50% { transform: translateX(-3px); } }
-              @keyframes thread-pull-r  { 0%,100% { transform: translateX(0); } 50% { transform: translateX(3px); } }
-              @keyframes pulse-dot      { 0%,100% { opacity:1; r:5; } 50% { opacity:0.5; r:3.8; } }
-              @keyframes dash-flow      { to { stroke-dashoffset: -20; } }
-              @keyframes knot-breathe   { 0%,100% { stroke-width:1.8; } 50% { stroke-width:2.3; } }
-              @keyframes ring-pulse     { 0%,100% { opacity:0.55; } 50% { opacity:0.85; } }
-              .knot-group  { transform-origin: 80px 78px; animation: untangle-drift 5s ease-in-out infinite; }
-              .knot-path   { animation: knot-breathe 3s ease-in-out infinite; }
-              .thread-left  { animation: thread-pull-l 3.4s ease-in-out infinite; }
-              .thread-right { animation: thread-pull-r 3.4s ease-in-out infinite 0.3s; }
-              .dot-left  { animation: pulse-dot 2.4s ease-in-out infinite; }
-              .dot-right { animation: pulse-dot 2.4s ease-in-out 0.9s infinite; }
-              .flow-line { stroke-dasharray: 4 4; animation: dash-flow 1.4s linear infinite; }
-              .outer-ring { animation: ring-pulse 3.6s ease-in-out infinite; }
-            </style>
+          <!-- Tonal gradient illustration (same approach as the About page
+               hobby cards): gradient-filled shapes, no hard outlines.
+               Misaligned blocks with one piece drifted off and the gap it
+               left behind — pieces that don't fit yet. -->
+          <svg class="problem-art" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="rbProbA" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#a8bcfb" stop-opacity="0.36"/>
+                <stop offset="100%" stop-color="#6c8ef5" stop-opacity="0.06"/>
+              </linearGradient>
+              <linearGradient id="rbProbB" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#a8bcfb" stop-opacity="0.24"/>
+                <stop offset="100%" stop-color="#6c8ef5" stop-opacity="0.04"/>
+              </linearGradient>
+              <linearGradient id="rbProbC" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#a8bcfb" stop-opacity="0.30"/>
+                <stop offset="100%" stop-color="#6c8ef5" stop-opacity="0.05"/>
+              </linearGradient>
+              <radialGradient id="rbProbGlow">
+                <stop offset="0%" stop-color="#a8bcfb" stop-opacity="0.26"/>
+                <stop offset="100%" stop-color="#6c8ef5" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
 
-            <!-- Tangled knot at centre — denser loops -->
-            <g class="knot-group">
-              <path class="knot-path" d="M80,44 C99,44 106,58 94,66 C82,74 62,68 65,54 C68,40 92,36 102,50
-                C112,64 104,88 84,92 C64,96 46,82 52,64 C58,46 84,40 96,56
-                C108,72 96,96 76,94 C56,92 48,74 60,62 C72,50 92,54 92,70
-                C92,86 70,92 62,78 C54,64 66,50 80,54 C94,58 98,76 84,82
-                C70,88 56,78 60,66"
-                stroke="rgba(108,142,245,0.78)" stroke-width="2" stroke-linecap="round" fill="none"/>
-            </g>
+            <circle cx="80" cy="80" r="60" fill="url(#rbProbGlow)"/>
 
-            <!-- Left thread pulling away -->
-            <g class="thread-left">
-              <path class="flow-line" d="M52,64 C38,60 24,68 10,79" stroke="rgba(108,142,245,0.45)" stroke-width="1.4" fill="none"/>
-              <circle class="dot-left" cx="9" cy="82" r="5" fill="rgba(108,142,245,0.9)"/>
-            </g>
+            <!-- two blocks that almost line up, but don't -->
+            <rect x="34" y="44" width="62" height="42" rx="11" fill="url(#rbProbA)"
+                  transform="rotate(-8 65 65)"/>
+            <rect x="64" y="74" width="62" height="42" rx="11" fill="url(#rbProbB)"
+                  transform="rotate(7 95 95)"/>
 
-            <!-- Right thread pulling away -->
-            <g class="thread-right">
-              <path class="flow-line" d="M102,50 C118,43 132,48 148,38" stroke="rgba(108,142,245,0.45)" stroke-width="1.4" fill="none"/>
-              <circle class="dot-right" cx="151" cy="35" r="5" fill="rgba(108,142,245,0.9)"/>
-            </g>
+            <!-- the piece that broke away -->
+            <rect x="98" y="24" width="36" height="26" rx="9" fill="url(#rbProbC)"
+                  transform="rotate(17 116 37)"/>
 
-            <!-- Outer containment ring — more visible -->
-            <circle class="outer-ring" cx="80" cy="80" r="74" stroke="rgba(108,142,245,0.32)" stroke-width="1.5" stroke-dasharray="3 6"/>
+            <!-- and the gap it left -->
+            <rect x="40" y="100" width="36" height="26" rx="9" fill="none"
+                  stroke="rgba(168,188,251,0.22)" stroke-width="1.5" stroke-dasharray="4 5"/>
           </svg>
         </div>
-        <p class="challenge-para">Designing an AI-powered recruitment solution required quickly understanding complex recruiter workflows, candidate evaluation processes, and subscription-based user management. The existing Chrome extension had limited functionality, unclear user flows, and usability issues, requiring a complete UX overhaul. Additionally, the Admin and User Portals were entirely new concepts, demanding the definition of features, user journeys, and workflows from scratch. Ensuring a seamless experience across all three platforms while establishing a scalable design system was a key challenge.</p>
+        <p class="challenge-para">Designing an AI-powered recruitment solution required quickly understanding complex recruiter workflows, candidate evaluation processes, and subscription-based user management. The existing Chrome extension had <span class="challenge-hl">limited functionality</span>, <span class="challenge-hl">unclear user flows</span>, and <span class="challenge-hl">usability issues</span>, requiring a complete UX overhaul. Additionally, the Admin and User Portals were entirely new concepts, <span class="challenge-hl">demanding the definition of features, user journeys, and workflows from scratch</span>. Ensuring a <span class="challenge-hl">seamless experience across all three platforms</span> while establishing a <span class="challenge-hl">scalable design system</span> was a key challenge.</p>
       </div>
     </section>
     <section class="case-section reveal">
