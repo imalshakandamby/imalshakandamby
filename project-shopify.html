@@ -636,6 +636,114 @@
       margin: 0;
     }
 
+    /* ─── UX Process step cards ───
+       Deliberately a different visual system from the role cards above:
+       those use a sweeping TOP rule + corner glow + filled icon chip.
+       These use a vertical LEFT spine (the progress metaphor) and an
+       outlined step numeral, echoing the ghost headline on the home hero. */
+    .ux-card {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      padding: 1.35rem 1.3rem 1.35rem 1.55rem;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.028);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.055);
+      transition: background 0.28s ease, box-shadow 0.28s ease,
+                  transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    /* the spine runs the full card height on hover */
+    .ux-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 1.35rem;
+      width: 3px;
+      height: 2.1rem;
+      border-radius: 0 3px 3px 0;
+      background: linear-gradient(180deg, rgba(108,142,245,0.95), rgba(108,142,245,0.25));
+      transition: height 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                  top 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .ux-card:hover::before { top: 0; height: 100%; }
+    .ux-card:hover {
+      background: rgba(108,142,245,0.055);
+      box-shadow: inset 0 0 0 1px rgba(108,142,245,0.22);
+      transform: translateY(-3px);
+    }
+    /* outlined numeral, same treatment as the home hero's ghost headline */
+    .ux-card__num {
+      position: absolute;
+      top: 0.45rem;
+      right: 0.8rem;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 2.55rem;
+      line-height: 1;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(108,142,245,0.35);
+      pointer-events: none;
+      transition: -webkit-text-stroke-color 0.28s ease;
+    }
+    .ux-card:hover .ux-card__num { -webkit-text-stroke-color: rgba(108,142,245,0.72); }
+    /* without text-stroke the numeral would be invisible, so fill it instead */
+    @supports not (-webkit-text-stroke: 1px red) {
+      .ux-card__num { color: rgba(108,142,245,0.2); }
+    }
+    .ux-card__head {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      /* keep the title clear of the numeral watermark */
+      padding-right: 2.4rem;
+    }
+    .ux-card__icon {
+      display: flex;
+      flex-shrink: 0;
+      color: rgba(108,142,245,0.85);
+      transition: color 0.28s ease;
+    }
+    .ux-card:hover .ux-card__icon { color: #a8bcfb; }
+    .ux-card__title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.3;
+    }
+    .ux-card__list {
+      position: relative;
+      z-index: 1;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .ux-card__list li {
+      position: relative;
+      padding-left: 0.85rem;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.6;
+    }
+    /* short dash marker - lighter than the disc + divider rule it replaces */
+    .ux-card__list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.72em;
+      width: 6px;
+      height: 1.5px;
+      border-radius: 1px;
+      background: rgba(108,142,245,0.6);
+    }
+
 
     /* ── My Role icon cards ── */
     .role-row { margin-bottom: 0; }
@@ -1095,59 +1203,78 @@
       <h2>UX Process</h2>
       <div class="mobile-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.85rem;margin-top:1rem;">
         
-        <div style="position:relative;padding:1.25rem;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.18);overflow:hidden;display:flex;flex-direction:column;gap:0.75rem;">
-          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,rgba(108,142,245,0.85),rgba(108,142,245,0.05));border-radius:14px 14px 0 0;"></div>
-          <div style="display:flex;align-items:center;justify-content:space-between;">
-            <span style="font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;color:rgba(108,142,245,0.5);">01</span>
-            <span style="color:rgba(108,142,245,0.7);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg></span>
+        <div class="ux-card">
+          <span class="ux-card__num" aria-hidden="true">01</span>
+          <div class="ux-card__head">
+            <span class="ux-card__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg></span>
+            <span class="ux-card__title">Research</span>
           </div>
-          <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--white);">Research</div>
-          <ul style="padding-left:1rem;margin:0;list-style:disc;"><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Gathered requirements from clients and internal stakeholders.</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Reviewed existing quiz experiences and analyzed usability issues.</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Identified drop-off points and conversion barriers.</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Studied customer behavior and product selection journeys within each domain.</li></ul>
+          <ul class="ux-card__list">
+            <li>Gathered requirements from clients and internal stakeholders.</li>
+            <li>Reviewed existing quiz experiences and analyzed usability issues.</li>
+            <li>Identified drop-off points and conversion barriers.</li>
+            <li>Studied customer behavior and product selection journeys within each domain.</li>
+          </ul>
         </div>
-        <div style="position:relative;padding:1.25rem;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.18);overflow:hidden;display:flex;flex-direction:column;gap:0.75rem;">
-          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,rgba(108,142,245,0.85),rgba(108,142,245,0.05));border-radius:14px 14px 0 0;"></div>
-          <div style="display:flex;align-items:center;justify-content:space-between;">
-            <span style="font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;color:rgba(108,142,245,0.5);">02</span>
-            <span style="color:rgba(108,142,245,0.7);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg></span>
+        <div class="ux-card">
+          <span class="ux-card__num" aria-hidden="true">02</span>
+          <div class="ux-card__head">
+            <span class="ux-card__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg></span>
+            <span class="ux-card__title">Define</span>
           </div>
-          <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--white);">Define</div>
-          <ul style="padding-left:1rem;margin:0;list-style:disc;"><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Defined business objectives and success metrics.</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Mapped user journeys and recommendation logic.</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Structured quiz flows to balance engagement and completion rates.</li></ul>
+          <ul class="ux-card__list">
+            <li>Defined business objectives and success metrics.</li>
+            <li>Mapped user journeys and recommendation logic.</li>
+            <li>Structured quiz flows to balance engagement and completion rates.</li>
+          </ul>
         </div>
-        <div style="position:relative;padding:1.25rem;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.18);overflow:hidden;display:flex;flex-direction:column;gap:0.75rem;">
-          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,rgba(108,142,245,0.85),rgba(108,142,245,0.05));border-radius:14px 14px 0 0;"></div>
-          <div style="display:flex;align-items:center;justify-content:space-between;">
-            <span style="font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;color:rgba(108,142,245,0.5);">03</span>
-            <span style="color:rgba(108,142,245,0.7);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 1 7 7c0 2.6-1.4 4.8-3.5 6.1V17a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-1.9C6.4 13.8 5 11.6 5 9a7 7 0 0 1 7-7z"/></svg></span>
+        <div class="ux-card">
+          <span class="ux-card__num" aria-hidden="true">03</span>
+          <div class="ux-card__head">
+            <span class="ux-card__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 1 7 7c0 2.6-1.4 4.8-3.5 6.1V17a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-1.9C6.4 13.8 5 11.6 5 9a7 7 0 0 1 7-7z"/></svg></span>
+            <span class="ux-card__title">Ideate</span>
           </div>
-          <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--white);">Ideate</div>
-          <ul style="padding-left:1rem;margin:0;list-style:disc;"><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Explored multiple interaction patterns and question formats.</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Developed conversion-focused approaches for different audiences.</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Optimized information flow to reduce friction and cognitive load.</li></ul>
+          <ul class="ux-card__list">
+            <li>Explored multiple interaction patterns and question formats.</li>
+            <li>Developed conversion-focused approaches for different audiences.</li>
+            <li>Optimized information flow to reduce friction and cognitive load.</li>
+          </ul>
         </div>
-        <div style="position:relative;padding:1.25rem;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.18);overflow:hidden;display:flex;flex-direction:column;gap:0.75rem;">
-          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,rgba(108,142,245,0.85),rgba(108,142,245,0.05));border-radius:14px 14px 0 0;"></div>
-          <div style="display:flex;align-items:center;justify-content:space-between;">
-            <span style="font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;color:rgba(108,142,245,0.5);">04</span>
-            <span style="color:rgba(108,142,245,0.7);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span>
+        <div class="ux-card">
+          <span class="ux-card__num" aria-hidden="true">04</span>
+          <div class="ux-card__head">
+            <span class="ux-card__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span>
+            <span class="ux-card__title">Design</span>
           </div>
-          <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--white);">Design</div>
-          <ul style="padding-left:1rem;margin:0;list-style:disc;"><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Created wireframes and high-fidelity UI designs in Figma.</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Designed responsive experiences for desktop, tablet, and mobile.</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Developed visually engaging interfaces aligned with each brand's identity.</li></ul>
+          <ul class="ux-card__list">
+            <li>Created wireframes and high-fidelity UI designs in Figma.</li>
+            <li>Designed responsive experiences for desktop, tablet, and mobile.</li>
+            <li>Developed visually engaging interfaces aligned with each brand's identity.</li>
+          </ul>
         </div>
-        <div style="position:relative;padding:1.25rem;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.18);overflow:hidden;display:flex;flex-direction:column;gap:0.75rem;">
-          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,rgba(108,142,245,0.85),rgba(108,142,245,0.05));border-radius:14px 14px 0 0;"></div>
-          <div style="display:flex;align-items:center;justify-content:space-between;">
-            <span style="font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;color:rgba(108,142,245,0.5);">05</span>
-            <span style="color:rgba(108,142,245,0.7);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></span>
+        <div class="ux-card">
+          <span class="ux-card__num" aria-hidden="true">05</span>
+          <div class="ux-card__head">
+            <span class="ux-card__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></span>
+            <span class="ux-card__title">Build & Prototype</span>
           </div>
-          <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--white);">Build & Prototype</div>
-          <ul style="padding-left:1rem;margin:0;list-style:disc;"><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Implemented quiz experiences using AskWhai Visual Quiz Builder.</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Added custom HTML, CSS, and SCSS enhancements when required.</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Worked closely with developers to integrate quizzes into Shopify stores.</li></ul>
+          <ul class="ux-card__list">
+            <li>Implemented quiz experiences using AskWhai Visual Quiz Builder.</li>
+            <li>Added custom HTML, CSS, and SCSS enhancements when required.</li>
+            <li>Worked closely with developers to integrate quizzes into Shopify stores.</li>
+          </ul>
         </div>
-        <div style="position:relative;padding:1.25rem;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.18);overflow:hidden;display:flex;flex-direction:column;gap:0.75rem;">
-          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,rgba(108,142,245,0.85),rgba(108,142,245,0.05));border-radius:14px 14px 0 0;"></div>
-          <div style="display:flex;align-items:center;justify-content:space-between;">
-            <span style="font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;color:rgba(108,142,245,0.5);">06</span>
-            <span style="color:rgba(108,142,245,0.7);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M10 3v7l-3.5 7A2 2 0 0 0 8.27 20h7.46a2 2 0 0 0 1.77-3L14 10V3"/><path d="M7.5 15h9"/></svg></span>
+        <div class="ux-card">
+          <span class="ux-card__num" aria-hidden="true">06</span>
+          <div class="ux-card__head">
+            <span class="ux-card__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M10 3v7l-3.5 7A2 2 0 0 0 8.27 20h7.46a2 2 0 0 0 1.77-3L14 10V3"/><path d="M7.5 15h9"/></svg></span>
+            <span class="ux-card__title">Testing & Optimization</span>
           </div>
-          <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--white);">Testing & Optimization</div>
-          <ul style="padding-left:1rem;margin:0;list-style:disc;"><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Conducted manual testing and quality assurance.</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Validated recommendation logic and user flows.</li><li style="color:var(--muted);font-size:0.82rem;line-height:1.6;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">Refined experiences based on stakeholder and user feedback.</li></ul>
+          <ul class="ux-card__list">
+            <li>Conducted manual testing and quality assurance.</li>
+            <li>Validated recommendation logic and user flows.</li>
+            <li>Refined experiences based on stakeholder and user feedback.</li>
+          </ul>
         </div>
       </div>
     </section>
