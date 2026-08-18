@@ -344,6 +344,31 @@
       .intro-meta { border-left: none; padding-left: 0; border-top: 1px solid rgba(255,255,255,0.13); padding-top: 1.25rem; }
     }
 
+    /* ─── The Solution tabs ───
+       The panel used to hug whichever pane was open, so its height jumped
+       every time you switched tabs. Now every pane shares one grid cell,
+       which makes the cell as tall as the LONGEST pane and keeps the block
+       a constant height. Inactive panes use visibility (not display) so
+       they still occupy the cell and contribute to that height. This is
+       measured by the browser, so it stays correct if the copy changes or
+       the text wraps differently at another width - no fixed pixel value. */
+    .sol-panel {
+      padding: 1.75rem 1.5rem;
+      display: grid;
+      align-content: start;
+    }
+    .sol-pane {
+      grid-area: 1 / 1;
+      visibility: hidden;
+    }
+    .sol-pane.is-active { visibility: visible; }
+    /* five equal rows filling the column, so no dead space under the last
+       item once the panel is locked to its tallest height */
+    .sol-tabs {
+      display: grid;
+      grid-template-rows: repeat(5, 1fr);
+    }
+
     /* ─── The Problem section ─── */
     .challenge-para {
       color: var(--muted);
@@ -1162,7 +1187,7 @@
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid rgba(108,142,245,0.18);border-radius:14px;overflow:hidden;">
 
         <!-- Left: Title list -->
-        <div style="border-right:1px solid rgba(108,142,245,0.18);">
+        <div class="sol-tabs" style="border-right:1px solid rgba(108,142,245,0.18);">
           <button onclick="selectSolution(0)" id="sol-btn-0" style="width:100%;text-align:left;padding:1.1rem 1.25rem;background:rgba(108,142,245,0.12);border:none;border-bottom:1px solid rgba(108,142,245,0.18);cursor:pointer;display:flex;align-items:center;gap:0.75rem;transition:background 0.2s;">
             <span style="flex-shrink:0;width:22px;height:22px;border-radius:6px;background:rgba(108,142,245,0.25);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:0.6rem;font-weight:700;color:rgba(108,142,245,1);">01</span>
             <span style="font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:600;color:var(--white);line-height:1.4;">Chrome Add-On</span>
@@ -1179,31 +1204,31 @@
             <span style="flex-shrink:0;width:22px;height:22px;border-radius:6px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:0.6rem;font-weight:700;color:rgba(108,142,245,0.5);">04</span>
             <span style="font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:600;color:var(--muted);line-height:1.4;">Unified Visual Language</span>
           </button>
-          <button onclick="selectSolution(4)" id="sol-btn-4" style="width:100%;text-align:left;padding:1.1rem 1.25rem;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:0.75rem;transition:background 0.2s;">
+          <button onclick="selectSolution(4)" id="sol-btn-4" style="width:100%;text-align:left;padding:1.1rem 1.25rem;background:transparent;border:none;border-bottom:1px solid transparent;cursor:pointer;display:flex;align-items:center;gap:0.75rem;transition:background 0.2s;">
             <span style="flex-shrink:0;width:22px;height:22px;border-radius:6px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:0.6rem;font-weight:700;color:rgba(108,142,245,0.5);">05</span>
             <span style="font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:600;color:var(--muted);line-height:1.4;">Scalable, Flexible Architecture</span>
           </button>
         </div>
 
         <!-- Right: Content panel -->
-        <div style="padding:1.75rem 1.5rem;min-height:220px;display:flex;flex-direction:column;justify-content:center;">
-          <div id="sol-content-0" style="display:block;">
+        <div class="sol-panel">
+          <div id="sol-content-0" class="sol-pane is-active">
             <p style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:rgba(108,142,245,0.95);line-height:1.45;margin-bottom:0.7rem;">From 8 Confusing Steps to 4 Clear Ones</p>
             <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin:0;">The original 8-step flow mixed user actions with AI-automated steps, leaving recruiters unsure what needed their input. I stripped out the automated steps entirely and rebuilt the flow around only what recruiters actually need to do, cutting it to 4 steps. Each step now includes a clear progress indicator, contextual input fields, and explicit guidance, &ldquo;upload job description here,&rdquo; &ldquo;upload CVs here,&rdquo; so recruiters always know what's expected without guessing. Candidate information can be extracted and processed directly from the browser, with no tool-switching required.</p>
           </div>
-          <div id="sol-content-1" style="display:none;">
+          <div id="sol-content-1" class="sol-pane">
             <p style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:rgba(108,142,245,0.95);line-height:1.45;margin-bottom:0.7rem;">Built from Zero into Clear Role-Based Management</p>
             <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin:0;">The Admin Portal didn't exist before this project, so every feature, journey, and structure had to be defined from scratch. I designed a modular layout giving administrators direct access to Users, Audit Logs, and Subscription settings, with a navigation structure clear enough that no onboarding is needed to find what you're looking for. The result replaces what would have been an undefined, ad hoc system with transparent, predictable administrative control.</p>
           </div>
-          <div id="sol-content-2" style="display:none;">
+          <div id="sol-content-2" class="sol-pane">
             <p style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:rgba(108,142,245,0.95);line-height:1.45;margin-bottom:0.7rem;">Simple by Design, Not by Accident</p>
             <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin:0;">Also built from scratch, the User Portal was designed around one goal: candidates should never have to think about how to use it. Profile and subscription management are laid out with minimal friction and high readability, so the portal supports the candidate experience instead of adding to its complexity.</p>
           </div>
-          <div id="sol-content-3" style="display:none;">
+          <div id="sol-content-3" class="sol-pane">
             <p style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:rgba(108,142,245,0.95);line-height:1.45;margin-bottom:0.7rem;">Fixing the Colour Confusion</p>
             <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin:0;">The original extension overused Rubi's primary colour across nearly every element, so nothing signalled importance. I established a consistent design system, components, spacing, typography, colour usage, and interaction patterns, applied across all three surfaces. Colour now carries meaning again: it highlights what matters instead of competing with everything else on screen. This shared language also closes the gap between the Chrome extension, Admin Portal, and User Portal, so switching between them no longer feels like switching products.</p>
           </div>
-          <div id="sol-content-4" style="display:none;">
+          <div id="sol-content-4" class="sol-pane">
             <p style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:rgba(108,142,245,0.95);line-height:1.45;margin-bottom:0.7rem;">Foundation that absorbs future features</p>
             <p style="color:var(--muted);font-size:0.9rem;line-height:1.75;margin:0;">Because the Admin and User Portals were new territory with no existing pattern to follow, I built every component to be reusable from the start rather than designing one-off screens. This gives the team a foundation that absorbs future features and integrations without rework, and lets designers and developers extend the system consistently as it grows.</p>
           </div>
@@ -1216,7 +1241,7 @@
           for (var i = 0; i < 5; i++) {
             var btn = document.getElementById('sol-btn-' + i);
             var content = document.getElementById('sol-content-' + i);
-            content.style.display = 'none';
+            content.classList.remove('is-active');
             btn.style.background = 'transparent';
             btn.querySelector('span:first-child').style.background = 'rgba(255,255,255,0.05)';
             btn.querySelector('span:first-child').style.color = 'rgba(108,142,245,0.5)';
@@ -1224,7 +1249,7 @@
           }
           var activeBtn = document.getElementById('sol-btn-' + index);
           var activeContent = document.getElementById('sol-content-' + index);
-          activeContent.style.display = 'block';
+          activeContent.classList.add('is-active');
           activeBtn.style.background = 'rgba(108,142,245,0.12)';
           activeBtn.querySelector('span:first-child').style.background = 'rgba(108,142,245,0.25)';
           activeBtn.querySelector('span:first-child').style.color = 'rgba(108,142,245,1)';
