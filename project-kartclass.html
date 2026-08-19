@@ -924,6 +924,78 @@
       line-height: 1.72;
       color: var(--muted);
     }
+
+    /* ─── Learnings: cut-corner insight cards ───
+       Every other block on these pages is a rounded rectangle. These are
+       clipped at the top-right so they read as torn/cut sheets - a takeaway
+       pulled out of the project rather than another UI card. Two columns,
+       so a 4-7 item list stops being a long vertical scroll. */
+    .case-section .learn-grid {
+      list-style: none;
+      padding-left: 0;
+      margin: 1.3rem 0 0;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.95rem;
+    }
+    .case-section .learn-card {
+      position: relative;
+      padding: 1.35rem 1.35rem 1.45rem;
+      background: linear-gradient(150deg, rgba(255,255,255,0.05), rgba(255,255,255,0.016));
+      /* the cut corner; no border, since clip-path would slice through it */
+      clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%);
+      border-radius: 3px;
+      transition: background 0.26s ease, transform 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .case-section .learn-card:hover {
+      background: linear-gradient(150deg, rgba(108,142,245,0.13), rgba(108,142,245,0.03));
+      transform: translateY(-3px);
+    }
+    /* fills the notch so the cut reads as deliberate, not a rendering fault */
+    .case-section .learn-card::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 20px; height: 20px;
+      background: linear-gradient(225deg, rgba(108,142,245,0.42), transparent 70%);
+      clip-path: polygon(0 0, 100% 100%, 0 100%);
+      transform: scaleX(-1);
+      transition: background 0.26s ease;
+    }
+    .case-section .learn-card:hover::after {
+      background: linear-gradient(225deg, rgba(168,188,251,0.75), transparent 70%);
+    }
+    /* rotated square - not reused from any other section on these pages */
+    .case-section .learn-card__mark {
+      display: block;
+      width: 7px;
+      height: 7px;
+      margin-bottom: 0.75rem;
+      background: rgba(108,142,245,0.9);
+      transform: rotate(45deg);
+      transition: background 0.26s ease, transform 0.26s ease;
+    }
+    .case-section .learn-card:hover .learn-card__mark {
+      background: #a8bcfb;
+      transform: rotate(135deg);
+    }
+    .case-section .learn-card__title {
+      margin: 0 0 0.4rem;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.92rem;
+      line-height: 1.4;
+      color: var(--white);
+    }
+    .case-section .learn-card__text {
+      margin: 0;
+      font-size: 0.87rem;
+      line-height: 1.72;
+      color: var(--muted);
+    }
+    @media (max-width: 760px) {
+      .case-section .learn-grid { grid-template-columns: 1fr; }
+    }
     @media (max-width: 820px) {
       .case-section .sol-row {
         grid-template-columns: 1fr;
@@ -1668,22 +1740,26 @@
     </section>
     <section class="case-section reveal">
       <h2>Learnings</h2>
-      <ul style="list-style:none;padding:0;margin:1rem 0 0;display:flex;flex-direction:column;gap:0.6rem;">
-        <li style="display:flex;align-items:flex-start;gap:0.85rem;">
-          <span style="flex-shrink:0;margin-top:0.42em;width:7px;height:7px;border-radius:50%;background:rgba(108,142,245,0.85);display:inline-block;"></span>
-          <p style="margin:0;color:var(--muted);font-size:0.92rem;line-height:1.7;flex:1;min-width:0;">Gained domain knowledge in the go-karting industry</p>
+      <ul class="learn-grid">
+        <li class="learn-card">
+          <span class="learn-card__mark" aria-hidden="true"></span>
+          <p class="learn-card__title">Gained domain knowledge in the go-karting industry</p>
+          <p class="learn-card__text">Learned the sport's specific vocabulary and advice categories well enough to structure content a coaching chatbot could actually use, rather than designing from assumptions.</p>
         </li>
-        <li style="display:flex;align-items:flex-start;gap:0.85rem;">
-          <span style="flex-shrink:0;margin-top:0.42em;width:7px;height:7px;border-radius:50%;background:rgba(108,142,245,0.85);display:inline-block;"></span>
-          <p style="margin:0;color:var(--muted);font-size:0.92rem;line-height:1.7;flex:1;min-width:0;">Learned to design within existing design systems and constraints</p>
+        <li class="learn-card">
+          <span class="learn-card__mark" aria-hidden="true"></span>
+          <p class="learn-card__title">Learned to design within existing design systems and constraints</p>
+          <p class="learn-card__text">Every decision had to extend Kartclass's established product and brand rather than introduce something new, teaching me to treat constraints as the brief, not a limitation.</p>
         </li>
-        <li style="display:flex;align-items:flex-start;gap:0.85rem;">
-          <span style="flex-shrink:0;margin-top:0.42em;width:7px;height:7px;border-radius:50%;background:rgba(108,142,245,0.85);display:inline-block;"></span>
-          <p style="margin:0;color:var(--muted);font-size:0.92rem;line-height:1.7;flex:1;min-width:0;">Improved collaboration with senior designers</p>
+        <li class="learn-card">
+          <span class="learn-card__mark" aria-hidden="true"></span>
+          <p class="learn-card__title">Improved collaboration with senior designers</p>
+          <p class="learn-card__text">Sharpened how I bring a clear point of view to reviews while staying open to direction, and learned to ask better questions earlier instead of iterating in the wrong direction first.</p>
         </li>
-        <li style="display:flex;align-items:flex-start;gap:0.85rem;">
-          <span style="flex-shrink:0;margin-top:0.42em;width:7px;height:7px;border-radius:50%;background:rgba(108,142,245,0.85);display:inline-block;"></span>
-          <p style="margin:0;color:var(--muted);font-size:0.92rem;line-height:1.7;flex:1;min-width:0;">Strengthened skills in conversational UX design</p>
+        <li class="learn-card">
+          <span class="learn-card__mark" aria-hidden="true"></span>
+          <p class="learn-card__title">Strengthened skills in conversational UX design</p>
+          <p class="learn-card__text">Designing a real time AI conversation meant thinking in turns and pacing rather than screens, and learning how small wording choices shift whether it feels like a coach or a script.</p>
         </li>
       </ul>
     </section>
