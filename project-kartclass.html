@@ -743,6 +743,77 @@
       background: rgba(108,142,245,0.6);
     }
 
+    /* ─── Outcome & Impact cards ───
+       A true gradient border (1px padding on the outer element, opaque
+       inner surface) - a device none of the sections around this one use,
+       so the results read as their own thing rather than more of the same
+       card. The metric uses a gradient text fill, which is deliberately the
+       opposite of the OUTLINED numeral in UX Process. */
+    .oi-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+    .oi-card {
+      border-radius: 16px;
+      padding: 1px;                       /* this padding IS the border */
+      background: linear-gradient(150deg,
+                  rgba(108,142,245,0.42) 0%,
+                  rgba(108,142,245,0.08) 48%,
+                  rgba(108,142,245,0.16) 100%);
+      transition: background 0.3s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.3s ease;
+    }
+    .oi-card:hover {
+      background: linear-gradient(150deg,
+                  rgba(168,188,251,0.75) 0%,
+                  rgba(108,142,245,0.2) 48%,
+                  rgba(108,142,245,0.35) 100%);
+      transform: translateY(-4px);
+      box-shadow: 0 14px 32px rgba(0,0,0,0.4), 0 4px 18px rgba(108,142,245,0.14);
+    }
+    .oi-card__inner {
+      height: 100%;
+      border-radius: 15px;
+      padding: 1.45rem 1.4rem;
+      background: linear-gradient(150deg, #15121f 0%, #0c0a13 60%);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    /* gradient-filled metric, for the pages whose outcomes are numbers */
+    .oi-grid .oi-card__metric {
+      margin: 0;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 2.15rem;
+      line-height: 1;
+      background: linear-gradient(145deg, #cdd8fd 0%, #8fa8f8 45%, #5570d8 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    /* if background-clip:text is unavailable the number would vanish */
+    @supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+      .oi-grid .oi-card__metric { color: #8fa8f8; }
+    }
+    .oi-grid .oi-card__title {
+      margin: 0;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.97rem;
+      line-height: 1.4;
+      color: var(--white);
+    }
+    .oi-grid .oi-card__desc {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.86rem;
+      line-height: 1.7;
+    }
+    @media (max-width: 640px) { .oi-grid { grid-template-columns: 1fr; } }
+
     /* ── My Role icon cards ── */
     .role-row { margin-bottom: 0; }
     .role-row:last-of-type { margin-bottom: 0; }
@@ -1356,48 +1427,27 @@
     </section>
     <section class="case-section reveal">
       <h2>Outcome &amp; Impact</h2>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.65rem;margin-top:1rem;">
-
-        <div style="position:relative;padding:1.1rem 1.1rem 1.1rem 1.35rem;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.14);overflow:hidden;">
-          <div style="position:absolute;top:0;bottom:0;left:0;width:3px;background:linear-gradient(to bottom,rgba(108,142,245,0.9),rgba(108,142,245,0.2));border-radius:12px 0 0 12px;"></div>
-          <div style="display:flex;align-items:flex-start;gap:0.7rem;">
-            <span style="flex-shrink:0;margin-top:1px;width:20px;height:20px;border-radius:50%;background:rgba(108,142,245,0.12);display:flex;align-items:center;justify-content:center;color:rgba(108,142,245,0.9);">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            </span>
-            <p style="margin:0;color:var(--muted);font-size:0.86rem;line-height:1.65;">Enhanced user experience by introducing conversational support</p>
+      <div class="oi-grid">
+        <article class="oi-card">
+          <div class="oi-card__inner">
+            <p class="oi-card__desc">Enhanced user experience by introducing conversational support</p>
           </div>
-        </div>
-
-        <div style="position:relative;padding:1.1rem 1.1rem 1.1rem 1.35rem;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.14);overflow:hidden;">
-          <div style="position:absolute;top:0;bottom:0;left:0;width:3px;background:linear-gradient(to bottom,rgba(108,142,245,0.9),rgba(108,142,245,0.2));border-radius:12px 0 0 12px;"></div>
-          <div style="display:flex;align-items:flex-start;gap:0.7rem;">
-            <span style="flex-shrink:0;margin-top:1px;width:20px;height:20px;border-radius:50%;background:rgba(108,142,245,0.12);display:flex;align-items:center;justify-content:center;color:rgba(108,142,245,0.9);">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            </span>
-            <p style="margin:0;color:var(--muted);font-size:0.86rem;line-height:1.65;">Improved accessibility to information within the platform</p>
+        </article>
+        <article class="oi-card">
+          <div class="oi-card__inner">
+            <p class="oi-card__desc">Improved accessibility to information within the platform</p>
           </div>
-        </div>
-
-        <div style="position:relative;padding:1.1rem 1.1rem 1.1rem 1.35rem;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.14);overflow:hidden;">
-          <div style="position:absolute;top:0;bottom:0;left:0;width:3px;background:linear-gradient(to bottom,rgba(108,142,245,0.9),rgba(108,142,245,0.2));border-radius:12px 0 0 12px;"></div>
-          <div style="display:flex;align-items:flex-start;gap:0.7rem;">
-            <span style="flex-shrink:0;margin-top:1px;width:20px;height:20px;border-radius:50%;background:rgba(108,142,245,0.12);display:flex;align-items:center;justify-content:center;color:rgba(108,142,245,0.9);">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            </span>
-            <p style="margin:0;color:var(--muted);font-size:0.86rem;line-height:1.65;">Maintained design consistency while adding new functionality</p>
+        </article>
+        <article class="oi-card">
+          <div class="oi-card__inner">
+            <p class="oi-card__desc">Maintained design consistency while adding new functionality</p>
           </div>
-        </div>
-
-        <div style="position:relative;padding:1.1rem 1.1rem 1.1rem 1.35rem;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.14);overflow:hidden;">
-          <div style="position:absolute;top:0;bottom:0;left:0;width:3px;background:linear-gradient(to bottom,rgba(108,142,245,0.9),rgba(108,142,245,0.2));border-radius:12px 0 0 12px;"></div>
-          <div style="display:flex;align-items:flex-start;gap:0.7rem;">
-            <span style="flex-shrink:0;margin-top:1px;width:20px;height:20px;border-radius:50%;background:rgba(108,142,245,0.12);display:flex;align-items:center;justify-content:center;color:rgba(108,142,245,0.9);">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            </span>
-            <p style="margin:0;color:var(--muted);font-size:0.86rem;line-height:1.65;">Created a scalable foundation for future chatbot features</p>
+        </article>
+        <article class="oi-card">
+          <div class="oi-card__inner">
+            <p class="oi-card__desc">Created a scalable foundation for future chatbot features</p>
           </div>
-        </div>
-
+        </article>
       </div>
       <img class="reveal-fade" src="assets/images/project-kartclass/project-kartclass-placeholder-3.jpg" alt="Kartclass project image 3" style="margin-top:1.7rem;width:100%;aspect-ratio:1880/1000;max-height:500px;border-radius:14px;object-fit:cover;display:block;"/>
     </section>
