@@ -953,6 +953,67 @@
       border-radius: 1px;
       background: rgba(108,142,245,0.6);
     }
+
+    /* ─── Design Highlights matrix ───
+       Six full-width stacked rows became a shared-gridline matrix, which
+       roughly halves the vertical space and uses the width that was
+       sitting empty. One border set for the whole block rather than six
+       separate cards, so it stays distinct from the left-spine and
+       top-rule card treatments used around it.
+       The six identical checkmark icons are gone - they repeated the same
+       glyph six times and carried no information; a small accent marker
+       does the same job in a fraction of the space. */
+    .dh-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;                                  /* gaps reveal the gridlines */
+      margin-top: 1rem;
+      background: rgba(108,142,245,0.16);
+      border: 1px solid rgba(108,142,245,0.16);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .dh-cell {
+      /* opaque, so the gridline colour only shows through the 1px gaps */
+      background: #0c0a14;
+      padding: 1.2rem 1.15rem 1.3rem;
+      transition: background 0.25s ease;
+    }
+    .dh-cell:hover { background: #14111f; }
+    .dh-cell__title {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.55rem;
+      margin: 0 0 0.45rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.35;
+    }
+    .dh-cell__title::before {
+      content: '';
+      flex-shrink: 0;
+      width: 6px;
+      height: 6px;
+      margin-top: 0.42em;
+      border-radius: 2px;
+      background: rgba(108,142,245,0.9);
+      transition: transform 0.25s ease, background 0.25s ease;
+    }
+    .dh-cell:hover .dh-cell__title::before {
+      transform: scale(1.4);
+      background: #a8bcfb;
+    }
+    .dh-cell__desc {
+      margin: 0;
+      padding-left: 1.15rem;                     /* aligns under the title text */
+      color: var(--muted);
+      font-size: 0.83rem;
+      line-height: 1.65;
+    }
+    @media (max-width: 900px) { .dh-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .dh-grid { grid-template-columns: 1fr; } }
     @media (max-width: 640px) {
       .role-wrapper {
         display: grid !important;
@@ -1433,68 +1494,31 @@
 
     <section class="case-section reveal">
       <h2>Design Highlights</h2>
-      <div style="display:flex;flex-direction:column;gap:0.6rem;margin-top:1rem;">
-
-        <div style="display:flex;align-items:center;gap:1.25rem;padding:1rem 1.25rem;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.15);border-left:1px solid rgba(108,142,245,0.25);">
-          <span style="flex-shrink:0;width:34px;height:34px;border-radius:9px;background:rgba(108,142,245,0.1);display:flex;align-items:center;justify-content:center;color:rgba(108,142,245,0.9);">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-          </span>
-          <div>
-            <p style="margin:0 0 0.2rem;font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--white);">Step-Based Structured Workflow</p>
-            <p style="margin:0;color:var(--muted);font-size:0.84rem;line-height:1.65;">Clean, guided steps inside the Chrome add-on make complex evaluation tasks feel simple and linear.</p>
-          </div>
+      <div class="dh-grid">
+        <div class="dh-cell">
+          <p class="dh-cell__title">Step-Based Structured Workflow</p>
+          <p class="dh-cell__desc">Clean, guided steps inside the Chrome add-on make complex evaluation tasks feel simple and linear.</p>
         </div>
-
-        <div style="display:flex;align-items:center;gap:1.25rem;padding:1rem 1.25rem;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.15);border-left:1px solid rgba(108,142,245,0.25);">
-          <span style="flex-shrink:0;width:34px;height:34px;border-radius:9px;background:rgba(108,142,245,0.1);display:flex;align-items:center;justify-content:center;color:rgba(108,142,245,0.9);">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-          </span>
-          <div>
-            <p style="margin:0 0 0.2rem;font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--white);">Clear Role-Based Navigation</p>
-            <p style="margin:0;color:var(--muted);font-size:0.84rem;line-height:1.65;">Admin Portal: Users, Subscriptions, Audit Logs | User Portal: Profile, Subscription Management</p>
-          </div>
+        <div class="dh-cell">
+          <p class="dh-cell__title">Clear Role-Based Navigation</p>
+          <p class="dh-cell__desc">Admin Portal: Users, Subscriptions, Audit Logs | User Portal: Profile, Subscription Management</p>
         </div>
-
-        <div style="display:flex;align-items:center;gap:1.25rem;padding:1rem 1.25rem;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.15);border-left:1px solid rgba(108,142,245,0.25);">
-          <span style="flex-shrink:0;width:34px;height:34px;border-radius:9px;background:rgba(108,142,245,0.1);display:flex;align-items:center;justify-content:center;color:rgba(108,142,245,0.9);">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-          </span>
-          <div>
-            <p style="margin:0 0 0.2rem;font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--white);">Unified Visual System</p>
-            <p style="margin:0;color:var(--muted);font-size:0.84rem;line-height:1.65;">Consistent components, spacing, typography, and colors across all platforms.</p>
-          </div>
+        <div class="dh-cell">
+          <p class="dh-cell__title">Unified Visual System</p>
+          <p class="dh-cell__desc">Consistent components, spacing, typography, and colors across all platforms.</p>
         </div>
-
-        <div style="display:flex;align-items:center;gap:1.25rem;padding:1rem 1.25rem;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.15);border-left:1px solid rgba(108,142,245,0.25);">
-          <span style="flex-shrink:0;width:34px;height:34px;border-radius:9px;background:rgba(108,142,245,0.1);display:flex;align-items:center;justify-content:center;color:rgba(108,142,245,0.9);">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-          </span>
-          <div>
-            <p style="margin:0 0 0.2rem;font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--white);">Efficient Layouts</p>
-            <p style="margin:0;color:var(--muted);font-size:0.84rem;line-height:1.65;">Screens designed for focus, reducing clutter and decision fatigue.</p>
-          </div>
+        <div class="dh-cell">
+          <p class="dh-cell__title">Efficient Layouts</p>
+          <p class="dh-cell__desc">Screens designed for focus, reducing clutter and decision fatigue.</p>
         </div>
-
-        <div style="display:flex;align-items:center;gap:1.25rem;padding:1rem 1.25rem;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.15);border-left:1px solid rgba(108,142,245,0.25);">
-          <span style="flex-shrink:0;width:34px;height:34px;border-radius:9px;background:rgba(108,142,245,0.1);display:flex;align-items:center;justify-content:center;color:rgba(108,142,245,0.9);">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-          </span>
-          <div>
-            <p style="margin:0 0 0.2rem;font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--white);">Scalable UI Components</p>
-            <p style="margin:0;color:var(--muted);font-size:0.84rem;line-height:1.65;">Ensures quick future enhancements and easy development handoff.</p>
-          </div>
+        <div class="dh-cell">
+          <p class="dh-cell__title">Scalable UI Components</p>
+          <p class="dh-cell__desc">Ensures quick future enhancements and easy development handoff.</p>
         </div>
-
-        <div style="display:flex;align-items:center;gap:1.25rem;padding:1rem 1.25rem;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.15);border-left:1px solid rgba(108,142,245,0.25);">
-          <span style="flex-shrink:0;width:34px;height:34px;border-radius:9px;background:rgba(108,142,245,0.1);display:flex;align-items:center;justify-content:center;color:rgba(108,142,245,0.9);">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-          </span>
-          <div>
-            <p style="margin:0 0 0.2rem;font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--white);">Responsive &amp; Accessible Design</p>
-            <p style="margin:0;color:var(--muted);font-size:0.84rem;line-height:1.65;">Readable layouts, balanced spacing, and accessible color contrasts.</p>
-          </div>
+        <div class="dh-cell">
+          <p class="dh-cell__title">Responsive &amp; Accessible Design</p>
+          <p class="dh-cell__desc">Readable layouts, balanced spacing, and accessible color contrasts.</p>
         </div>
-
       </div>
     </section>
     <section class="case-section reveal">
