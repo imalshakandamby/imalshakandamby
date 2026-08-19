@@ -6,7 +6,7 @@
   <title>Imalsha K. | Project Swivel</title>
   <link rel="icon" type="image/png" href="assets/images/favicon/favicon.png">  <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Handlee&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     :root { --bg:#0A0A0F; --white:#E8E4F0; --muted:#AFA9BD; --violet:#6c8ef5; --font-display:'Syne',sans-serif; --font-body:'Inter',sans-serif; --max-w:980px; }
 
@@ -745,6 +745,148 @@
       background: rgba(108,142,245,0.6);
     }
 
+    /* ─── The Problem section ─── */
+    .challenge-para {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 0.95rem;
+    }
+    .challenge-para + .challenge-para { margin-top: 1.1rem; }
+
+    .problem-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 1.15rem 0 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .problem-list li {
+      position: relative;
+      padding-left: 1.15rem;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 0.95rem;
+    }
+    .problem-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.72em;
+      width: 6px;
+      height: 6px;
+      border-radius: 2px;
+      background: rgba(108,142,245,0.75);
+    }
+    /* each item opens with the failure, then explains it - so the opening
+       clause carries the weight and the list stays scannable */
+    .problem-list__lead {
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    /* ─── Problem sticky notes ───
+       Dark-mode take on a physical sticky note: tinted paper, a slight
+       tilt, a lifted drop shadow and a folded bottom-right corner. Tints
+       stay inside the site's violet/indigo family rather than the bright
+       pastels of a real note, so it reads as this theme, not Post-it. */
+    /* two classes so it outranks `.case-section ul` (0,1,1), which would
+       otherwise indent the whole grid by 1.1rem */
+    .case-section .sticky-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      list-style: none;
+      padding-left: 0;
+      margin: 1.5rem 0 1.6rem;
+    }
+    .case-section .sticky-grid--three { grid-template-columns: repeat(3, 1fr); }
+
+    .sticky-grid .sticky {
+      --tilt: 0deg;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      padding: 1.15rem 1.1rem 1.35rem;
+      border-radius: 2px 2px 3px 3px;      /* paper, not a rounded card */
+      background: linear-gradient(158deg, var(--note-a), var(--note-b));
+      box-shadow: 0 12px 22px rgba(0,0,0,0.42), 0 2px 6px rgba(0,0,0,0.35);
+      transform: rotate(var(--tilt));
+      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.32s ease;
+    }
+    /* straightens and lifts, like picking the note off the wall */
+    .sticky-grid .sticky:hover {
+      transform: rotate(0deg) translateY(-6px);
+      box-shadow: 0 20px 34px rgba(0,0,0,0.5), 0 4px 12px rgba(108,142,245,0.16);
+    }
+    /* adhesive sheen across the top edge */
+    .sticky-grid .sticky::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 8%; right: 8%;
+      height: 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), transparent);
+      pointer-events: none;
+    }
+    /* folded bottom-right corner */
+    .sticky-grid .sticky::after {
+      content: '';
+      position: absolute;
+      right: 0; bottom: 0;
+      width: 20px; height: 20px;
+      background: linear-gradient(135deg, transparent 50%, rgba(0,0,0,0.38) 50%);
+      pointer-events: none;
+    }
+    /* alternating tilt + tint so no two neighbours look stamped */
+    .sticky-grid .sticky:nth-child(5n+1) { --tilt: -1.5deg; --note-a: #2b2553; --note-b: #1d1938; }
+    .sticky-grid .sticky:nth-child(5n+2) { --tilt:  1.1deg; --note-a: #1f2b54; --note-b: #161f3b; }
+    .sticky-grid .sticky:nth-child(5n+3) { --tilt: -0.8deg; --note-a: #34244f; --note-b: #241936; }
+    .sticky-grid .sticky:nth-child(5n+4) { --tilt:  1.6deg; --note-a: #1c3047; --note-b: #142232; }
+    .sticky-grid .sticky:nth-child(5n+5) { --tilt: -1.2deg; --note-a: #3a2447; --note-b: #281834; }
+
+    .sticky-grid .sticky__idx {
+      position: absolute;
+      top: 0.55rem; right: 0.8rem;
+      font-family: 'Handlee', cursive;
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.3);
+    }
+    /* Handlee ships a single weight, so the lead is separated from the body
+       by size and colour rather than by bold. Sizes run larger than the
+       Inter equivalents because Handlee's x-height is noticeably smaller. */
+    .sticky-grid .sticky__lead {
+      margin: 0;
+      padding-right: 1.9rem;               /* clears the index */
+      font-family: 'Handlee', cursive;
+      font-size: 1.1rem;
+      line-height: 1.35;
+      color: var(--white);
+    }
+    .sticky-grid .sticky__body {
+      margin: 0;
+      font-family: 'Handlee', cursive;
+      font-size: 0.98rem;
+      line-height: 1.55;
+      color: rgba(232,228,240,0.75);
+    }
+    @media (max-width: 980px) {
+      .case-section .sticky-grid,
+      .case-section .sticky-grid--three { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 620px) {
+      .case-section .sticky-grid,
+      .case-section .sticky-grid--three { grid-template-columns: 1fr; }
+      /* must outrank the :nth-child tint rules (0,3,0) that set --tilt */
+      .case-section .sticky-grid .sticky:nth-child(n) { --tilt: 0deg; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .case-section .sticky-grid .sticky:nth-child(n),
+      .case-section .sticky-grid .sticky:nth-child(n):hover { transform: none; transition: none; }
+    }
+
     /* ─── Outcome & Impact cards ───
        A true gradient border (1px padding on the outer element, opaque
        inner surface) - a device none of the sections around this one use,
@@ -1203,9 +1345,33 @@
       </div>
     </section>
     <section class="case-section reveal">
-      <h2>The Challenge</h2>
-      <p style="color:var(--muted);line-height:1.8;font-size:0.95rem;margin-bottom:1rem;">The existing marketing websites were not generating the expected level of user engagement and lead conversions. Navigation structures, content presentation, and user journeys required significant improvement to better communicate the company's value proposition and encourage user action.</p>
-      <p style="color:var(--muted);line-height:1.8;font-size:0.95rem;">Additionally, the team wanted to introduce modern AI-powered capabilities while maintaining a consistent experience across multiple brand websites.</p>
+      <h2>The Problem</h2>
+      <p class="challenge-para">Swivel's marketing websites weren't generating the engagement or lead conversions the business needed, and the underlying issues went deeper than visual polish.</p>
+
+      <ul class="sticky-grid">
+        <li class="sticky">
+          <span class="sticky__idx" aria-hidden="true">01</span>
+          <p class="sticky__lead">Fragmented service architecture.</p>
+          <p class="sticky__body">Navigation structures were incomplete, many of the services offered by Swivel Tech and Swivel Finance had no clear place in the site structure, leaving visitors unable to find or understand the full range of what the company offered.</p>
+        </li>
+        <li class="sticky">
+          <span class="sticky__idx" aria-hidden="true">02</span>
+          <p class="sticky__lead">Outdated visual language.</p>
+          <p class="sticky__body">The sites used old-styled UI patterns that undersold the business. Stakeholders wanted the design itself to signal that Swivel was building with AI, a defining technology of the moment, but nothing on screen communicated that.</p>
+        </li>
+        <li class="sticky">
+          <span class="sticky__idx" aria-hidden="true">03</span>
+          <p class="sticky__lead">Unclear user journeys.</p>
+          <p class="sticky__body">Pages didn't guide visitors toward action. The path from landing on a site to understanding Swivel's value proposition to taking the next step was undefined.</p>
+        </li>
+        <li class="sticky">
+          <span class="sticky__idx" aria-hidden="true">04</span>
+          <p class="sticky__lead">No unified brand system.</p>
+          <p class="sticky__body">Multiple brand websites existed with inconsistent colours, typography, and messaging, so the same visitor moving between Swivel entities encountered a different experience each time.</p>
+        </li>
+      </ul>
+
+      <p class="challenge-para">The result was a set of websites that failed to reflect the quality of the work Swivel actually delivered, and gave stakeholders no way to present the company as the modern, AI-forward organization it was becoming.</p>
     </section>
     <section class="case-section reveal">
                   <h2>My Role &amp; Responsibility</h2>

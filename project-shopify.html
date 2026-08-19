@@ -6,7 +6,7 @@
   <title>Imalsha K. | Project Shopify</title>
   <link rel="icon" type="image/png" href="assets/images/favicon/favicon.png">  <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Handlee&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     :root { --bg:#0A0A0F; --white:#E8E4F0; --muted:#AFA9BD; --violet:#6c8ef5; --font-display:'Syne',sans-serif; --font-body:'Inter',sans-serif; --max-w:980px; }
 
@@ -744,6 +744,148 @@
       background: rgba(108,142,245,0.6);
     }
 
+    /* ─── The Problem section ─── */
+    .challenge-para {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 0.95rem;
+    }
+    .challenge-para + .challenge-para { margin-top: 1.1rem; }
+
+    .problem-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 1.15rem 0 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .problem-list li {
+      position: relative;
+      padding-left: 1.15rem;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 0.95rem;
+    }
+    .problem-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.72em;
+      width: 6px;
+      height: 6px;
+      border-radius: 2px;
+      background: rgba(108,142,245,0.75);
+    }
+    /* each item opens with the failure, then explains it - so the opening
+       clause carries the weight and the list stays scannable */
+    .problem-list__lead {
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    /* ─── Problem sticky notes ───
+       Dark-mode take on a physical sticky note: tinted paper, a slight
+       tilt, a lifted drop shadow and a folded bottom-right corner. Tints
+       stay inside the site's violet/indigo family rather than the bright
+       pastels of a real note, so it reads as this theme, not Post-it. */
+    /* two classes so it outranks `.case-section ul` (0,1,1), which would
+       otherwise indent the whole grid by 1.1rem */
+    .case-section .sticky-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      list-style: none;
+      padding-left: 0;
+      margin: 1.5rem 0 1.6rem;
+    }
+    .case-section .sticky-grid--three { grid-template-columns: repeat(3, 1fr); }
+
+    .sticky-grid .sticky {
+      --tilt: 0deg;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      padding: 1.15rem 1.1rem 1.35rem;
+      border-radius: 2px 2px 3px 3px;      /* paper, not a rounded card */
+      background: linear-gradient(158deg, var(--note-a), var(--note-b));
+      box-shadow: 0 12px 22px rgba(0,0,0,0.42), 0 2px 6px rgba(0,0,0,0.35);
+      transform: rotate(var(--tilt));
+      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.32s ease;
+    }
+    /* straightens and lifts, like picking the note off the wall */
+    .sticky-grid .sticky:hover {
+      transform: rotate(0deg) translateY(-6px);
+      box-shadow: 0 20px 34px rgba(0,0,0,0.5), 0 4px 12px rgba(108,142,245,0.16);
+    }
+    /* adhesive sheen across the top edge */
+    .sticky-grid .sticky::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 8%; right: 8%;
+      height: 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), transparent);
+      pointer-events: none;
+    }
+    /* folded bottom-right corner */
+    .sticky-grid .sticky::after {
+      content: '';
+      position: absolute;
+      right: 0; bottom: 0;
+      width: 20px; height: 20px;
+      background: linear-gradient(135deg, transparent 50%, rgba(0,0,0,0.38) 50%);
+      pointer-events: none;
+    }
+    /* alternating tilt + tint so no two neighbours look stamped */
+    .sticky-grid .sticky:nth-child(5n+1) { --tilt: -1.5deg; --note-a: #2b2553; --note-b: #1d1938; }
+    .sticky-grid .sticky:nth-child(5n+2) { --tilt:  1.1deg; --note-a: #1f2b54; --note-b: #161f3b; }
+    .sticky-grid .sticky:nth-child(5n+3) { --tilt: -0.8deg; --note-a: #34244f; --note-b: #241936; }
+    .sticky-grid .sticky:nth-child(5n+4) { --tilt:  1.6deg; --note-a: #1c3047; --note-b: #142232; }
+    .sticky-grid .sticky:nth-child(5n+5) { --tilt: -1.2deg; --note-a: #3a2447; --note-b: #281834; }
+
+    .sticky-grid .sticky__idx {
+      position: absolute;
+      top: 0.55rem; right: 0.8rem;
+      font-family: 'Handlee', cursive;
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.3);
+    }
+    /* Handlee ships a single weight, so the lead is separated from the body
+       by size and colour rather than by bold. Sizes run larger than the
+       Inter equivalents because Handlee's x-height is noticeably smaller. */
+    .sticky-grid .sticky__lead {
+      margin: 0;
+      padding-right: 1.9rem;               /* clears the index */
+      font-family: 'Handlee', cursive;
+      font-size: 1.1rem;
+      line-height: 1.35;
+      color: var(--white);
+    }
+    .sticky-grid .sticky__body {
+      margin: 0;
+      font-family: 'Handlee', cursive;
+      font-size: 0.98rem;
+      line-height: 1.55;
+      color: rgba(232,228,240,0.75);
+    }
+    @media (max-width: 980px) {
+      .case-section .sticky-grid,
+      .case-section .sticky-grid--three { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 620px) {
+      .case-section .sticky-grid,
+      .case-section .sticky-grid--three { grid-template-columns: 1fr; }
+      /* must outrank the :nth-child tint rules (0,3,0) that set --tilt */
+      .case-section .sticky-grid .sticky:nth-child(n) { --tilt: 0deg; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .case-section .sticky-grid .sticky:nth-child(n),
+      .case-section .sticky-grid .sticky:nth-child(n):hover { transform: none; transition: none; }
+    }
+
     /* ─── Outcome & Impact cards ───
        A true gradient border (1px padding on the outer element, opaque
        inner surface) - a device none of the sections around this one use,
@@ -1222,10 +1364,33 @@
       </div>
     </section>
     <section class="case-section reveal">
-      <h2>The Challenge</h2>
-      <p style="color:var(--muted);line-height:1.8;font-size:0.95rem;margin-bottom:1rem;">Each brand had unique business goals, customer behaviors, and product catalogs, requiring tailored recommendation experiences.</p>
-      <p style="color:var(--muted);line-height:1.8;font-size:0.95rem;margin-bottom:1rem;">Some clients already had quizzes in place, but they suffered from low completion rates, unclear user journeys, poor visual design, and weak conversion performance. Others needed entirely new quiz experiences designed from the ground up.</p>
-      <p style="color:var(--muted);line-height:1.8;font-size:0.95rem;">The challenge was to quickly understand different industries, identify opportunities for improvement, and create engaging experiences that encouraged users to complete the quiz and confidently purchase recommended products.</p>
+      <h2>The Problem</h2>
+      <p class="challenge-para">Every client brand came with its own business goals, customer behaviours, and product catalogue, which meant no single quiz template could work across all of them.</p>
+
+      <ul class="sticky-grid">
+        <li class="sticky">
+          <span class="sticky__idx" aria-hidden="true">01</span>
+          <p class="sticky__lead">No one-size-fits-all solution.</p>
+          <p class="sticky__body">Each brand's audience and purchase logic were different enough that a generic quiz format would underperform for most of them.</p>
+        </li>
+        <li class="sticky">
+          <span class="sticky__idx" aria-hidden="true">02</span>
+          <p class="sticky__lead">Underperforming existing quizzes.</p>
+          <p class="sticky__body">Several clients already had quizzes live, but they suffered from low completion rates, unclear user journeys, weak visual design, and poor conversion, meaning the fix wasn't cosmetic, it required rethinking the flow itself.</p>
+        </li>
+        <li class="sticky">
+          <span class="sticky__idx" aria-hidden="true">03</span>
+          <p class="sticky__lead">Quizzes built from zero.</p>
+          <p class="sticky__body">Other clients had no existing quiz at all, requiring the experience to be designed from first principles, from question logic through to result and recommendation.</p>
+        </li>
+        <li class="sticky">
+          <span class="sticky__idx" aria-hidden="true">04</span>
+          <p class="sticky__lead">Fast domain ramp-up required.</p>
+          <p class="sticky__body">Each new brand meant learning a different industry, audience, and product catalogue quickly enough to identify what was actually broken or missing before designing the fix.</p>
+        </li>
+      </ul>
+
+      <p class="challenge-para">The challenge across every brand was the same underneath the surface: understand the business fast, find what was stopping users from completing the quiz, and design an experience confident enough to turn a quiz result into a purchase.</p>
     </section>
     <section class="case-section reveal">
                   <h2>My Role &amp; Responsibility</h2>
