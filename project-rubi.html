@@ -390,16 +390,22 @@
        stay inside the site's violet/indigo family rather than the bright
        pastels of a real note, so it reads as this theme, not Post-it. */
     /* two classes so it outranks `.case-section ul` (0,1,1), which would
-       otherwise indent the whole grid by 1.1rem */
+       otherwise indent the whole grid by 1.1rem.
+       Flex rather than grid: with 5 notes in a 3-up layout, grid leaves the
+       trailing row hugging the left edge. Flex + justify-center balances it,
+       and flex-grow:0 keeps those notes the same width as a full row. */
     .case-section .sticky-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       gap: 1.25rem;
       list-style: none;
       padding-left: 0;
       margin: 1.5rem 0 1.6rem;
     }
-    .case-section .sticky-grid--three { grid-template-columns: repeat(3, 1fr); }
+    /* basis = (100% - total gaps) / columns, gap being 1.25rem */
+    .case-section .sticky-grid .sticky        { flex: 0 1 calc(25% - 0.9375rem); }
+    .case-section .sticky-grid--three .sticky { flex: 0 1 calc(33.333% - 0.8333rem); }
 
     .sticky-grid .sticky {
       --tilt: 0deg;
@@ -615,12 +621,12 @@
       }
     }
     @media (max-width: 980px) {
-      .case-section .sticky-grid,
-      .case-section .sticky-grid--three { grid-template-columns: repeat(2, 1fr); }
+      .case-section .sticky-grid .sticky,
+      .case-section .sticky-grid--three .sticky { flex-basis: calc(50% - 0.625rem); }
     }
     @media (max-width: 620px) {
-      .case-section .sticky-grid,
-      .case-section .sticky-grid--three { grid-template-columns: 1fr; }
+      .case-section .sticky-grid .sticky,
+      .case-section .sticky-grid--three .sticky { flex-basis: 100%; }
       /* must outrank the :nth-child tint rules (0,3,0) that set --tilt */
       .case-section .sticky-grid .sticky:nth-child(n) { --tilt: 0deg; }
     }
