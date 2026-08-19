@@ -1020,75 +1020,97 @@
     }
 
     /* ─── Outcome & Impact cards ───
-       A true gradient border (1px padding on the outer element, opaque
-       inner surface) - a device none of the sections around this one use,
-       so the results read as their own thing rather than more of the same
-       card. The metric uses a gradient text fill, which is deliberately the
-       opposite of the OUTLINED numeral in UX Process. */
-    .oi-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.8rem;
-      margin-top: 1rem;
+       Tinted colour cards: label, then a large stat (or a large icon where
+       the outcome isn't a number), then the explanation, then a simple
+       abstract illustration anchored to the bottom. Palettes stay inside
+       the site's blue/violet/purple family, cycling per card the same way
+       the About page's domain map does.
+       Flex rather than grid, because a trailing short row (3+2) then
+       centres instead of hugging the left edge. */
+    .case-section .oi-grid {
+      list-style: none;
+      padding-left: 0;
+      margin: 1.35rem 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
     }
-    .oi-card {
-      border-radius: 16px;
-      padding: 1px;                       /* this padding IS the border */
-      background: linear-gradient(150deg,
-                  rgba(108,142,245,0.42) 0%,
-                  rgba(108,142,245,0.08) 48%,
-                  rgba(108,142,245,0.16) 100%);
-      transition: background 0.3s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-                  box-shadow 0.3s ease;
-    }
-    .oi-card:hover {
-      background: linear-gradient(150deg,
-                  rgba(168,188,251,0.75) 0%,
-                  rgba(108,142,245,0.2) 48%,
-                  rgba(108,142,245,0.35) 100%);
-      transform: translateY(-4px);
-      box-shadow: 0 14px 32px rgba(0,0,0,0.4), 0 4px 18px rgba(108,142,245,0.14);
-    }
-    .oi-card__inner {
-      height: 100%;
-      border-radius: 15px;
-      padding: 1.45rem 1.4rem;
-      background: linear-gradient(150deg, #15121f 0%, #0c0a13 60%);
+    .case-section .oi-card {
+      /* no flex-grow: a 2-card row keeps the 3-up width and centres,
+         rather than stretching to fill */
+      flex: 0 1 calc(33.333% - 0.67rem);
+      min-width: 250px;
+      max-width: 370px;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      padding: 1.5rem 1.4rem 1.35rem;
+      border-radius: 16px;
+      background: var(--oi-bg);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
     }
-    /* gradient-filled metric, for the pages whose outcomes are numbers */
-    .oi-grid .oi-card__metric {
-      margin: 0;
+    .case-section .oi-grid--two .oi-card {
+      flex-basis: calc(50% - 0.5rem);
+      max-width: 440px;
+    }
+    .case-section .oi-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 34px rgba(0,0,0,0.42);
+    }
+    .case-section .oi-card__title {
+      margin: 0 0 0.75rem;
       font-family: 'Syne', sans-serif;
       font-weight: 700;
-      font-size: 2.15rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      line-height: 1.5;
+      color: var(--oi-acc);
+    }
+    .case-section .oi-card__metric {
+      margin: 0 0 0.7rem;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 2.9rem;
       line-height: 1;
-      background: linear-gradient(145deg, #cdd8fd 0%, #8fa8f8 45%, #5570d8 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      letter-spacing: -0.01em;
+      color: #EFECF8;
     }
-    /* if background-clip:text is unavailable the number would vanish */
-    @supports not ((-webkit-background-clip: text) or (background-clip: text)) {
-      .oi-grid .oi-card__metric { color: #8fa8f8; }
+    /* stands in for the stat on cards whose outcome isn't a number */
+    .case-section .oi-card__icon {
+      display: block;
+      width: 2.6rem;
+      height: 2.6rem;
+      margin-bottom: 0.7rem;
+      color: #EFECF8;
     }
-    .oi-grid .oi-card__title {
+    .case-section .oi-card__icon svg { width: 100%; height: 100%; }
+    .case-section .oi-card__desc {
       margin: 0;
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 0.97rem;
-      line-height: 1.4;
-      color: var(--white);
-    }
-    .oi-grid .oi-card__desc {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.86rem;
+      font-size: 0.855rem;
       line-height: 1.7;
+      color: rgba(238,235,248,0.72);
     }
-    @media (max-width: 640px) { .oi-grid { grid-template-columns: 1fr; } }
+    /* pinned to the bottom so cards in a row line up regardless of copy */
+    .case-section .oi-card__art {
+      display: block;
+      margin-top: auto;
+      padding-top: 1.4rem;
+      color: var(--oi-acc);
+      opacity: 0.62;
+      transition: opacity 0.3s ease;
+    }
+    .case-section .oi-card:hover .oi-card__art { opacity: 0.85; }
+    .case-section .oi-card__art svg { width: 100%; height: auto; display: block; }
+    @media (max-width: 900px) {
+      .case-section .oi-card,
+      .case-section .oi-grid--two .oi-card { flex-basis: calc(50% - 0.5rem); }
+    }
+    @media (max-width: 620px) {
+      .case-section .oi-card,
+      .case-section .oi-grid--two .oi-card { flex-basis: 100%; max-width: none; }
+    }
 
 
     /* ── My Role icon cards ── */
@@ -1681,41 +1703,35 @@
     <section class="case-section reveal">
       <h2>Outcome &amp; Impact</h2>
       <div class="oi-grid">
-        <article class="oi-card">
-          <div class="oi-card__inner">
-            <p class="oi-card__metric">45%</p>
-            <p class="oi-card__desc">Increased quiz completion rates across all brands.</p>
-          </div>
+        <article class="oi-card" style="--oi-bg:#211c3e;--oi-acc:#a8bcfb;">
+          <p class="oi-card__title">Higher Completion on Rebuilt Quizzes</p>
+          <p class="oi-card__metric">45%</p>
+          <p class="oi-card__desc">For brands with existing quizzes suffering from low completion, rebuilding the flow itself, not just the visuals, raised completion rates by 45%, proving the fix addressed the actual drop-off points rather than surface polish.</p>
+          <span class="oi-card__art" aria-hidden="true"><svg viewBox="0 0 120 40" fill="currentColor" aria-hidden="true"><rect x="2" y="22" width="12" height="18" rx="1.5" opacity="0.45"/><rect x="18" y="12" width="12" height="28" rx="1.5" opacity="0.75"/><rect x="34" y="28" width="12" height="12" rx="1.5" opacity="0.35"/><rect x="50" y="6" width="12" height="34" rx="1.5" opacity="1"/><rect x="66" y="18" width="12" height="22" rx="1.5" opacity="0.6"/><rect x="82" y="26" width="12" height="14" rx="1.5" opacity="0.4"/><rect x="98" y="14" width="12" height="26" rx="1.5" opacity="0.7"/></svg></span>
         </article>
-        <article class="oi-card">
-          <div class="oi-card__inner">
-            <p class="oi-card__metric">30%</p>
-            <p class="oi-card__desc">Improved product conversion rates through personalized recommendation flows.</p>
-          </div>
+        <article class="oi-card" style="--oi-bg:#182444;--oi-acc:#93b4f2;">
+          <p class="oi-card__title">Lift in Conversion Through Brand-Specific Logic</p>
+          <p class="oi-card__metric">30%</p>
+          <p class="oi-card__desc">Designing question flow and recommendation logic around each brand's real audience and purchase behaviour, instead of a shared template, improved product conversion by 30% across brands with very different customers.</p>
+          <span class="oi-card__art" aria-hidden="true"><svg viewBox="0 0 120 40" fill="currentColor" aria-hidden="true"><rect x="1" y="1" width="8" height="8" rx="1.5" opacity="0.42"/><rect x="11" y="1" width="8" height="8" rx="1.5" opacity="0.28"/><rect x="21" y="1" width="8" height="8" rx="1.5" opacity="0.6"/><rect x="31" y="1" width="8" height="8" rx="1.5" opacity="0.18"/><rect x="41" y="1" width="8" height="8" rx="1.5" opacity="0.18"/><rect x="51" y="1" width="8" height="8" rx="1.5" opacity="0.85"/><rect x="61" y="1" width="8" height="8" rx="1.5" opacity="0.18"/><rect x="71" y="1" width="8" height="8" rx="1.5" opacity="0.42"/><rect x="81" y="1" width="8" height="8" rx="1.5" opacity="0.85"/><rect x="91" y="1" width="8" height="8" rx="1.5" opacity="0.18"/><rect x="101" y="1" width="8" height="8" rx="1.5" opacity="0.85"/><rect x="111" y="1" width="8" height="8" rx="1.5" opacity="0.28"/><rect x="1" y="11" width="8" height="8" rx="1.5" opacity="0.18"/><rect x="11" y="11" width="8" height="8" rx="1.5" opacity="0.18"/><rect x="21" y="11" width="8" height="8" rx="1.5" opacity="0.6"/><rect x="31" y="11" width="8" height="8" rx="1.5" opacity="0.6"/><rect x="41" y="11" width="8" height="8" rx="1.5" opacity="0.18"/><rect x="51" y="11" width="8" height="8" rx="1.5" opacity="0.28"/><rect x="61" y="11" width="8" height="8" rx="1.5" opacity="0.18"/><rect x="71" y="11" width="8" height="8" rx="1.5" opacity="0.85"/><rect x="81" y="11" width="8" height="8" rx="1.5" opacity="0.6"/><rect x="91" y="11" width="8" height="8" rx="1.5" opacity="0.18"/><rect x="101" y="11" width="8" height="8" rx="1.5" opacity="0.85"/><rect x="111" y="11" width="8" height="8" rx="1.5" opacity="0.18"/><rect x="1" y="21" width="8" height="8" rx="1.5" opacity="0.28"/><rect x="11" y="21" width="8" height="8" rx="1.5" opacity="0.85"/><rect x="21" y="21" width="8" height="8" rx="1.5" opacity="0.18"/><rect x="31" y="21" width="8" height="8" rx="1.5" opacity="0.85"/><rect x="41" y="21" width="8" height="8" rx="1.5" opacity="0.85"/><rect x="51" y="21" width="8" height="8" rx="1.5" opacity="0.6"/><rect x="61" y="21" width="8" height="8" rx="1.5" opacity="0.18"/><rect x="71" y="21" width="8" height="8" rx="1.5" opacity="0.28"/><rect x="81" y="21" width="8" height="8" rx="1.5" opacity="0.18"/><rect x="91" y="21" width="8" height="8" rx="1.5" opacity="0.85"/><rect x="101" y="21" width="8" height="8" rx="1.5" opacity="0.28"/><rect x="111" y="21" width="8" height="8" rx="1.5" opacity="0.42"/><rect x="1" y="31" width="8" height="8" rx="1.5" opacity="0.6"/><rect x="11" y="31" width="8" height="8" rx="1.5" opacity="0.28"/><rect x="21" y="31" width="8" height="8" rx="1.5" opacity="0.85"/><rect x="31" y="31" width="8" height="8" rx="1.5" opacity="0.18"/><rect x="41" y="31" width="8" height="8" rx="1.5" opacity="0.85"/><rect x="51" y="31" width="8" height="8" rx="1.5" opacity="0.42"/><rect x="61" y="31" width="8" height="8" rx="1.5" opacity="0.85"/><rect x="71" y="31" width="8" height="8" rx="1.5" opacity="0.28"/><rect x="81" y="31" width="8" height="8" rx="1.5" opacity="0.18"/><rect x="91" y="31" width="8" height="8" rx="1.5" opacity="0.85"/><rect x="101" y="31" width="8" height="8" rx="1.5" opacity="0.85"/><rect x="111" y="31" width="8" height="8" rx="1.5" opacity="0.28"/></svg></span>
         </article>
-        <article class="oi-card">
-          <div class="oi-card__inner">
-            <p class="oi-card__metric">↓</p>
-            <p class="oi-card__desc">Reduced user drop-off throughout multi-step quiz journeys.</p>
-          </div>
+        <article class="oi-card" style="--oi-bg:#281b3f;--oi-acc:#bda6f5;">
+          <p class="oi-card__title">New Quiz Experiences Built With Zero Legacy Debt</p>
+          <span class="oi-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg></span>
+          <p class="oi-card__desc">For clients starting from nothing, quizzes were designed from first principles rather than adapted from an existing pattern, giving those brands a purpose-built experience instead of a retrofit.</p>
+          <span class="oi-card__art" aria-hidden="true"><svg viewBox="0 0 120 40" fill="currentColor" aria-hidden="true"><rect x="1" y="4" width="68" height="18" rx="2" opacity=".8"/><rect x="73" y="4" width="46" height="18" rx="2" opacity=".38"/><rect x="1" y="26" width="40" height="12" rx="2" opacity=".5"/><rect x="45" y="26" width="74" height="12" rx="2" opacity=".22"/></svg></span>
         </article>
-        <article class="oi-card">
-          <div class="oi-card__inner">
-            <p class="oi-card__metric">↑</p>
-            <p class="oi-card__desc">Increased customer confidence in product selection and overall storefront engagement.</p>
-          </div>
+        <article class="oi-card" style="--oi-bg:#152a3d;--oi-acc:#8ec5e8;">
+          <p class="oi-card__title">Consistent Quality Across Genuinely Different Industries</p>
+          <span class="oi-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
+          <p class="oi-card__desc">A fast discovery process for each new brand meant quality held steady whether the client sold beauty products or hardware, proving domain speed didn't come at the cost of relevance.</p>
+          <span class="oi-card__art" aria-hidden="true"><svg viewBox="0 0 120 40" aria-hidden="true"><path d="M2 36 L22 28 L42 31 L62 17 L82 21 L102 9 L118 13 L118 40 L2 40 Z" fill="currentColor" opacity=".18"/><path d="M2 36 L22 28 L42 31 L62 17 L82 21 L102 9 L118 13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="102" cy="9" r="3.5" fill="currentColor"/></svg></span>
         </article>
-        <article class="oi-card">
-          <div class="oi-card__inner">
-            <p class="oi-card__metric">10+</p>
-            <p class="oi-card__desc">Quizzes launched across multiple international Shopify brands.</p>
-          </div>
-        </article>
-        <article class="oi-card">
-          <div class="oi-card__inner">
-            <p class="oi-card__metric">★</p>
-            <p class="oi-card__desc">Enabled brands to collect valuable customer preference data for marketing and personalization.</p>
-          </div>
+        <article class="oi-card" style="--oi-bg:#2c1a37;--oi-acc:#cba2e6;">
+          <p class="oi-card__title">Quizzes Shipped Across International Shopify Brands</p>
+          <p class="oi-card__metric">10+</p>
+          <p class="oi-card__desc">Delivered at this range and scale, the approach proved repeatable, not a one-off success, across multiple markets and product categories.</p>
+          <span class="oi-card__art" aria-hidden="true"><svg viewBox="0 0 120 40" aria-hidden="true"><circle cx="60" cy="40" r="14" fill="none" stroke="currentColor" stroke-width="5" opacity="0.9"/><circle cx="60" cy="40" r="25" fill="none" stroke="currentColor" stroke-width="4.5" opacity="0.6"/><circle cx="60" cy="40" r="36" fill="none" stroke="currentColor" stroke-width="4" opacity="0.4"/><circle cx="60" cy="40" r="47" fill="none" stroke="currentColor" stroke-width="3.5" opacity="0.25"/></svg></span>
         </article>
       </div>
     </section>
