@@ -872,6 +872,67 @@
       line-height: 1.55;
       color: rgba(232,228,240,0.75);
     }
+
+    /* ─── The Solution: editorial split rows ───
+       Not another card grid - every other section on this page is one.
+       Each row splits into the action taken (left) and what it achieved
+       (right), so the left column can be skimmed on its own like a
+       contents list, with the reasoning available at the same glance.
+       Nothing is hidden behind a click. */
+    .case-section .sol-rows {
+      list-style: none;
+      padding-left: 0;
+      margin: 1.4rem 0 0;
+      border-top: 1px solid rgba(255,255,255,0.09);
+    }
+    .case-section .sol-row {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+      gap: 0.45rem 2.4rem;
+      padding: 1.3rem 1rem 1.35rem 2.35rem;
+      border-bottom: 1px solid rgba(255,255,255,0.09);
+      transition: background 0.25s ease;
+    }
+    .case-section .sol-row:hover { background: rgba(108,142,245,0.05); }
+    /* chevron marker, nudges forward on hover */
+    .case-section .sol-row::before {
+      content: '';
+      position: absolute;
+      left: 0.55rem;
+      top: 1.62rem;
+      width: 9px;
+      height: 9px;
+      border-right: 2px solid rgba(108,142,245,0.9);
+      border-bottom: 2px solid rgba(108,142,245,0.9);
+      transform: rotate(-45deg);
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease;
+    }
+    .case-section .sol-row:hover::before {
+      transform: rotate(-45deg) translate(2.5px, 2.5px);
+      border-color: #a8bcfb;
+    }
+    .case-section .sol-row__lead {
+      margin: 0;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.97rem;
+      line-height: 1.45;
+      color: var(--white);
+    }
+    .case-section .sol-row__detail {
+      margin: 0;
+      font-size: 0.88rem;
+      line-height: 1.72;
+      color: var(--muted);
+    }
+    @media (max-width: 820px) {
+      .case-section .sol-row {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        padding-left: 2.1rem;
+      }
+    }
     @media (max-width: 980px) {
       .case-section .sticky-grid,
       .case-section .sticky-grid--three { grid-template-columns: repeat(2, 1fr); }
@@ -1483,26 +1544,26 @@
     </section>
     <section class="case-section reveal">
       <h2>The Solution</h2>
-      <ul style="list-style:none;padding:0;margin:1rem 0 0;display:flex;flex-direction:column;gap:0.6rem;">
-        <li style="display:flex;align-items:flex-start;gap:0.85rem;">
-          <span style="flex-shrink:0;margin-top:0.42em;width:7px;height:7px;border-radius:50%;background:rgba(108,142,245,0.85);display:inline-block;"></span>
-          <p style="margin:0;color:var(--muted);font-size:0.92rem;line-height:1.7;flex:1;min-width:0;">Redesigned four corporate and marketing websites across the Swivel Group ecosystem.</p>
+      <ul class="sol-rows">
+        <li class="sol-row">
+          <p class="sol-row__lead">Rebuilt navigation around a complete service architecture.</p>
+          <p class="sol-row__detail">Restructured the site map so every Swivel Tech and Swivel Finance service had a clear, findable place, replacing incomplete navigation with a structure visitors could actually use to understand the full range of what the company offered.</p>
         </li>
-        <li style="display:flex;align-items:flex-start;gap:0.85rem;">
-          <span style="flex-shrink:0;margin-top:0.42em;width:7px;height:7px;border-radius:50%;background:rgba(108,142,245,0.85);display:inline-block;"></span>
-          <p style="margin:0;color:var(--muted);font-size:0.92rem;line-height:1.7;flex:1;min-width:0;">Delivered fully responsive experiences for desktop, tablet, and mobile platforms.</p>
+        <li class="sol-row">
+          <p class="sol-row__lead">Redesigned the visual language to signal AI-forward positioning.</p>
+          <p class="sol-row__detail">Replaced outdated UI patterns with a modern interface that gave stakeholders what they'd been missing, a design that visually communicated Swivel was building with AI, not just claiming to.</p>
         </li>
-        <li style="display:flex;align-items:flex-start;gap:0.85rem;">
-          <span style="flex-shrink:0;margin-top:0.42em;width:7px;height:7px;border-radius:50%;background:rgba(108,142,245,0.85);display:inline-block;"></span>
-          <p style="margin:0;color:var(--muted);font-size:0.92rem;line-height:1.7;flex:1;min-width:0;">Enhanced lead generation and contact workflows with improved forms and conversion-focused content.</p>
+        <li class="sol-row">
+          <p class="sol-row__lead">Mapped clear user journeys from landing to action.</p>
+          <p class="sol-row__detail">Restructured page flow and content hierarchy so every page guided visitors toward a defined next step, turning an undefined path into a deliberate one that supported lead generation and contact conversion.</p>
         </li>
-        <li style="display:flex;align-items:flex-start;gap:0.85rem;">
-          <span style="flex-shrink:0;margin-top:0.42em;width:7px;height:7px;border-radius:50%;background:rgba(108,142,245,0.85);display:inline-block;"></span>
-          <p style="margin:0;color:var(--muted);font-size:0.92rem;line-height:1.7;flex:1;min-width:0;">Integrated AI-powered engagement features to streamline user interactions.</p>
+        <li class="sol-row">
+          <p class="sol-row__lead">Established one unified design system across all four brand sites.</p>
+          <p class="sol-row__detail">Introduced consistent colours, typography, and messaging across Swivel Tech, Swivel Finance, and the wider group ecosystem, so a visitor moving between entities now experiences one coherent brand instead of four disconnected ones.</p>
         </li>
-        <li style="display:flex;align-items:flex-start;gap:0.85rem;">
-          <span style="flex-shrink:0;margin-top:0.42em;width:7px;height:7px;border-radius:50%;background:rgba(108,142,245,0.85);display:inline-block;"></span>
-          <p style="margin:0;color:var(--muted);font-size:0.92rem;line-height:1.7;flex:1;min-width:0;">Established consistent visual patterns and user experiences across multiple brand websites.</p>
+        <li class="sol-row">
+          <p class="sol-row__lead">Delivered fully responsive experiences</p>
+          <p class="sol-row__detail">Delivered fully responsive experiences across desktop, tablet, and mobile, ensuring the new navigation, visual language, and user journeys held up consistently regardless of device.</p>
         </li>
       </ul>
     </section>
