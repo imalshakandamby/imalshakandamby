@@ -1248,48 +1248,79 @@
       .dt-hint { display: block; }
     }
 
+    /* each stage owns a colour, running violet -> teal across the process,
+       the same accent-per-item language used by the domain map and the
+       experience cards */
+    .dt-node__glow {
+      fill: var(--n);
+      opacity: 0.16;
+      filter: blur(20px);
+      pointer-events: none;
+    }
     .dt-node__disc {
-      fill: url(#dtNodeFill);
-      stroke: rgba(143,168,248,0.55);
-      stroke-width: 1.6;
-      transition: stroke 0.25s, filter 0.25s;
+      stroke: none;
+      transition: filter 0.28s ease;
+    }
+    /* thin bright rim, so the disc reads as a lit object rather than a blob */
+    .dt-node__ring {
+      fill: none;
+      stroke: rgba(255,255,255,0.28);
+      stroke-width: 1.4;
+      transition: stroke 0.28s ease, stroke-width 0.28s ease;
     }
     .dt-node__halo {
       fill: none;
-      stroke: rgba(108,142,245,0.5);
+      stroke: var(--n);
       stroke-width: 1.4;
       opacity: 0;
+    }
+    .dt-node__num {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      fill: rgba(255,255,255,0.62);
+      transition: fill 0.28s ease;
     }
     .dt-node__label {
       font-family: var(--font-display);
       font-weight: 700;
       font-size: 20px;
-      fill: #F2F0F8;
+      fill: #F7F5FC;
       letter-spacing: 0.01em;
       transition: fill 0.25s;
     }
-    .dt-node:hover .dt-node__disc { stroke: rgba(180,200,255,0.95); filter: url(#dtGlow); }
+    .dt-node { cursor: default; }
+    .dt-node:hover .dt-node__ring { stroke: rgba(255,255,255,0.85); stroke-width: 2.2; }
+    .dt-node:hover .dt-node__disc { filter: url(#dtGlow); }
+    .dt-node:hover .dt-node__num { fill: rgba(255,255,255,0.9); }
     .dt-node:hover .dt-node__label { fill: #FFFFFF; }
 
+    /* connectors carry a gradient from one stage's colour into the next */
     .dt-arrow {
       fill: none;
-      stroke: rgba(108,142,245,0.85);
-      stroke-width: 2.4;
+      stroke-width: 2.6;
       stroke-linecap: round;
-      stroke-dasharray: 6 7;
+      stroke-dasharray: 5 8;
     }
+    .dt-arrow--1 { stroke: url(#dtC1); }
+    .dt-arrow--2 { stroke: url(#dtC2); }
+    .dt-arrow--3 { stroke: url(#dtC3); }
+    .dt-arrow--4 { stroke: url(#dtC4); }
+
+    /* feedback loops sit back: violet-tinted rather than neutral grey */
     .dt-loop {
       fill: none;
-      stroke: rgba(175,169,189,0.42);
-      stroke-width: 2;
+      stroke: rgba(150,138,225,0.3);
+      stroke-width: 1.7;
       stroke-linecap: round;
-      stroke-dasharray: 9 9;
+      stroke-dasharray: 7 10;
     }
     .dt-loop-label {
       font-family: var(--font-body);
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 400;
-      fill: rgba(175,169,189,0.9);
+      fill: rgba(186,180,205,0.78);
       letter-spacing: 0.01em;
     }
 
@@ -2122,24 +2153,60 @@
                 <desc id="dtDesc">Five stages run in order: Empathize, Define, Ideate, Prototype and Test. Dashed feedback loops run backwards between them, showing that testing feeds new ideas, redefines the problem and returns to user understanding.</desc>
 
                 <defs>
-                  <linearGradient id="dtNodeFill" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%"   stop-color="#7d9df7" />
-                    <stop offset="100%" stop-color="#5570d8" />
-                  </linearGradient>
                   <filter id="dtGlow" x="-60%" y="-60%" width="220%" height="220%">
                     <feGaussianBlur stdDeviation="9" result="b" />
-                    <feMerge>
-                      <feMergeNode in="b" />
-                      <feMergeNode in="SourceGraphic" />
-                    </feMerge>
+                    <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
                   </filter>
-                  <marker id="dtTipAccent" viewBox="0 0 10 10" refX="8.5" refY="5"
-                          markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
-                    <path d="M0 0 L10 5 L0 10 Z" fill="rgba(108,142,245,0.9)" />
+                  <linearGradient id="dtG1" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#9db6f7" />
+                    <stop offset="100%" stop-color="#4257c4" />
+                  </linearGradient>
+                  <linearGradient id="dtG2" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#b3a6f6" />
+                    <stop offset="100%" stop-color="#5b4bc6" />
+                  </linearGradient>
+                  <linearGradient id="dtG3" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#a3c7f4" />
+                    <stop offset="100%" stop-color="#3f78bf" />
+                  </linearGradient>
+                  <linearGradient id="dtG4" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#aed3f0" />
+                    <stop offset="100%" stop-color="#4c88ba" />
+                  </linearGradient>
+                  <linearGradient id="dtG5" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#a4dbe6" />
+                    <stop offset="100%" stop-color="#3f90a1" />
+                  </linearGradient>
+                  <linearGradient id="dtC1" gradientUnits="userSpaceOnUse" x1="185" y1="0" x2="269" y2="0">
+                    <stop offset="0%" stop-color="#6c8ef5" />
+                    <stop offset="100%" stop-color="#8a7cf0" />
+                  </linearGradient>
+                  <linearGradient id="dtC2" gradientUnits="userSpaceOnUse" x1="433" y1="0" x2="517" y2="0">
+                    <stop offset="0%" stop-color="#8a7cf0" />
+                    <stop offset="100%" stop-color="#6fa8ee" />
+                  </linearGradient>
+                  <linearGradient id="dtC3" gradientUnits="userSpaceOnUse" x1="681" y1="0" x2="765" y2="0">
+                    <stop offset="0%" stop-color="#6fa8ee" />
+                    <stop offset="100%" stop-color="#7fb6e8" />
+                  </linearGradient>
+                  <linearGradient id="dtC4" gradientUnits="userSpaceOnUse" x1="929" y1="0" x2="1013" y2="0">
+                    <stop offset="0%" stop-color="#7fb6e8" />
+                    <stop offset="100%" stop-color="#6fc3d6" />
+                  </linearGradient>
+                  <marker id="dtTip1" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                    <path d="M0 0 L10 5 L0 10 Z" fill="#8a7cf0" />
                   </marker>
-                  <marker id="dtTipMuted" viewBox="0 0 10 10" refX="8.5" refY="5"
-                          markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
-                    <path d="M0 0 L10 5 L0 10 Z" fill="rgba(175,169,189,0.6)" />
+                  <marker id="dtTip2" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                    <path d="M0 0 L10 5 L0 10 Z" fill="#6fa8ee" />
+                  </marker>
+                  <marker id="dtTip3" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                    <path d="M0 0 L10 5 L0 10 Z" fill="#7fb6e8" />
+                  </marker>
+                  <marker id="dtTip4" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                    <path d="M0 0 L10 5 L0 10 Z" fill="#6fc3d6" />
+                  </marker>
+                  <marker id="dtTipMuted" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                    <path d="M0 0 L10 5 L0 10 Z" fill="rgba(150,138,225,0.65)" />
                   </marker>
                 </defs>
 
@@ -2179,37 +2246,52 @@
                   <tspan x="640" y="524">redefine the problem</tspan>
                 </text>
 
-                <!-- forward arrows -->
-                <path class="dt-arrow dt-arrow--1" d="M 185 320 L 269 320" marker-end="url(#dtTipAccent)" />
-                <path class="dt-arrow dt-arrow--2" d="M 433 320 L 517 320" marker-end="url(#dtTipAccent)" />
-                <path class="dt-arrow dt-arrow--3" d="M 681 320 L 765 320" marker-end="url(#dtTipAccent)" />
-                <path class="dt-arrow dt-arrow--4" d="M 929 320 L 1013 320" marker-end="url(#dtTipAccent)" />
+                <!-- forward connectors, blending stage to stage -->
+                <path class="dt-arrow dt-arrow--1" d="M 185 320 L 269 320" marker-end="url(#dtTip1)" />
+                <path class="dt-arrow dt-arrow--2" d="M 433 320 L 517 320" marker-end="url(#dtTip2)" />
+                <path class="dt-arrow dt-arrow--3" d="M 681 320 L 765 320" marker-end="url(#dtTip3)" />
+                <path class="dt-arrow dt-arrow--4" d="M 929 320 L 1013 320" marker-end="url(#dtTip4)" />
 
                 <!-- stages -->
-                <g class="dt-node dt-node--1">
+                <g class="dt-node dt-node--1" style="--n:#6c8ef5">
+                  <circle class="dt-node__glow" cx="105" cy="320" r="82" />
                   <circle class="dt-node__halo" cx="105" cy="320" r="66" />
-                  <circle class="dt-node__disc" cx="105" cy="320" r="66" />
-                  <text class="dt-node__label" x="105" y="320" text-anchor="middle" dominant-baseline="central">Empathize</text>
+                  <circle class="dt-node__disc" cx="105" cy="320" r="66" fill="url(#dtG1)" />
+                  <circle class="dt-node__ring" cx="105" cy="320" r="66" />
+                  <text class="dt-node__num" x="105" y="307" text-anchor="middle">01</text>
+                  <text class="dt-node__label" x="105" y="334" text-anchor="middle">Empathize</text>
                 </g>
-                <g class="dt-node dt-node--2">
+                <g class="dt-node dt-node--2" style="--n:#8a7cf0">
+                  <circle class="dt-node__glow" cx="353" cy="320" r="82" />
                   <circle class="dt-node__halo" cx="353" cy="320" r="66" />
-                  <circle class="dt-node__disc" cx="353" cy="320" r="66" />
-                  <text class="dt-node__label" x="353" y="320" text-anchor="middle" dominant-baseline="central">Define</text>
+                  <circle class="dt-node__disc" cx="353" cy="320" r="66" fill="url(#dtG2)" />
+                  <circle class="dt-node__ring" cx="353" cy="320" r="66" />
+                  <text class="dt-node__num" x="353" y="307" text-anchor="middle">02</text>
+                  <text class="dt-node__label" x="353" y="334" text-anchor="middle">Define</text>
                 </g>
-                <g class="dt-node dt-node--3">
+                <g class="dt-node dt-node--3" style="--n:#6fa8ee">
+                  <circle class="dt-node__glow" cx="601" cy="320" r="82" />
                   <circle class="dt-node__halo" cx="601" cy="320" r="66" />
-                  <circle class="dt-node__disc" cx="601" cy="320" r="66" />
-                  <text class="dt-node__label" x="601" y="320" text-anchor="middle" dominant-baseline="central">Ideate</text>
+                  <circle class="dt-node__disc" cx="601" cy="320" r="66" fill="url(#dtG3)" />
+                  <circle class="dt-node__ring" cx="601" cy="320" r="66" />
+                  <text class="dt-node__num" x="601" y="307" text-anchor="middle">03</text>
+                  <text class="dt-node__label" x="601" y="334" text-anchor="middle">Ideate</text>
                 </g>
-                <g class="dt-node dt-node--4">
+                <g class="dt-node dt-node--4" style="--n:#7fb6e8">
+                  <circle class="dt-node__glow" cx="849" cy="320" r="82" />
                   <circle class="dt-node__halo" cx="849" cy="320" r="66" />
-                  <circle class="dt-node__disc" cx="849" cy="320" r="66" />
-                  <text class="dt-node__label" x="849" y="320" text-anchor="middle" dominant-baseline="central">Prototype</text>
+                  <circle class="dt-node__disc" cx="849" cy="320" r="66" fill="url(#dtG4)" />
+                  <circle class="dt-node__ring" cx="849" cy="320" r="66" />
+                  <text class="dt-node__num" x="849" y="307" text-anchor="middle">04</text>
+                  <text class="dt-node__label" x="849" y="334" text-anchor="middle">Prototype</text>
                 </g>
-                <g class="dt-node dt-node--5">
+                <g class="dt-node dt-node--5" style="--n:#6fc3d6">
+                  <circle class="dt-node__glow" cx="1097" cy="320" r="82" />
                   <circle class="dt-node__halo" cx="1097" cy="320" r="66" />
-                  <circle class="dt-node__disc" cx="1097" cy="320" r="66" />
-                  <text class="dt-node__label" x="1097" y="320" text-anchor="middle" dominant-baseline="central">Test</text>
+                  <circle class="dt-node__disc" cx="1097" cy="320" r="66" fill="url(#dtG5)" />
+                  <circle class="dt-node__ring" cx="1097" cy="320" r="66" />
+                  <text class="dt-node__num" x="1097" y="307" text-anchor="middle">05</text>
+                  <text class="dt-node__label" x="1097" y="334" text-anchor="middle">Test</text>
                 </g>
               </svg>
             </div>
