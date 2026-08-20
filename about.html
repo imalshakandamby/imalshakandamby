@@ -644,7 +644,9 @@
        The offset lives in .about-hero-sec's own padding instead. */
     .about-page { padding-top: 0; padding-bottom: 0; }
 
-    .about-sec { padding-block: clamp(3rem, 6vw, 5rem); position: relative; z-index: 1; }
+    /* 5.125rem = 82px a side, so adjacent sections sit 164px apart on
+       desktop; the vw term only takes over on narrow screens */
+    .about-sec { padding-block: clamp(3rem, 7vw, 5.125rem); position: relative; z-index: 1; }
     .about-sec--tight { padding-block: clamp(2rem, 4vw, 3rem); }
 
     /* ── Tinted bands ──────────────────────────────
@@ -1025,11 +1027,8 @@
     }
 
     /* ── 3b. DOMAIN MAP ────────────────────────── */
-    .dom-block {
-      margin-top: 3.5rem;
-      padding-top: 3rem;
-      border-top: 1px solid rgba(255,255,255,0.12);
-    }
+    /* lives in its own section now, which supplies the surrounding space */
+    .dom-block { margin-top: 0; padding-top: 0; }
     .dom-head { margin-bottom: 2rem; }
     .dom-head__label {
       font-size: 0.68rem;
@@ -1944,7 +1943,7 @@
     <!-- ══════════════════════════════
          3 · WORK EXPERIENCE
     ══════════════════════════════ -->
-    <section class="about-sec" aria-labelledby="expTitle">
+    <section class="about-sec about-sec--wash about-sec--wash-alt" aria-labelledby="expTitle">
       <div class="container">
         <div class="sec-head reveal">
           <p class="sec-head__label">Where I've Worked</p>
@@ -2017,12 +2016,17 @@
           </ul>
         </article>
         </div>
+      </div>
+    </section>
 
-        <!-- Domain map -->
+    <!-- Domain map: its own section, so the wash above stops at the
+         experience cards instead of running behind this too -->
+    <section class="about-sec" aria-labelledby="domTitle">
+      <div class="container">
         <div class="dom-block">
           <div class="dom-head reveal">
             <p class="dom-head__label">Domains &amp; Industries</p>
-            <h3 class="dom-head__title">Five kinds of problem, one standard</h3>
+            <h3 class="dom-head__title" id="domTitle">Five kinds of problem, one standard</h3>
           </div>
 
           <div class="dom-grid">
