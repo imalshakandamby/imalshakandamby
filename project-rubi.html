@@ -120,8 +120,9 @@
       margin-bottom: 2rem;
     }
     .case-section {
-      border-top: 1px solid rgba(255,255,255,0.13);
-      padding: 2.75rem 0 3rem;
+      /* no divider between sections - spacing alone separates them, so the
+         gap is wider than it was when a rule carried the boundary */
+      padding: clamp(3.25rem, 5vw, 4rem) 0 clamp(3.5rem, 5.5vw, 4.25rem);
     }
     .case-section h2 {
       font-family: var(--font-display);

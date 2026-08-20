@@ -44,7 +44,11 @@
     .back-link{display:inline-flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--muted);margin-bottom:1.25rem;transition:color .2s}.back-link:hover{color:var(--white)}.back-link svg{width:1rem;height:1rem}
     .case-header h1{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,3rem);line-height:1.08;letter-spacing:-.01em;margin-bottom:.75rem}
     .case-header p{color:var(--muted);line-height:1.7;margin-bottom:2rem;}
-    .case-section{border-top:1px solid rgba(255,255,255,.08);padding:2.75rem 0 3rem}
+    .case-section{
+      /* no divider between sections - spacing alone separates them, so the
+         gap is wider than it was when a rule carried the boundary */
+      padding: clamp(3.25rem, 5vw, 4rem) 0 clamp(3.5rem, 5.5vw, 4.25rem);
+    }
     .case-section h2{font-family:var(--font-display);font-size:1.15rem;margin-bottom:.7rem;color:var(--white)}
     .case-section p,.case-section li{color:var(--muted);line-height:1.75;font-size:.95rem}.case-section ul{padding-left:1.1rem}
     /* ─── Creative Footer ─── */
