@@ -52,28 +52,13 @@
     .case-section h2{font-family:var(--font-display);font-size:1.15rem;margin-bottom:.7rem;color:var(--white)}
     .case-section p,.case-section li{color:var(--muted);line-height:1.75;font-size:.95rem}.case-section ul{padding-left:1.1rem}
     /* ─── Creative Footer ─── */
-    .site-footer { position: relative; z-index: 1; padding: 3.5rem 0 2rem; }
-    .site-footer::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg,
-        transparent 0%,
-        rgba(108,142,245,0.5) 50%,
-        transparent 100%);
-    }
-    .site-footer::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 40%; height: 2px;
-      background: linear-gradient(90deg,
-        transparent 0%,
-        rgba(160,150,255,0.95) 50%,
-        transparent 100%);
-      filter: blur(0.5px);
-      animation: footerEdgeShine 6s ease-in-out infinite;
+    /* no rule along the top edge - the footer separates from the page by
+       sitting on its own, slightly lifted dark ground instead */
+    .site-footer {
+      position: relative;
+      z-index: 1;
+      padding: 3.5rem 0 2rem;
+      background: linear-gradient(180deg, #100D1A 0%, #0C0A14 100%);
     }
     @keyframes footerEdgeShine {
       0%   { left: -40%; opacity: 0; }
@@ -91,12 +76,39 @@
       pointer-events: none;
     }
     .footer-top {
+      position: relative;
+      overflow: hidden;
       display: grid;
       grid-template-columns: 1fr auto 1fr;
       align-items: start;
       gap: 2rem;
       padding-bottom: 2rem;
-      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+    /* the divider above the copyright row. Drawn as pseudo-elements rather
+       than a border so the sweeping highlight can ride it and get clipped
+       at the container edges instead of bleeding into the gutters. */
+    .footer-top::before,
+    .footer-top::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      pointer-events: none;
+    }
+    .footer-top::before {
+      left: 0; right: 0; height: 1px;
+      background: rgba(255,255,255,0.12);
+    }
+    .footer-top::after {
+      left: 0; width: 40%; height: 2px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(160,150,255,0.95) 50%,
+        transparent 100%);
+      filter: blur(0.5px);
+      animation: footerEdgeShine 6s ease-in-out infinite;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .footer-top::after { animation: none; opacity: 0; }
     }
     .footer-brand { display: flex; flex-direction: column; gap: 0.35rem; }
     .footer-brand__name { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; color: var(--white); }
