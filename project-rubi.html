@@ -3,20 +3,280 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    /* Runs before first paint so a light-mode visitor never sees a flash of
+       the dark theme. Dark is the default whenever nothing has been stored. */
+    (function () {
+      try {
+        if (localStorage.getItem('theme') === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <title>Imalsha K. | Project Rubi</title>
   <link rel="icon" type="image/png" href="assets/images/favicon/favicon.png">  <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Handlee&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0A0A0F;
-      --white: #E8E4F0;
-      --muted: #AFA9BD;
-      --violet: #6c8ef5;
+      color-scheme: dark;
+
+      /* ── ground + surfaces ── */
+      --bg:            #0A0A0F;
+      --bg-rgb:        10,10,15;
+      --surface:       #13101C;
+      --surface-rgb:   19,16,28;
+      --surface-2:     #1C1729;
+      --surface-2-rgb: 28,23,41;
+      --footer-top:    #100D1A;
+      --footer-bot:    #0C0A14;
+
+      /* ── type ── */
+      --text:          #E8E4F0;
+      --text-rgb:      232,228,240;
+      --muted:         #AFA9BD;
+      --muted-rgb:     175,169,189;
+
+      /* ── accent ── */
+      --violet:        #6c8ef5;
+      --violet-rgb:    108,142,245;
+      --violet-lt:     #8fa8f8;
+      --green:         #6ee7a0;
+      --green-rgb:     110,231,160;
+
+      /* Hairlines and overlays. White on dark, near-black on light, so
+         every rgba(var(--ink-rgb), a) rule keeps its own alpha and just
+         flips which end of the scale it is tinting from. */
+      --ink-rgb:       255,255,255;
+      --meta-label:    rgba(var(--violet-rgb),0.7);
+
+      /* Shadows. --shadow-a scales every shadow at once, so light mode
+         can run them softer without touching each rule. */
+      --shadow-rgb:    0,0,0;
+      --shadow-a:      1;
+
+      /* per-item card accents */
+      --acc-1: #6c8ef5; --acc-2: #8a7cf0; --acc-3: #6fa8ee;
+      --acc-4: #7fb6e8; --acc-5: #6fc3d6; --acc-6: #9d8cf2;
+
+      /* Outcome & Impact stat cards: tinted ground + its accent */
+      --oi-1-bg:#281b3f; --oi-1-acc:#bda6f5;
+      --oi-2-bg:#211c3e; --oi-2-acc:#a8bcfb;
+      --oi-3-bg:#182444; --oi-3-acc:#93b4f2;
+      --oi-4-bg:#152a3d; --oi-4-acc:#8ec5e8;
+      --oi-5-bg:#2c1a37; --oi-5-acc:#cba2e6;
+      --oi-6-bg:#1a2140; --oi-6-acc:#9db6f7;
+
+      /* sticky-note paper tints (5 cycling pairs) */
+      --note-1a:#2b2553; --note-1b:#1d1938;
+      --note-2a:#1f2b54; --note-2b:#161f3b;
+      --note-3a:#34244f; --note-3b:#241936;
+      --note-4a:#1c3047; --note-4b:#142232;
+      --note-5a:#3a2447; --note-5b:#281834;
+
+      /* project tile grounds (index) */
+      --proj-1:#041A0C; --proj-2:#130A2E; --proj-3:#141F04; --proj-4:#2A0717;
+
+      /* decorative gradients, scrollbar, sweeping shine */
+      --grad-hi:#a8bcfb; --grad-hi-rgb:168,188,251;
+      --grad-lo:#4257c4;
+      --scroll-rgb:140,100,255;
+      --shine-rgb:160,150,255;
+      /* Values kept distinct from the tokens above so dark mode renders
+         exactly as it did before the theme layer went in. */
+      --menu-bg-rgb:    10,8,18;
+      --chip-bg-rgb:    18,14,30;
+      --icon-muted-rgb: 167,155,214;
+      --copy-muted-rgb: 195,190,210;
+      --label-muted-rgb:186,180,205;
+      --text-hi:        #efecf8;
+      --text-hi-rgb:    238,235,248;
+      --text-max:       #f7f5fc;
+      --loop-rgb:       150,138,225;
+      --surface-3-rgb:  38,32,58;
+      --viewer-rgb:     7,8,13;
+      --card-base:      #17132a;
+      --card-base-2:    #1b162c;
+
       --font-display: 'Syne', sans-serif;
       --font-body: 'Inter', sans-serif;
       --max-w: 980px;
     }
+
+    /* ── Light theme ───────────────────────────────────────────────
+       Only values change here, never structure. Ground is a soft
+       violet-grey rather than white so long reading stays comfortable,
+       and the accent deepens to #4A63C9 to hold AA contrast on it. */
+    :root[data-theme="light"] {
+      color-scheme: light;
+
+      /* Dimmed light. The ground sits near 77% relative luminance rather
+         than 88%, and text stops short of black, so the page reads as
+         tinted paper rather than a lit panel - much easier over a long
+         scroll. Everything below moved together to keep the same
+         relationships: surfaces still lift off the ground, accents still
+         clear AA against whatever they sit on. */
+      --bg:            #E4E2EE;
+      --bg-rgb:        228,226,238;
+      --surface:       #EDEBF4;
+      --surface-rgb:   237,235,244;
+      --surface-2:     #F4F3F9;
+      --surface-2-rgb: 244,243,249;
+      --footer-top:    #DCDAEA;
+      --footer-bot:    #D5D3E4;
+
+      --text:          #262233;
+      --text-rgb:      38,34,51;
+      --muted:         #5C5770;
+      --muted-rgb:     92,87,112;
+
+      --violet:        #4459BE;
+      --violet-rgb:    68,89,190;
+      --violet-lt:     #384BA4;
+      --green:         #196B3E;
+      --green-rgb:     25,107,62;
+
+      --ink-rgb:       38,34,51;
+      --meta-label:    rgba(var(--violet-rgb),1);
+
+      /* a dimmer ground needs less shadow to read as lift */
+      --shadow-rgb:    38,33,64;
+      --shadow-a:      0.34;
+
+      --acc-1: #4459BE; --acc-2: #6246C4; --acc-3: #2A6FB4;
+      --acc-4: #337AA8; --acc-5: #257D8E; --acc-6: #6A4FCC;
+
+      --oi-1-bg:#E6DFF5; --oi-1-acc:#5C41BE;
+      --oi-2-bg:#E1E6F7; --oi-2-acc:#3E53B8;
+      --oi-3-bg:#DEE7F6; --oi-3-acc:#22548F;
+      --oi-4-bg:#DDEAF4; --oi-4-acc:#195773;
+      --oi-5-bg:#ECE0F1; --oi-5-acc:#733BA5;
+      --oi-6-bg:#E0E4F6; --oi-6-acc:#374BAE;
+
+      --note-1a:#E3DDF2; --note-1b:#D5CEE8;
+      --note-2a:#DDE3F3; --note-2b:#CED6EB;
+      --note-3a:#E9DFF0; --note-3b:#DBCFE7;
+      --note-4a:#DAE4EF; --note-4b:#CBD9E6;
+      --note-5a:#EADFF0; --note-5b:#DCCFE3;
+
+      --proj-1:#D6E5DC; --proj-2:#DCD8EE; --proj-3:#DFE7D3; --proj-4:#EDD9E0;
+
+      --grad-hi:#6079D4; --grad-hi-rgb:96,121,212;
+      --grad-lo:#27368C;
+      --scroll-rgb:100,72,186;
+      --shine-rgb:110,96,200;
+      --menu-bg-rgb:    237,235,244;
+      --chip-bg-rgb:    237,235,244;
+      --icon-muted-rgb: 92,87,112;
+      --copy-muted-rgb: 92,87,112;
+      --label-muted-rgb:92,87,112;
+      --text-hi:        #262233;
+      --text-hi-rgb:    38,34,51;
+      --text-max:       #1C1927;
+      --loop-rgb:       68,89,190;
+      --surface-3-rgb:  244,243,249;
+      --viewer-rgb:     214,212,228;
+      --card-base:      #EDEBF4;
+      --card-base-2:    #EDEBF4;
+    }
+
+    /* ── Light-mode readability ─────────────────────────────────────
+       Alpha that reads as "softer" on a dark ground reads as "washed
+       out" on a light one: the same 75% muted that gives 7:1 over
+       #0A0A0F gives only 3.3:1 over #F1F0F8. Rather than darken the
+       tokens until every faded variant passes - which would flatten the
+       hierarchy everywhere - the handful of small faded labels are
+       restored to full strength here. */
+    :root[data-theme="light"] .footer-copy,
+    :root[data-theme="light"] .exp-card__co-desc,
+    :root[data-theme="light"] .exp-card__period,
+    :root[data-theme="light"] .testi-card__org { color: var(--muted); }
+
+    :root[data-theme="light"] .mq-item,
+    :root[data-theme="light"] .blob-badge__location,
+    :root[data-theme="light"] .sol-row__label { color: var(--violet); }
+
+    :root[data-theme="light"] .footer-brand__tagline { color: var(--green); }
+    :root[data-theme="light"] .card-tag    { color: rgba(var(--ink-rgb), 0.78); }
+    :root[data-theme="light"] .sticky__idx { color: rgba(var(--ink-rgb), 0.72); }
+    :root[data-theme="light"] .testi-card__mark { color: rgba(var(--violet-rgb), 0.85); }
+
+    /* ── Theme toggle ───────────────────────────────────────────────
+       Sits inside .site-header so it inherits the nav's fade-on-scroll
+       and shares its top baseline, rather than being a second fixed
+       element that has to be kept in sync. */
+    .theme-toggle {
+      position: absolute;
+      right: clamp(1rem, 5vw, 1.5rem);
+      top: 50%;
+      transform: translateY(-50%);
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 100px;
+      cursor: pointer;
+      color: var(--violet);
+      background: rgba(var(--surface-2-rgb), 0.85);
+      border: 1px solid rgba(var(--violet-rgb), 0.2);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      -webkit-tap-highlight-color: transparent;
+      transition: color .3s, background .3s, border-color .3s, box-shadow .3s;
+    }
+    .theme-toggle:hover {
+      color: var(--violet-lt);
+      border-color: rgba(var(--violet-rgb), 0.55);
+      box-shadow: 0 0 0 4px rgba(var(--violet-rgb), 0.10);
+    }
+    .theme-toggle:focus-visible { outline: 2px solid var(--violet); outline-offset: 3px; }
+    .theme-toggle:active { transform: translateY(-50%) scale(0.92); }
+
+    .theme-toggle__icon {
+      width: 21px;
+      height: 21px;
+      overflow: visible;
+      transition: transform .5s cubic-bezier(.36,1.5,.5,1);
+    }
+    /* The sun becomes the moon: the orb swells, the rays fold away, and a
+       masked circle slides in from off-canvas to carve out the crescent. */
+    .tt-orb  { fill: currentColor; transition: r .45s cubic-bezier(.36,1.5,.5,1); }
+    .tt-bite { transition: cx .45s cubic-bezier(.36,1.5,.5,1), cy .45s cubic-bezier(.36,1.5,.5,1); }
+    .tt-rays {
+      transform-origin: 12px 12px;
+      transition: transform .45s cubic-bezier(.36,1.5,.5,1), opacity .3s ease;
+    }
+    :root[data-theme="light"] .theme-toggle__icon { transform: rotate(-35deg); }
+    :root[data-theme="light"] .tt-orb  { r: 8; }
+    :root[data-theme="light"] .tt-bite { cx: 19; cy: 7; }
+    :root[data-theme="light"] .tt-rays { transform: scale(.35); opacity: 0; }
+
+    /* Eases the page ground across during a switch. Applied by JS only for
+       the length of the transition, so it never competes with hover states. */
+    html.theme-anim, html.theme-anim body {
+      transition: background-color .3s ease, color .3s ease;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .theme-toggle, .theme-toggle__icon,
+      .tt-orb, .tt-bite, .tt-rays,
+      html.theme-anim, html.theme-anim body { transition: none; }
+    }
+
+    /* At <=640px the pill collapses to just the hamburger and parks on the
+       right - exactly where the toggle sits - so step the toggle left of it
+       rather than stacking the two on the same spot. */
+    @media (max-width: 640px) {
+      .theme-toggle {
+        right: calc(clamp(1rem, 5vw, 1.5rem) + 54px);
+        width: 42px;
+        height: 42px;
+      }
+      .theme-toggle__icon { width: 19px; height: 19px; }
+    }
+
+
 
     /* ── Scrollbar ──────────────────────────────
        Thin, theme-tinted thumb instead of the OS default. The 2px border
@@ -24,25 +284,25 @@
        as a slim accent rather than a thick generic rail. */
     html {
       scrollbar-width: thin;
-      scrollbar-color: rgba(120,130,220,0.45) transparent;
+      scrollbar-color: rgba(var(--violet-rgb),0.45) transparent;
     }
     ::-webkit-scrollbar { width: 10px; height: 10px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, rgba(140,100,255,0.55), rgba(108,142,245,0.35));
+      background: linear-gradient(180deg, rgba(var(--scroll-rgb),0.55), rgba(var(--violet-rgb),0.35));
       border-radius: 100px;
       border: 2px solid var(--bg);
       background-clip: padding-box;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(180deg, rgba(140,100,255,0.75), rgba(108,142,245,0.55));
+      background: linear-gradient(180deg, rgba(var(--scroll-rgb),0.75), rgba(var(--violet-rgb),0.55));
       background-clip: padding-box;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { overflow-x: hidden; width: 100%; }
     body {
       background: var(--bg);
-      color: var(--white);
+      color: var(--text);
       font-family: var(--font-body);
       -webkit-font-smoothing: antialiased;
       min-height: 100vh;
@@ -79,8 +339,8 @@
       gap: 0.25rem;
       padding: 0.5rem;
       border-radius: 100px;
-      background: rgba(28, 23, 41, 0.85);
-      border: 1px solid rgba(108, 142, 245, 0.2);
+      background: rgba(var(--surface-2-rgb),0.85);
+      border: 1px solid rgba(var(--violet-rgb),0.2);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
     }
@@ -94,8 +354,8 @@
       border-radius: 100px;
       transition: color 0.2s, background 0.2s;
     }
-    .nav-link:hover { color: var(--white); background: rgba(255,255,255,0.05); }
-    .nav-link--active { color: rgba(232,228,240,0.85); background: rgba(108,142,245,0.15); }
+    .nav-link:hover { color: var(--text); background: rgba(var(--ink-rgb),0.05); }
+    .nav-link--active { color: rgba(var(--text-rgb),0.85); background: rgba(var(--violet-rgb),0.15); }
     .back-link {
       display: inline-flex;
       align-items: center;
@@ -105,7 +365,7 @@
       margin-bottom: 1.25rem;
       transition: color 0.2s;
     }
-    .back-link:hover { color: var(--white); }
+    .back-link:hover { color: var(--text); }
     .back-link svg { width: 1rem; height: 1rem; }
     .case-header h1 {
       font-family: var(--font-display);
@@ -128,7 +388,7 @@
       font-family: var(--font-display);
       font-size: 1.15rem;
       margin-bottom: 0.7rem;
-      color: var(--white);
+      color: var(--text);
     }
     .case-section p, .case-section li {
       color: var(--muted);
@@ -143,7 +403,7 @@
       position: relative;
       z-index: 1;
       padding: 3.5rem 0 2rem;
-      background: linear-gradient(180deg, #100D1A 0%, #0C0A14 100%);
+      background: linear-gradient(180deg, var(--footer-top) 0%, var(--footer-bot) 100%);
     }
     @keyframes footerEdgeShine {
       0%   { left: -40%; opacity: 0; }
@@ -157,7 +417,7 @@
       bottom: 0; left: 50%;
       transform: translateX(-50%);
       width: 520px; height: 160px;
-      background: radial-gradient(ellipse at center, rgba(108,142,245,0.1) 0%, transparent 70%);
+      background: radial-gradient(ellipse at center, rgba(var(--violet-rgb),0.1) 0%, transparent 70%);
       pointer-events: none;
     }
     .footer-top {
@@ -181,13 +441,13 @@
     }
     .footer-top::before {
       left: 0; right: 0; height: 1px;
-      background: rgba(255,255,255,0.12);
+      background: rgba(var(--ink-rgb),0.12);
     }
     .footer-top::after {
       left: 0; width: 40%; height: 2px;
       background: linear-gradient(90deg,
         transparent 0%,
-        rgba(160,150,255,0.95) 50%,
+        rgba(var(--shine-rgb),0.95) 50%,
         transparent 100%);
       filter: blur(0.5px);
       animation: footerEdgeShine 6s ease-in-out infinite;
@@ -196,7 +456,7 @@
       .footer-top::after { animation: none; opacity: 0; }
     }
     .footer-brand { display: flex; flex-direction: column; gap: 0.35rem; }
-    .footer-brand__name { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; color: var(--white); }
+    .footer-brand__name { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; color: var(--text); }
     .footer-brand__sub { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.03em; }
     .footer-brand__tagline {
       display: inline-block;
@@ -204,9 +464,9 @@
       font-size: 0.7rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: rgba(110,231,160,0.9);
-      border: 1px solid rgba(110,231,160,0.3);
-      background: rgba(110,231,160,0.08);
+      color: rgba(var(--green-rgb),0.9);
+      border: 1px solid rgba(var(--green-rgb),0.3);
+      background: rgba(var(--green-rgb),0.08);
       border-radius: 100px;
       padding: 0.25rem 0.7rem;
       width: fit-content;
@@ -215,14 +475,14 @@
     .footer-logo-mark {
       width: 40px; height: 40px;
       border-radius: 12px;
-      background: rgba(108,142,245,0.1);
-      border: 1px solid rgba(108,142,245,0.25);
+      background: rgba(var(--violet-rgb),0.1);
+      border: 1px solid rgba(var(--violet-rgb),0.25);
       display: flex; align-items: center; justify-content: center;
-      color: rgba(108,142,245,0.8);
+      color: rgba(var(--violet-rgb),0.8);
     }
     .footer-divider-v {
       width: 1px; height: 32px;
-      background: linear-gradient(to bottom, transparent, rgba(108,142,245,0.3), transparent);
+      background: linear-gradient(to bottom, transparent, rgba(var(--violet-rgb),0.3), transparent);
     }
     .footer-contact { display: flex; flex-direction: column; align-items: flex-end; gap: 0.55rem; }
     .footer-contact-row {
@@ -234,15 +494,15 @@
       padding: 0.42rem 0.55rem 0.42rem 0.7rem;
       border-radius: 10px;
       border: none;
-      background: rgba(255,255,255,0.035);
+      background: rgba(var(--ink-rgb),0.035);
       transition: background 0.2s;
     }
     .footer-contact-row:hover {
-      background: rgba(255,255,255,0.06);
+      background: rgba(var(--ink-rgb),0.06);
     }
     .footer-contact-row__icon {
       flex-shrink: 0;
-      color: rgba(167,155,214,0.85);
+      color: rgba(var(--icon-muted-rgb),0.85);
     }
     .footer-contact-row__text {
       flex: 1;
@@ -254,7 +514,7 @@
       text-align: left;
       transition: color 0.2s;
     }
-    .footer-contact-row__text:hover { color: var(--white); }
+    .footer-contact-row__text:hover { color: var(--text); }
     .footer-copy-btn {
       flex-shrink: 0;
       position: relative;
@@ -262,7 +522,7 @@
       padding: 0.24rem 0.6rem;
       border-radius: 999px;
       background: transparent;
-      border: 1px solid rgba(108,142,245,0.45);
+      border: 1px solid rgba(var(--violet-rgb),0.45);
       color: var(--violet-lt);
       font-family: var(--font-display);
       font-size: 0.64rem;
@@ -273,14 +533,14 @@
       transition: background 0.2s, border-color 0.2s, color 0.2s;
     }
     .footer-copy-btn:hover {
-      background: rgba(108,142,245,0.15);
-      border-color: rgba(108,142,245,0.7);
-      color: var(--white);
+      background: rgba(var(--violet-rgb),0.15);
+      border-color: rgba(var(--violet-rgb),0.7);
+      color: var(--text);
     }
     .footer-copy-btn.is-copied {
-      border-color: rgba(110,231,160,0.55);
-      color: #6ee7a0;
-      background: rgba(110,231,160,0.08);
+      border-color: rgba(var(--green-rgb),0.55);
+      color: var(--green);
+      background: rgba(var(--green-rgb),0.08);
     }
     .footer-bottom {
       display: flex; align-items: center; justify-content: space-between;
@@ -291,19 +551,19 @@
       display: inline-flex; align-items: center; justify-content: center;
       flex: 1;
       padding: 0.35rem 0.6rem; height: 32px; border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.15);
-      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(var(--ink-rgb),0.15);
+      background: rgba(var(--ink-rgb),0.03);
       color: var(--muted); font-size: 0.75rem;
       font-family: var(--font-display); font-weight: 700;
       transition: border-color 0.2s, color 0.2s, background 0.2s;
       text-decoration: none;
     }
-    .footer-social-btn:hover { border-color: rgba(108,142,245,0.5); color: var(--white); background: rgba(108,142,245,0.08); }
-    .footer-copy { font-size: 0.65rem; color: rgba(195,190,210,0.75); letter-spacing: 0.08em; }
+    .footer-social-btn:hover { border-color: rgba(var(--violet-rgb),0.5); color: var(--text); background: rgba(var(--violet-rgb),0.08); }
+    .footer-copy { font-size: 0.65rem; color: rgba(var(--copy-muted-rgb),0.75); letter-spacing: 0.08em; }
     @media (max-width: 640px) {
       .footer-top { grid-template-columns: 1fr; }
       .footer-center { align-items: flex-start; flex-direction: row; }
-      .footer-divider-v { width: 32px; height: 1px; background: linear-gradient(to right, transparent, rgba(108,142,245,0.3), transparent); }
+      .footer-divider-v { width: 32px; height: 1px; background: linear-gradient(to right, transparent, rgba(var(--violet-rgb),0.3), transparent); }
       .footer-contact { align-items: flex-start; }
       .footer-bottom { flex-direction: column; align-items: flex-start; }
     }
@@ -328,7 +588,7 @@
       display: flex;
       flex-direction: column;
       gap: 0;
-      border-left: 1px solid rgba(255,255,255,0.13);
+      border-left: 1px solid rgba(var(--ink-rgb),0.13);
       padding-left: 1.75rem;
     }
     .intro-meta-item {
@@ -336,7 +596,7 @@
       flex-direction: column;
       gap: 0.2rem;
       padding: 0.75rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.10);
+      border-bottom: 1px solid rgba(var(--ink-rgb),0.10);
     }
     .intro-meta-item:last-child { border-bottom: none; }
     .intro-meta-label {
@@ -348,13 +608,13 @@
     }
     .intro-meta-value {
       font-size: 0.85rem;
-      color: var(--white);
+      color: var(--text);
       font-family: var(--font-display);
       font-weight: 600;
     }
     @media (max-width: 640px) {
       .intro-grid { grid-template-columns: 1fr; }
-      .intro-meta { border-left: none; padding-left: 0; border-top: 1px solid rgba(255,255,255,0.13); padding-top: 1.25rem; }
+      .intro-meta { border-left: none; padding-left: 0; border-top: 1px solid rgba(var(--ink-rgb),0.13); padding-top: 1.25rem; }
     }
 
     /* ─── The Problem section ─── */
@@ -388,12 +648,12 @@
       width: 6px;
       height: 6px;
       border-radius: 2px;
-      background: rgba(108,142,245,0.75);
+      background: rgba(var(--violet-rgb),0.75);
     }
     /* each item opens with the failure, then explains it - so the opening
        clause carries the weight and the list stays scannable */
     .problem-list__lead {
-      color: var(--white);
+      color: var(--text);
       font-weight: 500;
     }
 
@@ -429,7 +689,7 @@
       padding: 1.15rem 1.1rem 1.35rem;
       border-radius: 2px 2px 3px 3px;      /* paper, not a rounded card */
       background: linear-gradient(158deg, var(--note-a), var(--note-b));
-      box-shadow: 0 12px 22px rgba(0,0,0,0.42), 0 2px 6px rgba(0,0,0,0.35);
+      box-shadow: 0 12px 22px rgba(var(--shadow-rgb),calc(0.42*var(--shadow-a))), 0 2px 6px rgba(var(--shadow-rgb),calc(0.35*var(--shadow-a)));
       transform: rotate(var(--tilt));
       transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
                   box-shadow 0.32s ease;
@@ -437,7 +697,7 @@
     /* straightens and lifts, like picking the note off the wall */
     .sticky-grid .sticky:hover {
       transform: rotate(0deg) translateY(-6px);
-      box-shadow: 0 20px 34px rgba(0,0,0,0.5), 0 4px 12px rgba(108,142,245,0.16);
+      box-shadow: 0 20px 34px rgba(var(--shadow-rgb),calc(0.5*var(--shadow-a))), 0 4px 12px rgba(var(--violet-rgb),0.16);
     }
     /* adhesive sheen across the top edge */
     .sticky-grid .sticky::before {
@@ -445,7 +705,7 @@
       position: absolute;
       top: 0; left: 8%; right: 8%;
       height: 12px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.07), transparent);
+      background: linear-gradient(180deg, rgba(var(--ink-rgb),0.07), transparent);
       pointer-events: none;
     }
     /* folded bottom-right corner */
@@ -454,15 +714,15 @@
       position: absolute;
       right: 0; bottom: 0;
       width: 20px; height: 20px;
-      background: linear-gradient(135deg, transparent 50%, rgba(0,0,0,0.38) 50%);
+      background: linear-gradient(135deg, transparent 50%, rgba(var(--shadow-rgb),calc(0.38*var(--shadow-a))) 50%);
       pointer-events: none;
     }
     /* alternating tilt + tint so no two neighbours look stamped */
-    .sticky-grid .sticky:nth-child(5n+1) { --tilt: -1.5deg; --note-a: #2b2553; --note-b: #1d1938; }
-    .sticky-grid .sticky:nth-child(5n+2) { --tilt:  1.1deg; --note-a: #1f2b54; --note-b: #161f3b; }
-    .sticky-grid .sticky:nth-child(5n+3) { --tilt: -0.8deg; --note-a: #34244f; --note-b: #241936; }
-    .sticky-grid .sticky:nth-child(5n+4) { --tilt:  1.6deg; --note-a: #1c3047; --note-b: #142232; }
-    .sticky-grid .sticky:nth-child(5n+5) { --tilt: -1.2deg; --note-a: #3a2447; --note-b: #281834; }
+    .sticky-grid .sticky:nth-child(5n+1) { --tilt: -1.5deg; --note-a: var(--note-1a); --note-b: var(--note-1b); }
+    .sticky-grid .sticky:nth-child(5n+2) { --tilt:  1.1deg; --note-a: var(--note-2a); --note-b: var(--note-2b); }
+    .sticky-grid .sticky:nth-child(5n+3) { --tilt: -0.8deg; --note-a: var(--note-3a); --note-b: var(--note-3b); }
+    .sticky-grid .sticky:nth-child(5n+4) { --tilt:  1.6deg; --note-a: var(--note-4a); --note-b: var(--note-4b); }
+    .sticky-grid .sticky:nth-child(5n+5) { --tilt: -1.2deg; --note-a: var(--note-5a); --note-b: var(--note-5b); }
 
     .sticky-grid .sticky__idx {
       position: absolute;
@@ -470,7 +730,7 @@
       font-family: 'Handlee', cursive;
       font-size: 0.72rem;
       letter-spacing: 0.04em;
-      color: rgba(255,255,255,0.3);
+      color: rgba(var(--ink-rgb),0.3);
     }
     /* Handlee ships a single weight, so the lead is separated from the body
        by size and colour rather than by bold. Sizes run larger than the
@@ -481,14 +741,14 @@
       font-family: 'Handlee', cursive;
       font-size: 1.1rem;
       line-height: 1.35;
-      color: var(--white);
+      color: var(--text);
     }
     .sticky-grid .sticky__body {
       margin: 0;
       font-family: 'Handlee', cursive;
       font-size: 0.98rem;
       line-height: 1.55;
-      color: rgba(232,228,240,0.75);
+      color: rgba(var(--text-rgb),0.75);
     }
 
     /* ─── The Solution: editorial split rows ───
@@ -501,7 +761,7 @@
       list-style: none;
       padding-left: 0;
       margin: 1.4rem 0 0;
-      border-top: 1px solid rgba(255,255,255,0.09);
+      border-top: 1px solid rgba(var(--ink-rgb),0.09);
     }
     .case-section .sol-row {
       position: relative;
@@ -509,10 +769,10 @@
       grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
       gap: 0.45rem 2.4rem;
       padding: 1.3rem 1rem 1.35rem 2.35rem;
-      border-bottom: 1px solid rgba(255,255,255,0.09);
+      border-bottom: 1px solid rgba(var(--ink-rgb),0.09);
       transition: background 0.25s ease;
     }
-    .case-section .sol-row:hover { background: rgba(108,142,245,0.05); }
+    .case-section .sol-row:hover { background: rgba(var(--violet-rgb),0.05); }
     /* chevron marker, nudges forward on hover */
     .case-section .sol-row::before {
       content: '';
@@ -521,14 +781,14 @@
       top: 1.62rem;
       width: 9px;
       height: 9px;
-      border-right: 2px solid rgba(108,142,245,0.9);
-      border-bottom: 2px solid rgba(108,142,245,0.9);
+      border-right: 2px solid rgba(var(--violet-rgb),0.9);
+      border-bottom: 2px solid rgba(var(--violet-rgb),0.9);
       transform: rotate(-45deg);
       transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease;
     }
     .case-section .sol-row:hover::before {
       transform: rotate(-45deg) translate(2.5px, 2.5px);
-      border-color: #a8bcfb;
+      border-color: var(--grad-hi);
     }
     /* Rubi's items also carry a module name; the other pages have none */
     .case-section .sol-row__label {
@@ -538,7 +798,7 @@
       font-size: 0.63rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: rgba(108,142,245,0.85);
+      color: rgba(var(--violet-rgb),0.85);
     }
     .case-section .sol-row__lead {
       margin: 0;
@@ -546,7 +806,7 @@
       font-weight: 700;
       font-size: 0.97rem;
       line-height: 1.45;
-      color: var(--white);
+      color: var(--text);
     }
     .case-section .sol-row__detail {
       margin: 0;
@@ -577,14 +837,14 @@
     .case-section .learn-card {
       position: relative;
       padding: 1.35rem 1.35rem 1.45rem;
-      background: linear-gradient(150deg, rgba(255,255,255,0.05), rgba(255,255,255,0.016));
+      background: linear-gradient(150deg, rgba(var(--ink-rgb),0.05), rgba(var(--ink-rgb),0.016));
       /* the cut corner; no border, since clip-path would slice through it */
       clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%);
       border-radius: 3px;
       transition: background 0.26s ease, transform 0.26s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .case-section .learn-card:hover {
-      background: linear-gradient(150deg, rgba(108,142,245,0.13), rgba(108,142,245,0.03));
+      background: linear-gradient(150deg, rgba(var(--violet-rgb),0.13), rgba(var(--violet-rgb),0.03));
       transform: translateY(-3px);
     }
     /* fills the notch so the cut reads as deliberate, not a rendering fault */
@@ -593,13 +853,13 @@
       position: absolute;
       top: 0; right: 0;
       width: 20px; height: 20px;
-      background: linear-gradient(225deg, rgba(108,142,245,0.42), transparent 70%);
+      background: linear-gradient(225deg, rgba(var(--violet-rgb),0.42), transparent 70%);
       clip-path: polygon(0 0, 100% 100%, 0 100%);
       transform: scaleX(-1);
       transition: background 0.26s ease;
     }
     .case-section .learn-card:hover::after {
-      background: linear-gradient(225deg, rgba(168,188,251,0.75), transparent 70%);
+      background: linear-gradient(225deg, rgba(var(--grad-hi-rgb),0.75), transparent 70%);
     }
     /* rotated square - not reused from any other section on these pages */
     .case-section .learn-card__mark {
@@ -607,12 +867,12 @@
       width: 7px;
       height: 7px;
       margin-bottom: 0.75rem;
-      background: rgba(108,142,245,0.9);
+      background: rgba(var(--violet-rgb),0.9);
       transform: rotate(45deg);
       transition: background 0.26s ease, transform 0.26s ease;
     }
     .case-section .learn-card:hover .learn-card__mark {
-      background: #a8bcfb;
+      background: var(--grad-hi);
       transform: rotate(135deg);
     }
     .case-section .learn-card__title {
@@ -621,7 +881,7 @@
       font-weight: 700;
       font-size: 0.92rem;
       line-height: 1.4;
-      color: var(--white);
+      color: var(--text);
     }
     .case-section .learn-card__text {
       margin: 0;
@@ -773,7 +1033,7 @@
       display: block;
       width: 22px;
       height: 2px;
-      background: var(--white);
+      background: var(--text);
       border-radius: 2px;
       transition: transform 0.3s, opacity 0.3s;
       transform-origin: center;
@@ -787,7 +1047,7 @@
       position: fixed;
       inset: 0;
       z-index: 150;
-      background: rgba(10,8,18,0.97);
+      background: rgba(var(--menu-bg-rgb),0.97);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       flex-direction: column;
@@ -810,8 +1070,8 @@
     }
     .nav-mobile-menu .nav-link:hover,
     .nav-mobile-menu .nav-link--active {
-      color: var(--white);
-      background: rgba(108,142,245,0.12);
+      color: var(--text);
+      background: rgba(var(--violet-rgb),0.12);
     }
     .nav-mobile-close {
       position: absolute;
@@ -829,7 +1089,7 @@
       justify-content: center;
       border-radius: 8px;
     }
-    .nav-mobile-close:hover { color: var(--white); background: rgba(255,255,255,0.06); }
+    .nav-mobile-close:hover { color: var(--text); background: rgba(var(--ink-rgb),0.06); }
 
     @media (max-width: 640px) {
       .nav-pill {
@@ -845,8 +1105,8 @@
         transition: background 0.2s, border-color 0.2s;
       }
       .nav-pill:hover {
-        background: rgba(108,142,245,0.12);
-        border-color: rgba(108,142,245,0.4);
+        background: rgba(var(--violet-rgb),0.12);
+        border-color: rgba(var(--violet-rgb),0.4);
       }
       .nav-pill .nav-link { display: none; }
       .nav-hamburger { display: flex; margin-left: 0; }
@@ -867,7 +1127,7 @@
       .footer-divider-v {
         width: 24px !important;
         height: 1px !important;
-        background: linear-gradient(to right, transparent, rgba(108,142,245,0.3), transparent) !important;
+        background: linear-gradient(to right, transparent, rgba(var(--violet-rgb),0.3), transparent) !important;
       }
       .footer-contact {
         align-items: center !important;
@@ -1038,9 +1298,9 @@
       padding: 1.6rem 1.45rem;
       border-radius: 16px;
       /* lit surface instead of a flat near-transparent fill */
-      background: linear-gradient(158deg, rgba(38,32,58,0.9) 0%, rgba(19,16,28,0.72) 62%);
-      border: 1px solid rgba(255,255,255,0.07);
-      box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      background: linear-gradient(158deg, rgba(var(--surface-3-rgb),0.9) 0%, rgba(var(--surface-rgb),0.72) 62%);
+      border: 1px solid rgba(var(--ink-rgb),0.07);
+      box-shadow: 0 1px 2px rgba(var(--shadow-rgb),calc(0.3*var(--shadow-a)));
       transition: transform 0.28s cubic-bezier(0.22,1,0.36,1),
                   box-shadow 0.28s ease, border-color 0.28s ease;
     }
@@ -1051,7 +1311,7 @@
       top: 0; left: 0;
       height: 2px;
       width: 3rem;
-      background: linear-gradient(90deg, rgba(108,142,245,0.95), transparent);
+      background: linear-gradient(90deg, rgba(var(--violet-rgb),0.95), transparent);
       transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
     }
     /* soft corner light so the surface reads as lit, not flat */
@@ -1061,14 +1321,14 @@
       top: -45%; right: -30%;
       width: 150px; height: 150px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(108,142,245,0.13) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(var(--violet-rgb),0.13) 0%, transparent 70%);
       pointer-events: none;
       transition: transform 0.45s ease;
     }
     .role-card:hover {
       transform: translateY(-4px);
-      border-color: rgba(108,142,245,0.3);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.4), 0 4px 16px rgba(108,142,245,0.13);
+      border-color: rgba(var(--violet-rgb),0.3);
+      box-shadow: 0 12px 30px rgba(var(--shadow-rgb),calc(0.4*var(--shadow-a))), 0 4px 16px rgba(var(--violet-rgb),0.13);
     }
     .role-card:hover::before { width: 100%; }
     .role-card:hover::after  { transform: scale(1.35); }
@@ -1081,9 +1341,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #a8bcfb;
-      background: linear-gradient(145deg, rgba(168,188,251,0.20), rgba(108,142,245,0.06));
-      border: 1px solid rgba(108,142,245,0.22);
+      color: var(--grad-hi);
+      background: linear-gradient(145deg, rgba(var(--grad-hi-rgb),0.20), rgba(var(--violet-rgb),0.06));
+      border: 1px solid rgba(var(--violet-rgb),0.22);
       flex-shrink: 0;
       transition: background 0.28s ease, color 0.28s ease,
                   box-shadow 0.28s ease, border-color 0.28s ease;
@@ -1091,10 +1351,10 @@
     /* icon fills with the accent gradient on hover - same language as the
        Core Skills nodes on the About page */
     .role-card:hover .role-card__icon {
-      background: linear-gradient(145deg, #a8bcfb 0%, #6c8ef5 55%, #4257c4 100%);
-      border-color: rgba(168,188,251,0.7);
-      color: #0A0A0F;
-      box-shadow: 0 5px 16px rgba(108,142,245,0.35);
+      background: linear-gradient(145deg, var(--grad-hi) 0%, var(--violet) 55%, var(--grad-lo) 100%);
+      border-color: rgba(var(--grad-hi-rgb),0.7);
+      color: var(--bg);
+      box-shadow: 0 5px 16px rgba(var(--violet-rgb),0.35);
     }
     .role-card__text {
       position: relative;
@@ -1118,8 +1378,8 @@
       gap: 0.7rem;
       padding: 1.35rem 1.3rem 1.35rem 1.55rem;
       border-radius: 14px;
-      background: rgba(255,255,255,0.028);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.055);
+      background: rgba(var(--ink-rgb),0.028);
+      box-shadow: inset 0 0 0 1px rgba(var(--ink-rgb),0.055);
       transition: background 0.28s ease, box-shadow 0.28s ease,
                   transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
     }
@@ -1132,14 +1392,14 @@
       width: 3px;
       height: 2.1rem;
       border-radius: 0 3px 3px 0;
-      background: linear-gradient(180deg, rgba(108,142,245,0.95), rgba(108,142,245,0.25));
+      background: linear-gradient(180deg, rgba(var(--violet-rgb),0.95), rgba(var(--violet-rgb),0.25));
       transition: height 0.45s cubic-bezier(0.22, 1, 0.36, 1),
                   top 0.45s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .ux-card:hover::before { top: 0; height: 100%; }
     .ux-card:hover {
-      background: rgba(108,142,245,0.055);
-      box-shadow: inset 0 0 0 1px rgba(108,142,245,0.22);
+      background: rgba(var(--violet-rgb),0.055);
+      box-shadow: inset 0 0 0 1px rgba(var(--violet-rgb),0.22);
       transform: translateY(-3px);
     }
     /* outlined numeral, same treatment as the home hero's ghost headline */
@@ -1152,14 +1412,14 @@
       font-size: 2.55rem;
       line-height: 1;
       color: transparent;
-      -webkit-text-stroke: 1px rgba(108,142,245,0.35);
+      -webkit-text-stroke: 1px rgba(var(--violet-rgb),0.35);
       pointer-events: none;
       transition: -webkit-text-stroke-color 0.28s ease;
     }
-    .ux-card:hover .ux-card__num { -webkit-text-stroke-color: rgba(108,142,245,0.72); }
+    .ux-card:hover .ux-card__num { -webkit-text-stroke-color: rgba(var(--violet-rgb),0.72); }
     /* without text-stroke the numeral would be invisible, so fill it instead */
     @supports not (-webkit-text-stroke: 1px red) {
-      .ux-card__num { color: rgba(108,142,245,0.2); }
+      .ux-card__num { color: rgba(var(--violet-rgb),0.2); }
     }
     .ux-card__head {
       position: relative;
@@ -1173,15 +1433,15 @@
     .ux-card__icon {
       display: flex;
       flex-shrink: 0;
-      color: rgba(108,142,245,0.85);
+      color: rgba(var(--violet-rgb),0.85);
       transition: color 0.28s ease;
     }
-    .ux-card:hover .ux-card__icon { color: #a8bcfb; }
+    .ux-card:hover .ux-card__icon { color: var(--grad-hi); }
     .ux-card__title {
       font-family: 'Syne', sans-serif;
       font-size: 0.95rem;
       font-weight: 700;
-      color: var(--white);
+      color: var(--text);
       line-height: 1.3;
     }
     .ux-card__list {
@@ -1210,7 +1470,7 @@
       width: 6px;
       height: 1.5px;
       border-radius: 1px;
-      background: rgba(108,142,245,0.6);
+      background: rgba(var(--violet-rgb),0.6);
     }
 
     /* ─── Outcome & Impact cards ───
@@ -1241,7 +1501,7 @@
       padding: 1.5rem 1.4rem 1.35rem;
       border-radius: 16px;
       background: var(--oi-bg);
-      box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      box-shadow: 0 1px 2px rgba(var(--shadow-rgb),calc(0.3*var(--shadow-a)));
       transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
     }
     .case-section .oi-grid--two .oi-card {
@@ -1250,7 +1510,7 @@
     }
     .case-section .oi-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 16px 34px rgba(0,0,0,0.42);
+      box-shadow: 0 16px 34px rgba(var(--shadow-rgb),calc(0.42*var(--shadow-a)));
     }
     .case-section .oi-card__title {
       margin: 0 0 0.75rem;
@@ -1269,7 +1529,7 @@
       font-size: 2.9rem;
       line-height: 1;
       letter-spacing: -0.01em;
-      color: #EFECF8;
+      color: var(--text-hi);
     }
     /* stands in for the stat on cards whose outcome isn't a number */
     .case-section .oi-card__icon {
@@ -1277,14 +1537,14 @@
       width: 2.6rem;
       height: 2.6rem;
       margin-bottom: 0.7rem;
-      color: #EFECF8;
+      color: var(--text-hi);
     }
     .case-section .oi-card__icon svg { width: 100%; height: 100%; }
     .case-section .oi-card__desc {
       margin: 0;
       font-size: 0.855rem;
       line-height: 1.7;
-      color: rgba(238,235,248,0.72);
+      color: rgba(var(--text-hi-rgb),0.72);
     }
     /* pinned to the bottom so cards in a row line up regardless of copy */
     .case-section .oi-card__art {
@@ -1320,18 +1580,18 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 1px;                                  /* gaps reveal the gridlines */
       margin-top: 1rem;
-      background: rgba(108,142,245,0.16);
-      border: 1px solid rgba(108,142,245,0.16);
+      background: rgba(var(--violet-rgb),0.16);
+      border: 1px solid rgba(var(--violet-rgb),0.16);
       border-radius: 14px;
       overflow: hidden;
     }
     .dh-cell {
       /* opaque, so the gridline colour only shows through the 1px gaps */
-      background: #0c0a14;
+      background: var(--footer-bot);
       padding: 1.2rem 1.15rem 1.3rem;
       transition: background 0.25s ease;
     }
-    .dh-cell:hover { background: #14111f; }
+    .dh-cell:hover { background: var(--surface); }
     .dh-cell__title {
       display: flex;
       align-items: flex-start;
@@ -1340,7 +1600,7 @@
       font-family: 'Syne', sans-serif;
       font-size: 0.86rem;
       font-weight: 700;
-      color: var(--white);
+      color: var(--text);
       line-height: 1.35;
     }
     .dh-cell__title::before {
@@ -1350,12 +1610,12 @@
       height: 6px;
       margin-top: 0.42em;
       border-radius: 2px;
-      background: rgba(108,142,245,0.9);
+      background: rgba(var(--violet-rgb),0.9);
       transition: transform 0.25s ease, background 0.25s ease;
     }
     .dh-cell:hover .dh-cell__title::before {
       transform: scale(1.4);
-      background: #a8bcfb;
+      background: var(--grad-hi);
     }
     .dh-cell__desc {
       margin: 0;
@@ -1449,7 +1709,7 @@
     }
     #customCursor svg {
       display: block;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35));
+      filter: drop-shadow(0 2px 4px rgba(var(--shadow-rgb),calc(0.35*var(--shadow-a))));
     }
     #customCursor .cursor-tag {
       position: absolute;
@@ -1464,7 +1724,7 @@
       padding: 0.22rem 0.65rem;
       border-radius: 999px;
       white-space: nowrap;
-      box-shadow: 0 4px 10px rgba(108,142,245,0.35);
+      box-shadow: 0 4px 10px rgba(var(--violet-rgb),0.35);
     }
     @media (hover: none), (pointer: coarse) {
       * { cursor: auto !important; }
@@ -1478,7 +1738,7 @@
       }
       .intro-meta-bar > div {
         border-right: none !important;
-        border-bottom: 1px solid rgba(108,142,245,0.12);
+        border-bottom: 1px solid rgba(var(--violet-rgb),0.12);
         flex: unset !important;
         width: 100% !important;
       }
@@ -1498,13 +1758,13 @@
       margin-bottom: 0;
       padding: 0.6rem 1.25rem;
       border-radius: 999px;
-      border: 1px solid rgba(108,142,245,0.3);
-      background: rgba(108,142,245,0.08);
+      border: 1px solid rgba(var(--violet-rgb),0.3);
+      background: rgba(var(--violet-rgb),0.08);
       transition: border-color 0.2s, background 0.2s, color 0.2s;
     }
     .back-link--bottom:hover {
-      border-color: rgba(108,142,245,0.55);
-      background: rgba(108,142,245,0.14);
+      border-color: rgba(var(--violet-rgb),0.55);
+      background: rgba(var(--violet-rgb),0.14);
     }
     @media (max-width: 900px) {
       .back-link-bottom-wrap {
@@ -1560,6 +1820,26 @@
       <a href="about.html" class="nav-link" data-umami-event="nav-click" data-umami-event-target="about">About</a>
       <a href="assets/resume/Imalsha-Kandamby-Resume-Product-Designer.pdf" target="_blank" rel="noopener" class="nav-link" data-umami-event="resume-view">Resume ↗</a>
     </nav>
+      <button type="button" class="theme-toggle" id="themeToggle"
+              aria-label="Switch to light mode" aria-pressed="false" title="Switch theme">
+        <svg class="theme-toggle__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <mask id="ttMoonMask">
+            <rect x="0" y="0" width="24" height="24" fill="#fff" />
+            <circle class="tt-bite" cx="26" cy="4" r="7" fill="#000" />
+          </mask>
+          <circle class="tt-orb" cx="12" cy="12" r="5" mask="url(#ttMoonMask)" />
+          <g class="tt-rays" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+            <line x1="12" y1="1.4" x2="12" y2="3.3" />
+            <line x1="12" y1="20.7" x2="12" y2="22.6" />
+            <line x1="1.4" y1="12" x2="3.3" y2="12" />
+            <line x1="20.7" y1="12" x2="22.6" y2="12" />
+            <line x1="4.6" y1="4.6" x2="5.9" y2="5.9" />
+            <line x1="18.1" y1="18.1" x2="19.4" y2="19.4" />
+            <line x1="4.6" y1="19.4" x2="5.9" y2="18.1" />
+            <line x1="18.1" y1="5.9" x2="19.4" y2="4.6" />
+          </g>
+        </svg>
+      </button>
   </header>
 
   <main class="container">
@@ -1574,7 +1854,7 @@
     </section>
     <div class="reveal-left" style="display:flex;align-items:center;gap:0.85rem;margin-bottom:1.7rem;">
       <span style="font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);">Live Product Link :</span>
-      <a href="https://www.rubirecruit.ai/" target="_blank" rel="noopener" aria-label="Live Product" data-umami-event="live-demo-click" data-umami-event-client="rubi-recruit" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.04);color:var(--muted);transition:border-color 0.2s,color 0.2s;" onmouseover="this.style.borderColor='rgba(108,142,245,0.6)';this.style.color='var(--violet)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.18)';this.style.color='var(--muted)';">
+      <a href="https://www.rubirecruit.ai/" target="_blank" rel="noopener" aria-label="Live Product" data-umami-event="live-demo-click" data-umami-event-client="rubi-recruit" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:1px solid rgba(var(--ink-rgb),0.13);background:rgba(var(--ink-rgb),0.04);color:var(--muted);transition:border-color 0.2s,color 0.2s;" onmouseover="this.style.borderColor='rgba(var(--violet-rgb),0.6)';this.style.color='var(--violet)';" onmouseout="this.style.borderColor='rgba(var(--ink-rgb),0.18)';this.style.color='var(--muted)';">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
       </a>
     </div>
@@ -1583,51 +1863,51 @@
 
     <section class="case-section reveal">
       <h2>Project Intro</h2>
-      <div class="intro-meta-bar" style="display:flex;flex-wrap:wrap;gap:0;margin-top:1.25rem;border:1px solid rgba(108,142,245,0.15);border-radius:14px;overflow:hidden;">
+      <div class="intro-meta-bar" style="display:flex;flex-wrap:wrap;gap:0;margin-top:1.25rem;border:1px solid rgba(var(--violet-rgb),0.15);border-radius:14px;overflow:hidden;">
 
-        <div style="flex:1;min-width:140px;padding:1.1rem 1.25rem;border-right:1px solid rgba(108,142,245,0.12);">
-          <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(108,142,245,0.7);font-weight:500;margin-bottom:0.4rem;">Project Type</span>
-          <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--white);">Recruitment - Web</span>
+        <div style="flex:1;min-width:140px;padding:1.1rem 1.25rem;border-right:1px solid rgba(var(--violet-rgb),0.12);">
+          <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta-label);font-weight:500;margin-bottom:0.4rem;">Project Type</span>
+          <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--text);">Recruitment - Web</span>
         </div>
 
-        <div style="flex:1;min-width:140px;padding:1.1rem 1.25rem;border-right:1px solid rgba(108,142,245,0.12);">
-          <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(108,142,245,0.7);font-weight:500;margin-bottom:0.4rem;">Role</span>
-          <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--white);">UX Designer</span>
+        <div style="flex:1;min-width:140px;padding:1.1rem 1.25rem;border-right:1px solid rgba(var(--violet-rgb),0.12);">
+          <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta-label);font-weight:500;margin-bottom:0.4rem;">Role</span>
+          <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--text);">UX Designer</span>
         </div>
 
-        <div style="flex:1;min-width:120px;padding:1.1rem 1.25rem;border-right:1px solid rgba(108,142,245,0.12);">
-          <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(108,142,245,0.7);font-weight:500;margin-bottom:0.4rem;">Client</span>
-          <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--white);">Rubirecruit</span>
+        <div style="flex:1;min-width:120px;padding:1.1rem 1.25rem;border-right:1px solid rgba(var(--violet-rgb),0.12);">
+          <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta-label);font-weight:500;margin-bottom:0.4rem;">Client</span>
+          <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--text);">Rubirecruit</span>
         </div>
 
-        <div style="flex:1;min-width:140px;padding:1.1rem 1.25rem;border-right:1px solid rgba(108,142,245,0.12);">
-          <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(108,142,245,0.7);font-weight:500;margin-bottom:0.4rem;">Time</span>
-          <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--white);">2025 Sep - 2025 Dec</span>
+        <div style="flex:1;min-width:140px;padding:1.1rem 1.25rem;border-right:1px solid rgba(var(--violet-rgb),0.12);">
+          <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta-label);font-weight:500;margin-bottom:0.4rem;">Time</span>
+          <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--text);">2025 Sep - 2025 Dec</span>
         </div>
 
         <div style="flex:1;min-width:100px;padding:1.1rem 1.25rem;">
-          <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(108,142,245,0.7);font-weight:500;margin-bottom:0.4rem;">Tools</span>
-          <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--white);">Figma, FigJam, ChatGPT, Perplexity AI</span>
+          <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta-label);font-weight:500;margin-bottom:0.4rem;">Tools</span>
+          <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--text);">Figma, FigJam, ChatGPT, Perplexity AI</span>
         </div>
 
       </div>
       <p class="intro-para" style="margin-top:1.25rem;">RubiRecruit is an AI-driven Candidate Evaluation System created to optimize and modernize the hiring process for recruitment teams. The project involves the design of three interconnected experiences: a Chrome extension that guides recruiters through step-based evaluation workflows, a newly built Admin Portal for managing users, audit logs, and subscriptions, and a User Portal designed for candidates to manage their profiles and subscription details.<br><br>The primary users of the platform are recruiters who need a structured, efficient way to process candidate data, and candidates who require a simple interface to manage their personal information. My role was to design clear, task-oriented flows within the Chrome extension, craft responsive and scalable portal interfaces, and ensure consistency across all touchpoints through reusable components and a modern visual system.<br><br>The final solution provides a seamless recruitment experience - improving clarity, reducing manual effort, and enhancing the speed and quality of candidate evaluation. The design prioritizes usability, transparency, and workflow efficiency, enabling recruitment teams to make more informed decisions through an intuitive and well-organized system.</p>
       <!-- Skills Demonstrated -->
-      <div style="margin-top:0.75rem;padding:1rem 1.25rem;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(108,142,245,0.15);">
-        <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(108,142,245,0.7);font-weight:500;margin-bottom:0.75rem;">Skills Demonstrated</span>
+      <div style="margin-top:0.75rem;padding:1rem 1.25rem;border-radius:14px;background:rgba(var(--ink-rgb),0.02);border:1px solid rgba(var(--violet-rgb),0.15);">
+        <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta-label);font-weight:500;margin-bottom:0.75rem;">Skills Demonstrated</span>
         <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:0.45rem;">
-          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">End-to-End Product Design</span>
-          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">UX Research & Discovery</span>
-          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Workflow Optimization</span>
-          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Information Architecture</span>
-          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">User Journey Mapping</span>
-          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Interaction Design</span>
-          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Chrome Extension UX</span>
-          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Admin Dashboard Design</span>
-          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Design Systems</span>
-          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Responsive Design</span>
-          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Interactive Prototyping</span>
-          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(108,142,245,0.08);border:1px solid rgba(108,142,245,0.2);font-size:0.75rem;color:var(--muted);">Cross-Functional Collaboration</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(var(--violet-rgb),0.08);border:1px solid rgba(var(--violet-rgb),0.2);font-size:0.75rem;color:var(--muted);">End-to-End Product Design</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(var(--violet-rgb),0.08);border:1px solid rgba(var(--violet-rgb),0.2);font-size:0.75rem;color:var(--muted);">UX Research & Discovery</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(var(--violet-rgb),0.08);border:1px solid rgba(var(--violet-rgb),0.2);font-size:0.75rem;color:var(--muted);">Workflow Optimization</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(var(--violet-rgb),0.08);border:1px solid rgba(var(--violet-rgb),0.2);font-size:0.75rem;color:var(--muted);">Information Architecture</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(var(--violet-rgb),0.08);border:1px solid rgba(var(--violet-rgb),0.2);font-size:0.75rem;color:var(--muted);">User Journey Mapping</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(var(--violet-rgb),0.08);border:1px solid rgba(var(--violet-rgb),0.2);font-size:0.75rem;color:var(--muted);">Interaction Design</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(var(--violet-rgb),0.08);border:1px solid rgba(var(--violet-rgb),0.2);font-size:0.75rem;color:var(--muted);">Chrome Extension UX</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(var(--violet-rgb),0.08);border:1px solid rgba(var(--violet-rgb),0.2);font-size:0.75rem;color:var(--muted);">Admin Dashboard Design</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(var(--violet-rgb),0.08);border:1px solid rgba(var(--violet-rgb),0.2);font-size:0.75rem;color:var(--muted);">Design Systems</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(var(--violet-rgb),0.08);border:1px solid rgba(var(--violet-rgb),0.2);font-size:0.75rem;color:var(--muted);">Responsive Design</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(var(--violet-rgb),0.08);border:1px solid rgba(var(--violet-rgb),0.2);font-size:0.75rem;color:var(--muted);">Interactive Prototyping</span>
+          <span style="padding:0.3rem 0.75rem;border-radius:999px;background:rgba(var(--violet-rgb),0.08);border:1px solid rgba(var(--violet-rgb),0.2);font-size:0.75rem;color:var(--muted);">Cross-Functional Collaboration</span>
         </div>
       </div>
     </section>
@@ -1857,37 +2137,37 @@
     <section class="case-section reveal">
       <h2>Outcome &amp; Impact</h2>
       <div class="oi-grid">
-        <article class="oi-card" style="--oi-bg:#211c3e;--oi-acc:#a8bcfb;">
+        <article class="oi-card" style="--oi-bg:var(--oi-2-bg);--oi-acc:var(--oi-2-acc);">
           <p class="oi-card__title">Evaluation time cut by half</p>
           <span class="oi-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
           <p class="oi-card__desc">Reducing the workflow from 8 steps to 4 didn't just shorten the flow, it removed the guesswork. Recruiters now move through candidate evaluation without pausing to figure out what needs their input, cutting the time and mental effort spent per candidate.</p>
           <span class="oi-card__art" aria-hidden="true"><svg viewBox="0 0 120 40" aria-hidden="true"><g opacity=".3"><rect x="2.0" y="4" width="11" height="9" rx="2" fill="currentColor"/><rect x="16.6" y="4" width="11" height="9" rx="2" fill="currentColor"/><rect x="31.2" y="4" width="11" height="9" rx="2" fill="currentColor"/><rect x="45.8" y="4" width="11" height="9" rx="2" fill="currentColor"/><rect x="60.4" y="4" width="11" height="9" rx="2" fill="currentColor"/><rect x="75.0" y="4" width="11" height="9" rx="2" fill="currentColor"/><rect x="89.6" y="4" width="11" height="9" rx="2" fill="currentColor"/><rect x="104.2" y="4" width="11" height="9" rx="2" fill="currentColor"/></g><rect x="2.0" y="24" width="26" height="12" rx="2" fill="currentColor"/><rect x="31.5" y="24" width="26" height="12" rx="2" fill="currentColor"/><rect x="61.0" y="24" width="26" height="12" rx="2" fill="currentColor"/><rect x="90.5" y="24" width="26" height="12" rx="2" fill="currentColor"/></svg></span>
         </article>
-        <article class="oi-card" style="--oi-bg:#182444;--oi-acc:#93b4f2;">
+        <article class="oi-card" style="--oi-bg:var(--oi-3-bg);--oi-acc:var(--oi-3-acc);">
           <p class="oi-card__title">Zero ambiguity between user and system actions</p>
           <span class="oi-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/></svg></span>
           <p class="oi-card__desc">By separating AI-automated steps from user actions entirely, recruiters always know what they're responsible for and what the system has already handled, closing the trust gap that came from a flow with no distinction between the two.</p>
           <span class="oi-card__art" aria-hidden="true"><svg viewBox="0 0 120 40" aria-hidden="true"><line x1="60" y1="2" x2="60" y2="38" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3" opacity=".5"/><rect x="6" y="5" width="44" height="8" rx="2" fill="currentColor" opacity="0.85"/><rect x="6" y="17" width="44" height="8" rx="2" fill="currentColor" opacity="0.85"/><rect x="6" y="29" width="44" height="8" rx="2" fill="currentColor" opacity="0.85"/><g fill="none" stroke="currentColor" stroke-width="1.5" opacity=".55"><rect x="70" y="5" width="44" height="8" rx="2"/><rect x="70" y="17" width="44" height="8" rx="2"/><rect x="70" y="29" width="44" height="8" rx="2"/></g></svg></span>
         </article>
-        <article class="oi-card" style="--oi-bg:#281b3f;--oi-acc:#bda6f5;">
+        <article class="oi-card" style="--oi-bg:var(--oi-1-bg);--oi-acc:var(--oi-1-acc);">
           <p class="oi-card__title">Two portals built where none existed</p>
           <span class="oi-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></span>
           <p class="oi-card__desc">The Admin and User Portals didn't exist before this project. Delivering both from scratch, with defined features, journeys, and navigation, gave the product a management and self-service layer it previously had no way to offer.</p>
           <span class="oi-card__art" aria-hidden="true"><svg viewBox="0 0 120 40" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.6" opacity=".75"><rect x="6" y="6" width="48" height="28" rx="3"/><rect x="66" y="6" width="48" height="28" rx="3"/></g><rect x="6" y="6" width="48" height="7" rx="3" fill="currentColor" opacity="0.55"/><rect x="66" y="6" width="48" height="7" rx="3" fill="currentColor" opacity="0.55"/><g opacity=".35"><rect x="11" y="19" width="26" height="4" rx="2" fill="currentColor"/><rect x="11" y="26" width="17" height="4" rx="2" fill="currentColor"/><rect x="71" y="19" width="26" height="4" rx="2" fill="currentColor"/><rect x="71" y="26" width="17" height="4" rx="2" fill="currentColor"/></g></svg></span>
         </article>
-        <article class="oi-card" style="--oi-bg:#152a3d;--oi-acc:#8ec5e8;">
+        <article class="oi-card" style="--oi-bg:var(--oi-4-bg);--oi-acc:var(--oi-4-acc);">
           <p class="oi-card__title">A colour system that means something again</p>
           <span class="oi-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C8 11.1 7 13 7 15a7 7 0 0 0 7 7z"/></svg></span>
           <p class="oi-card__desc">Replacing the overused primary colour with a deliberate, restrained palette means visual weight now signals actual priority. Users can tell what matters on a screen at a glance, instead of everything competing for attention equally.</p>
           <span class="oi-card__art" aria-hidden="true"><svg viewBox="0 0 120 40" aria-hidden="true"><rect x="3.0" y="12" width="13" height="20" rx="2" fill="currentColor" opacity="0.26"/><rect x="19.6" y="12" width="13" height="20" rx="2" fill="currentColor" opacity="0.26"/><rect x="36.2" y="12" width="13" height="20" rx="2" fill="currentColor" opacity="0.26"/><rect x="52.8" y="5" width="13" height="30" rx="2" fill="currentColor" opacity="1"/><rect x="69.4" y="12" width="13" height="20" rx="2" fill="currentColor" opacity="0.26"/><rect x="86.0" y="12" width="13" height="20" rx="2" fill="currentColor" opacity="0.26"/><rect x="102.6" y="12" width="13" height="20" rx="2" fill="currentColor" opacity="0.26"/></svg></span>
         </article>
-        <article class="oi-card" style="--oi-bg:#2c1a37;--oi-acc:#cba2e6;">
+        <article class="oi-card" style="--oi-bg:var(--oi-5-bg);--oi-acc:var(--oi-5-acc);">
           <p class="oi-card__title">One design language across three surfaces</p>
           <span class="oi-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
           <p class="oi-card__desc">Before this project, the Chrome extension, Admin Portal, and User Portal had no shared visual or interaction pattern. A unified component system now means switching between them feels like using one product, not three.</p>
           <span class="oi-card__art" aria-hidden="true"><svg viewBox="0 0 120 40" aria-hidden="true"><line x1="14" y1="20" x2="106" y2="20" stroke="currentColor" stroke-width="1.5" opacity=".35"/><g fill="none" stroke="currentColor" stroke-width="1.6" opacity=".8"><rect x="4" y="8" width="34" height="24" rx="3"/><rect x="46" y="11" width="28" height="18" rx="3"/><rect x="86" y="5" width="16" height="30" rx="3"/></g><g opacity=".5"><rect x="9" y="14" width="14" height="3" rx="1.5" fill="currentColor"/><rect x="51" y="17" width="14" height="3" rx="1.5" fill="currentColor"/><rect x="90" y="12" width="9" height="3" rx="1.5" fill="currentColor"/></g></svg></span>
         </article>
-        <article class="oi-card" style="--oi-bg:#1a2140;--oi-acc:#9db6f7;">
+        <article class="oi-card" style="--oi-bg:var(--oi-6-bg);--oi-acc:var(--oi-6-acc);">
           <p class="oi-card__title">A foundation built to expand, not rebuild</p>
           <span class="oi-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></span>
           <p class="oi-card__desc">Every component was built reusable from day one. New features and integrations can now be added by extending existing patterns rather than starting over, reducing rework for the design and development team going forward.</p>
@@ -2240,5 +2520,31 @@
     })();
   </script>
 
+
+  <script>
+    /* ── Theme toggle ── */
+    (function () {
+      var root = document.documentElement;
+      var btn  = document.getElementById('themeToggle');
+      if (!btn) return;
+
+      function sync(theme) {
+        btn.setAttribute('aria-label', theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode');
+        btn.setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
+      }
+      sync(root.getAttribute('data-theme') === 'light' ? 'light' : 'dark');
+
+      btn.addEventListener('click', function () {
+        var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        root.classList.add('theme-anim');
+        if (next === 'light') { root.setAttribute('data-theme', 'light'); }
+        else { root.removeAttribute('data-theme'); }
+        try { localStorage.setItem('theme', next); } catch (e) {}
+        sync(next);
+        if (window.umami) { window.umami.track('theme-toggle', { theme: next }); }
+        window.setTimeout(function () { root.classList.remove('theme-anim'); }, 340);
+      });
+    })();
+  </script>
 </body>
 </html>
