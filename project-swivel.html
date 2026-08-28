@@ -1371,32 +1371,39 @@
       transform: translateY(-5px);
       box-shadow: 0 16px 34px rgba(var(--shadow-rgb),calc(0.42*var(--shadow-a)));
     }
+    /* Same family as the section heading all along - what made these hard
+       to read was the treatment: 11px, uppercase, wide tracking. Set them
+       in sentence case at a readable size instead, subordinate to the h2
+       but styled like it. The source text is already sentence case, so
+       only the transform had to go. */
     .case-section .oi-card__title {
-      margin: 0 0 0.75rem;
-      font-family: 'Syne', sans-serif;
+      margin: 0 0 1.15rem;
+      font-family: var(--font-display);
       font-weight: 700;
-      font-size: 0.7rem;
-      letter-spacing: 0.11em;
-      text-transform: uppercase;
-      line-height: 1.5;
+      font-size: 0.98rem;
+      letter-spacing: normal;
+      text-transform: none;
+      line-height: 1.4;
       color: var(--oi-acc);
     }
     .case-section .oi-card__metric {
-      margin: 0 0 0.7rem;
-      font-family: 'Syne', sans-serif;
+      margin: 0 0 1.1rem;
+      font-family: var(--font-display);
       font-weight: 700;
       font-size: 2.9rem;
       line-height: 1;
       letter-spacing: -0.01em;
-      color: var(--text-hi);
+      /* dialled back from full-strength white: still clearly above the
+         0.72 body text, without shouting */
+      color: rgba(var(--text-hi-rgb), 0.84);
     }
     /* stands in for the stat on cards whose outcome isn't a number */
     .case-section .oi-card__icon {
       display: block;
       width: 2.6rem;
       height: 2.6rem;
-      margin-bottom: 0.7rem;
-      color: var(--text-hi);
+      margin-bottom: 1.1rem;
+      color: rgba(var(--text-hi-rgb), 0.84);
     }
     .case-section .oi-card__icon svg { width: 100%; height: 100%; }
     .case-section .oi-card__desc {
