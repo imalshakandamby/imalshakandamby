@@ -261,18 +261,19 @@
       overflow: visible;
       transition: transform .5s cubic-bezier(.36,1.5,.5,1);
     }
-    /* The sun becomes the moon: the orb swells, the rays fold away, and a
-       masked circle slides in from off-canvas to carve out the crescent. */
-    .tt-orb  { fill: currentColor; transition: r .45s cubic-bezier(.36,1.5,.5,1); }
-    .tt-bite { transition: cx .45s cubic-bezier(.36,1.5,.5,1), cy .45s cubic-bezier(.36,1.5,.5,1); }
-    .tt-rays {
+    /* The sun and the moon are two marks that swap with a turn.
+       An earlier version morphed one into the other by animating the SVG
+       geometry (r / cx / cy) from CSS - which WebKit does not implement, so
+       on iOS the orb never grew and the crescent was never carved, leaving
+       a bare dot. Only opacity and transform are used here; both are
+       supported everywhere. */
+    .tt-sun, .tt-moon {
       transform-origin: 12px 12px;
-      transition: transform .45s cubic-bezier(.36,1.5,.5,1), opacity .3s ease;
+      transition: opacity .26s ease, transform .45s cubic-bezier(.36,1.5,.5,1);
     }
-    :root[data-theme="light"] .theme-toggle__icon { transform: rotate(-35deg); }
-    :root[data-theme="light"] .tt-orb  { r: 8; }
-    :root[data-theme="light"] .tt-bite { cx: 19; cy: 7; }
-    :root[data-theme="light"] .tt-rays { transform: scale(.35); opacity: 0; }
+    .tt-moon { opacity: 0; transform: rotate(-80deg) scale(.45); }
+    :root[data-theme="light"] .tt-sun  { opacity: 0; transform: rotate(80deg) scale(.45); }
+    :root[data-theme="light"] .tt-moon { opacity: 1; transform: rotate(0deg) scale(1); }
 
     /* Eases the page ground across during a switch. Applied by JS only for
        the length of the transition, so it never competes with hover states. */
@@ -282,7 +283,7 @@
 
     @media (prefers-reduced-motion: reduce) {
       .theme-toggle, .theme-toggle__icon,
-      .tt-orb, .tt-bite, .tt-rays,
+      .tt-sun, .tt-moon,
       html.theme-anim, html.theme-anim body { transition: none; }
     }
 
@@ -1228,21 +1229,20 @@
       <button type="button" class="theme-toggle" id="themeToggle"
               aria-label="Switch to light mode" aria-pressed="false" title="Switch theme">
         <svg class="theme-toggle__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <mask id="ttMoonMask">
-            <rect x="0" y="0" width="24" height="24" fill="#fff" />
-            <circle class="tt-bite" cx="26" cy="4" r="7" fill="#000" />
-          </mask>
-          <circle class="tt-orb" cx="12" cy="12" r="5" mask="url(#ttMoonMask)" />
-          <g class="tt-rays" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
-            <line x1="12" y1="1.4" x2="12" y2="3.3" />
-            <line x1="12" y1="20.7" x2="12" y2="22.6" />
-            <line x1="1.4" y1="12" x2="3.3" y2="12" />
-            <line x1="20.7" y1="12" x2="22.6" y2="12" />
-            <line x1="4.6" y1="4.6" x2="5.9" y2="5.9" />
-            <line x1="18.1" y1="18.1" x2="19.4" y2="19.4" />
-            <line x1="4.6" y1="19.4" x2="5.9" y2="18.1" />
-            <line x1="18.1" y1="5.9" x2="19.4" y2="4.6" />
+          <g class="tt-sun">
+            <circle cx="12" cy="12" r="4.6" fill="currentColor" />
+            <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+              <line x1="12" y1="1.5" x2="12" y2="3.4" />
+              <line x1="12" y1="20.6" x2="12" y2="22.5" />
+              <line x1="1.5" y1="12" x2="3.4" y2="12" />
+              <line x1="20.6" y1="12" x2="22.5" y2="12" />
+              <line x1="4.7" y1="4.7" x2="6" y2="6" />
+              <line x1="18" y1="18" x2="19.3" y2="19.3" />
+              <line x1="4.7" y1="19.3" x2="6" y2="18" />
+              <line x1="18" y1="6" x2="19.3" y2="4.7" />
+            </g>
           </g>
+          <path class="tt-moon" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="currentColor" />
         </svg>
       </button>
   </header>
