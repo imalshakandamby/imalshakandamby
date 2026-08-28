@@ -1324,7 +1324,11 @@
       font-size: 0.94rem;
       line-height: 1.65;
       color: var(--text);
-      max-width: 68ch;
+      /* 68ch left the bullets using barely half the row, with a wide empty
+         column to their right. This runs long for body copy, but the points
+         are two lines each rather than prose, so it reads fine and the row
+         no longer looks half-used. */
+      max-width: 94ch;
     }
     .xp-points li::before {
       content: '';
