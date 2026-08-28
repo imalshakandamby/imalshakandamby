@@ -214,6 +214,24 @@
     :root[data-theme="light"] .sticky__idx { color: rgba(var(--ink-rgb), 0.72); }
     :root[data-theme="light"] .testi-card__mark { color: rgba(var(--violet-rgb), 0.85); }
 
+    /* Highlights inside the case intro. Three strengths of the primary,
+       stepping up as the story moves from problem to approach to result,
+       so the variation carries meaning rather than being decorative. */
+    .case-hi {
+      background: color-mix(in srgb, var(--violet) 20%, transparent);
+      /* full-strength text, not the paragraph's muted grey: inheriting it
+         put highlighted phrases at 3:1 on the strongest wash in light mode,
+         i.e. the emphasised words were the hardest to read */
+      color: var(--text);
+      padding: 0.1em 0.25em;
+      margin: 0 -0.05em;
+      border-radius: 3px;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+    .case-hi--mid    { background: color-mix(in srgb, var(--violet) 30%, transparent); }
+    .case-hi--strong { background: color-mix(in srgb, var(--violet) 42%, transparent); }
+
     /* ── Theme toggle ───────────────────────────────────────────────
        Sits inside .site-header so it inherits the nav's fade-on-scroll
        and shares its top baseline, rather than being a second fixed
@@ -594,11 +612,6 @@
       grid-template-columns: 2fr 1fr;
       gap: 2.5rem;
       align-items: start;
-    }
-    .intro-para {
-      color: var(--muted);
-      line-height: 1.8;
-      font-size: 0.95rem;
     }
     .intro-meta {
       display: flex;
@@ -1872,7 +1885,9 @@
 
     <section class="case-header">
       <h1>AI-Powered Candidate Evaluation System</h1>
-      <p>RubiRecruit is an AI-powered recruitment evaluation system designed to streamline hiring tasks for recruiters and offer a seamless application experience for candidates. This project includes the UX/UI design of a Chrome extension workflow, along with newly designed Admin and User portals. My focus was to create a structured, intuitive process that helps recruiters evaluate candidates faster, with clear navigation, simplified steps, and a scalable design system.</p>
+      <p>RubiRecruit's original Chrome extension asked recruiters to trust an AI-driven evaluation process without ever showing them what the AI was doing. <mark class="case-hi">An 8-step flow mixed manual and automated actions</mark> with no distinction between them, there was <mark class="case-hi">no progress feedback</mark>, and the <mark class="case-hi">brand's primary colour was overused</mark> to the point that <mark class="case-hi">nothing signalled priority</mark>. Beyond the extension, an Admin Portal and User Portal didn't exist yet - <mark class="case-hi">2 portals built from zero</mark>, both designed with no existing pattern to build on.</p>
+      <p>I redesigned the Chrome extension around a <mark class="case-hi case-hi--mid">clear 4-step flow with explicit guidance at every stage</mark>, then built the <mark class="case-hi case-hi--mid">Admin and User Portals</mark> from the ground up on a single, <mark class="case-hi case-hi--mid">reusable design system</mark> - unifying all 3 surfaces so colour, components, and navigation finally meant the same thing across the entire product.</p>
+      <p>The result: <mark class="case-hi case-hi--strong">evaluation time cut by half</mark>, <mark class="case-hi case-hi--strong">zero ambiguity between user and system actions</mark>, and <mark class="case-hi case-hi--strong">two fully-functioning portals</mark> delivered where none existed before - on a <mark class="case-hi case-hi--strong">reusable component foundation built to expand</mark>, not rebuild.</p>
     </section>
     <div class="reveal-left" style="display:flex;align-items:center;gap:0.85rem;margin-bottom:1.7rem;">
       <span style="font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);">Live Product Link :</span>
@@ -1913,8 +1928,7 @@
         </div>
 
       </div>
-      <p class="intro-para" style="margin-top:1.25rem;">RubiRecruit is an AI-driven Candidate Evaluation System created to optimize and modernize the hiring process for recruitment teams. The project involves the design of three interconnected experiences: a Chrome extension that guides recruiters through step-based evaluation workflows, a newly built Admin Portal for managing users, audit logs, and subscriptions, and a User Portal designed for candidates to manage their profiles and subscription details.<br><br>The primary users of the platform are recruiters who need a structured, efficient way to process candidate data, and candidates who require a simple interface to manage their personal information. My role was to design clear, task-oriented flows within the Chrome extension, craft responsive and scalable portal interfaces, and ensure consistency across all touchpoints through reusable components and a modern visual system.<br><br>The final solution provides a seamless recruitment experience - improving clarity, reducing manual effort, and enhancing the speed and quality of candidate evaluation. The design prioritizes usability, transparency, and workflow efficiency, enabling recruitment teams to make more informed decisions through an intuitive and well-organized system.</p>
-      <!-- Skills Demonstrated -->
+            <!-- Skills Demonstrated -->
       <div style="margin-top:0.75rem;padding:1rem 1.25rem;border-radius:14px;background:rgba(var(--ink-rgb),0.02);border:1px solid rgba(var(--violet-rgb),0.15);">
         <span style="display:block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta-label);font-weight:500;margin-bottom:0.75rem;">Skills Demonstrated</span>
         <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:0.45rem;">
