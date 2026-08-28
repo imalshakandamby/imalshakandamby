@@ -216,8 +216,6 @@
        hierarchy everywhere - the handful of small faded labels are
        restored to full strength here. */
     :root[data-theme="light"] .footer-copy,
-    :root[data-theme="light"] .exp-card__co-desc,
-    :root[data-theme="light"] .exp-card__period,
     :root[data-theme="light"] .testi-card__org { color: var(--muted); }
 
     :root[data-theme="light"] .blob-badge__location,
@@ -235,21 +233,7 @@
     :root[data-theme="light"] .sticky__idx { color: rgba(var(--ink-rgb), 0.72); }
     :root[data-theme="light"] .testi-card__mark { color: rgba(var(--violet-rgb), 0.85); }
 
-    /* The pill mixes its accent toward white, which lifts the label off a
-       dark card but washes it out on a light one. Mix toward black
-       instead, and thin the fill so the text has more to sit against. */
-    :root[data-theme="light"] .exp-card__dur {
-      color: color-mix(in srgb, var(--acc) 62%, black);
-      background: color-mix(in srgb, var(--acc) 11%, transparent);
-      border-color: color-mix(in srgb, var(--acc) 46%, transparent);
-    }
-    :root[data-theme="light"] .exp-card__dur-label { opacity: 1; }
 
-    /* Same white-mix problem as the duration pill: fine on a dark card,
-       a pale wash on a light one. */
-    :root[data-theme="light"] .exp-card__co {
-      color: color-mix(in srgb, var(--acc) 66%, black);
-    }
 
     /* ── Theme toggle ───────────────────────────────────────────────
        Sits inside .site-header so it inherits the nav's fade-on-scroll
@@ -1227,118 +1211,152 @@
       font-style: italic;
     }
 
-    /* ── 3. WORK EXPERIENCE ────────────────────── */
-    .exp-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.15rem;
-    }
-    .exp-card {
-      display: flex;
-      flex-direction: column;
-      border-radius: var(--radius);
-      padding: 1.6rem 1.4rem;
-      /* plain fill first, so the card still reads if color-mix is missing */
-      background: rgba(var(--surface-rgb),0.75);
-      background: linear-gradient(158deg,
-                  color-mix(in srgb, var(--acc) 15%, var(--card-base)) 0%,
-                  rgba(var(--surface-rgb),0.78) 62%);
-      border: 1px solid rgba(var(--ink-rgb),0.13);
-      border-color: color-mix(in srgb, var(--acc) 26%, transparent);
-      transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease;
-    }
-    .exp-card:hover {
-      border-color: color-mix(in srgb, var(--acc) 52%, transparent);
-      transform: translateY(-4px);
-    }
-    .exp-card__top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      margin-bottom: 1.1rem;
-    }
-    .exp-card__dur {
-      display: flex;
-      align-items: baseline;
-      gap: 0.35rem;
-      font-family: var(--font-display);
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      color: color-mix(in srgb, var(--acc) 72%, white);
-      background: color-mix(in srgb, var(--acc) 16%, transparent);
-      border: 1px solid color-mix(in srgb, var(--acc) 38%, transparent);
-      border-radius: 100px;
-      padding: 0.4rem 0.95rem;
-      white-space: nowrap;
-    }
-    .exp-card__dur-num {
-      font-size: 1.15rem;
-    }
-    .exp-card__dur-label {
-      font-size: 0.7rem;
-      font-weight: 400;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      opacity: 0.85;
-    }
-    .exp-card__period {
-      font-size: 0.7rem;
-      color: rgba(var(--muted-rgb),0.8);
-      white-space: nowrap;
-    }
-    .exp-card__co-desc {
-      display: block;
-      font-size: 0.75rem;
-      color: rgba(var(--muted-rgb),0.75);
-      margin-top: 0.2rem;
-      margin-bottom: 0.8rem;
-      letter-spacing: 0.02em;
-    }
-    .exp-card__role {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 1.02rem;
-      color: var(--text);
-      line-height: 1.3;
-      margin-bottom: 0.35rem;
-    }
-    .exp-card__co {
-      font-size: 0.82rem;
-      color: color-mix(in srgb, var(--acc) 70%, white);
-      margin-bottom: 0.2rem;
-    }
-    .exp-card__loc {
-      display: flex;
-      align-items: center;
-      gap: 0.32rem;
-      font-size: 0.72rem;
-      color: var(--muted);
-      margin-bottom: 1.1rem;
-    }
-    .exp-card__list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-      padding-top: 1.1rem;
+    /* ── 3. WORK EXPERIENCE ──────────────────────
+       An editorial list rather than three side-by-side cards: each role is
+       a row you can open, so the section stays short until someone wants
+       detail. Hairlines carry the structure; the only colour is the
+       per-role accent on the chevron and the highlights. */
+    .xp-list {
       border-top: 1px solid rgba(var(--ink-rgb),0.12);
     }
-    .exp-card__list li {
-      position: relative;
-      padding-left: 1rem;
-      font-size: 0.8rem;
-      line-height: 1.65;
-      color: var(--muted);
-      font-weight: 300;
+    .xp-item {
+      border-bottom: 1px solid rgba(var(--ink-rgb),0.12);
     }
-    .exp-card__list li::before {
+
+    .xp-head { margin: 0; }
+    .xp-toggle {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      gap: 1.5rem;
+      padding: 1.6rem 0;
+      background: none;
+      border: 0;
+      text-align: left;
+      cursor: pointer;
+      font: inherit;
+      color: inherit;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .xp-toggle:focus-visible {
+      outline: 2px solid var(--violet);
+      outline-offset: 4px;
+      border-radius: 4px;
+    }
+    .xp-co {
+      display: block;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      transition: color 0.2s ease;
+    }
+    .xp-toggle:hover .xp-co { color: var(--acc); }
+    .xp-role {
+      display: inline;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+    .xp-sub {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.25rem 0.7rem;
+      margin-top: 0.3rem;
+    }
+    .xp-loc {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .xp-loc svg { flex-shrink: 0; opacity: 0.8; }
+
+    .xp-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding-top: 0.15rem;
+      white-space: nowrap;
+    }
+    .xp-period {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .xp-period span { opacity: 0.75; }
+    .xp-chev {
+      flex-shrink: 0;
+      color: var(--acc);
+      transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .xp-item.is-open .xp-chev { transform: rotate(180deg); }
+
+    /* Height is driven from JS. The grid 0fr -> 1fr trick reads better but
+       does not survive the transition here: the computed value resolves to
+       0px and stays there, so the panel never opens. */
+    .xp-panel {
+      height: 0;
+      overflow: hidden;
+      transition: height 0.34s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .xp-body { padding: 0.2rem 0 1.9rem; }
+
+    .xp-eyebrow {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.1rem;
+    }
+
+    .xp-points { list-style: none; display: grid; gap: 0.85rem; }
+    .xp-points li {
+      position: relative;
+      padding-left: 1.4rem;
+      font-size: 0.94rem;
+      line-height: 1.65;
+      color: var(--text);
+      max-width: 68ch;
+    }
+    .xp-points li::before {
       content: '';
       position: absolute;
-      left: 0; top: 0.62em;
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: color-mix(in srgb, var(--acc) 78%, transparent);
+      left: 0.15rem;
+      top: 0.62em;
+      width: 5px;
+      height: 5px;
+      background: var(--acc);
+      border-radius: 1px;
+    }
+
+    /* the phrase that carries the value of the point */
+    .xp-hi {
+      background: color-mix(in srgb, var(--acc) 28%, transparent);
+      color: inherit;
+      padding: 0.1em 0.25em;
+      margin: 0 -0.05em;
+      border-radius: 3px;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+
+    @media (max-width: 560px) {
+      /* the date column cannot hold its own next to a long company name at
+         this width, so the row stacks and the chevron pins to the right */
+      .xp-toggle { grid-template-columns: 1fr auto; gap: 0.75rem; padding: 1.35rem 0; }
+      .xp-meta { align-self: start; }
+      .xp-period { font-size: 0.78rem; white-space: normal; text-align: right; }
+      .xp-co { font-size: 1.02rem; }
+      .xp-role { font-size: 0.88rem; }
+      .xp-points li { font-size: 0.9rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .xp-panel, .xp-chev { transition: none; }
     }
 
     /* ── 3b. DOMAIN MAP ────────────────────────── */
@@ -2096,7 +2114,6 @@
     /* ── About responsive ──────────────────────── */
     @media (max-width: 960px) {
       .about-hero    { grid-template-columns: 1fr; gap: 2.5rem; }
-      .exp-grid      { grid-template-columns: 1fr; }
       .hobby-grid    { grid-template-columns: repeat(2, 1fr); }
       .edu-grid      { grid-template-columns: 1fr; gap: 2rem; }
       .dom-head      { grid-template-columns: 1fr; align-items: start; }
@@ -2289,67 +2306,100 @@
           </p>
         </div>
 
-        <div class="exp-grid">
-        <article class="exp-card reveal" style="--acc:var(--violet)">
-          <div class="exp-card__top">
-            <span class="exp-card__dur"><span class="exp-card__dur-num">3</span><span class="exp-card__dur-label">Years</span></span>
-            <span class="exp-card__period">2023 – 2026</span>
-          </div>
-          <h3 class="exp-card__role">UX Designer</h3>
-          <span class="exp-card__co">Swivel Tech Pvt Ltd</span>
-          <span class="exp-card__co-desc">Serving Australian & Global Clients</span>
-          <span class="exp-card__loc">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            Australia
-          </span>
-          <ul class="exp-card__list">
-            <li>Promoted based on KPI performance for consistent ownership and delivery across a project-based environment</li>
-            <li>Shipped 28+ projects across 15+ domains simultaneously without losing speed or quality - including complex consumer apps and internal operational tools.</li>
-            <li>Built a token-driven design system of 48 components from scratch, adopted across 4 products, cutting handoff time by 40%</li>
-            <li>Owned the full design lifecycle end-to-end - from discovery and research through to post-handoff design review - across web, mobile, and AI-powered platforms</li>
-            <li>Collaborated with Product Managers, Developers, Test Engineers, Stakeholders, and Marketing teams to deliver UI/UX, branding assets, campaign materials, and social media content.</li>
-          </ul>
-        </article>
-        <article class="exp-card reveal" style="--acc:var(--acc-2)">
-          <div class="exp-card__top">
-            <span class="exp-card__dur"><span class="exp-card__dur-num">1</span><span class="exp-card__dur-label">Year</span></span>
-            <span class="exp-card__period">2022 – 2023</span>
-          </div>
-          <h3 class="exp-card__role">UI/UX Engineer</h3>
-          <span class="exp-card__co">Akvasoft Pvt Ltd</span>
-          <span class="exp-card__co-desc">Serving Indian & Global Clients</span>
-          <span class="exp-card__loc">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            Sri Lanka
-          </span>
-          <ul class="exp-card__list">
-            <li>Promoted within 3 months for switching between unrelated client domains quickly - learning each business context, adapting design decisions, and maintaining quality without losing speed.</li>
-            <li>Designed and shipped Shopify product recommendation quizzes across 5+ e-commerce domains - sitting directly in the purchase funnel, where better UX translates into measurable gains in discovery, personalization, and conversion.</li>
-            <li>Bridged design and development by building in Figma and implementing in HTML, CSS, and Shopify Liquid - fewer lost-in-translation moments, faster iterations, and a final product that actually matched the design intent.</li>
-            <li>Collaborated with Developers, Test Engineers, Project Managers, and Clients across multiple Shopify stores to ensure seamless implementation, design consistency, and high-quality delivery throughout.</li>
-          </ul>
-        </article>
-        <article class="exp-card reveal" style="--acc:var(--acc-3)">
-          <div class="exp-card__top">
-            <span class="exp-card__dur"><span class="exp-card__dur-num">6</span><span class="exp-card__dur-label">Months</span></span>
-            <span class="exp-card__period">2020 – 2021</span>
-          </div>
-          <h3 class="exp-card__role">Trainee Software Engineer</h3>
-          <span class="exp-card__co">Inova Labs Pvt Ltd</span>
-          <span class="exp-card__co-desc">Internship during University</span>
-          <span class="exp-card__loc">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            Sri Lanka
-          </span>
-          <ul class="exp-card__list">
-            <li>Built responsive interfaces using React, Bootstrap, and Ant Design during a 6-month front-end internship.</li>
-            <li>Gained hands-on understanding of how design decisions behave in real code - spacing, component states, responsive breakpoints, and rendering constraints.</li>
-            <li>That early technical grounding has made every developer conversation since faster, more precise, and less likely to end in "that's not possible."</li>
-            <li>Applied UI/UX principles directly in front-end implementation, not just in design files.</li>
-            <li>Developed early fluency across both design and engineering - understanding how the two disciplines speak differently about the same problem.</li>
-            <li>The result: cleaner handoffs, shorter feedback loops, and a significantly smaller gap between what gets designed and what actually gets shipped.</li>
-          </ul>
-        </article>
+        <div class="xp-list">
+          <article class="xp-item reveal" style="--acc:var(--violet)">
+            <h3 class="xp-head">
+              <button type="button" class="xp-toggle" aria-expanded="false" aria-controls="xpPanel1">
+                <span>
+                  <span class="xp-co">Swivel Tech Pvt Ltd</span>
+                  <span class="xp-sub">
+                    <span class="xp-role">UX Designer</span>
+                    <span class="xp-loc"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Australia</span>
+                  </span>
+                </span>
+                <span class="xp-meta">
+                  <span class="xp-period">2023 – 2026 <span>· 3 yrs</span></span>
+                  <svg class="xp-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </button>
+            </h3>
+            <div class="xp-panel" id="xpPanel1">
+              <div class="xp-panel__inner">
+                <div class="xp-body">
+                  <p class="xp-eyebrow">Serving Australian &amp; Global Clients</p>
+                  <ul class="xp-points">
+              <li><mark class="xp-hi">Promoted based on KPI performance</mark> for consistent ownership and delivery across a project-based environment</li>
+              <li>Shipped <mark class="xp-hi">28+ projects across 15+ domains</mark> simultaneously without losing speed or quality - including complex consumer apps and internal operational tools.</li>
+              <li>Built a <mark class="xp-hi">token-driven design system of 48 components</mark> from scratch, adopted across 4 products, <mark class="xp-hi">cutting handoff time by 40%</mark></li>
+              <li>Owned the <mark class="xp-hi">full design lifecycle end-to-end</mark> - from discovery and research through to post-handoff design review - across web, mobile, and AI-powered platforms</li>
+              <li>Collaborated with Product Managers, Developers, Test Engineers, Stakeholders, and Marketing teams to deliver UI/UX, branding assets, campaign materials, and social media content.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="xp-item reveal" style="--acc:var(--acc-2)">
+            <h3 class="xp-head">
+              <button type="button" class="xp-toggle" aria-expanded="false" aria-controls="xpPanel2">
+                <span>
+                  <span class="xp-co">Akvasoft Pvt Ltd</span>
+                  <span class="xp-sub">
+                    <span class="xp-role">UI/UX Engineer</span>
+                    <span class="xp-loc"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Sri Lanka</span>
+                  </span>
+                </span>
+                <span class="xp-meta">
+                  <span class="xp-period">2022 – 2023 <span>· 1 yr</span></span>
+                  <svg class="xp-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </button>
+            </h3>
+            <div class="xp-panel" id="xpPanel2">
+              <div class="xp-panel__inner">
+                <div class="xp-body">
+                  <p class="xp-eyebrow">Serving Indian &amp; Global Clients</p>
+                  <ul class="xp-points">
+              <li><mark class="xp-hi">Promoted within 3 months</mark> for switching between unrelated client domains quickly - learning each business context, adapting design decisions, and maintaining quality without losing speed.</li>
+              <li>Designed and shipped <mark class="xp-hi">Shopify product recommendation quizzes across 5+ e-commerce domains</mark> - sitting directly in the purchase funnel, where better UX translates into measurable gains in discovery, personalization, and conversion.</li>
+              <li>Bridged design and development by <mark class="xp-hi">building in Figma and implementing in HTML, CSS, and Shopify Liquid</mark> - fewer lost-in-translation moments, faster iterations, and a final product that actually matched the design intent.</li>
+              <li>Collaborated with Developers, Test Engineers, Project Managers, and Clients across multiple Shopify stores to ensure seamless implementation, design consistency, and high-quality delivery throughout.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="xp-item reveal" style="--acc:var(--acc-3)">
+            <h3 class="xp-head">
+              <button type="button" class="xp-toggle" aria-expanded="false" aria-controls="xpPanel3">
+                <span>
+                  <span class="xp-co">Inova Labs Pvt Ltd</span>
+                  <span class="xp-sub">
+                    <span class="xp-role">Trainee Software Engineer</span>
+                    <span class="xp-loc"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Sri Lanka</span>
+                  </span>
+                </span>
+                <span class="xp-meta">
+                  <span class="xp-period">2020 – 2021 <span>· 6 mos</span></span>
+                  <svg class="xp-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </button>
+            </h3>
+            <div class="xp-panel" id="xpPanel3">
+              <div class="xp-panel__inner">
+                <div class="xp-body">
+                  <p class="xp-eyebrow">Internship during University</p>
+                  <ul class="xp-points">
+              <li>Built responsive interfaces using <mark class="xp-hi">React, Bootstrap, and Ant Design</mark> during a 6-month front-end internship.</li>
+              <li>Gained hands-on understanding of <mark class="xp-hi">how design decisions behave in real code</mark> - spacing, component states, responsive breakpoints, and rendering constraints.</li>
+              <li>That early technical grounding has made every developer conversation since faster, more precise, and less likely to end in "that’s not possible."</li>
+              <li>Applied <mark class="xp-hi">UI/UX principles directly in front-end implementation</mark>, not just in design files.</li>
+              <li>Developed early fluency across both design and engineering - understanding how the two disciplines speak differently about the same problem.</li>
+              <li>The result: <mark class="xp-hi">cleaner handoffs, shorter feedback loops</mark>, and a significantly smaller gap between what gets designed and what actually gets shipped.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -3624,5 +3674,60 @@
       });
     })();
   </script>
+
+  <script>
+    /* ── Experience accordion ── */
+    (function () {
+      var items = document.querySelectorAll('.xp-item');
+      if (!items.length) return;
+
+      var DURATION = 340;
+
+      function settle(item, panel) {
+        // back to auto once the animation is done, so the panel keeps
+        // following its content when the text reflows
+        if (item.classList.contains('is-open')) panel.style.height = 'auto';
+      }
+
+      function expand(item, panel) {
+        panel.style.height = panel.scrollHeight + 'px';
+        item.classList.add('is-open');
+        window.setTimeout(function () { settle(item, panel); }, DURATION);
+      }
+
+      function collapse(item, panel) {
+        panel.style.height = panel.scrollHeight + 'px';
+        void panel.offsetHeight;          // flush, so the next value animates
+        item.classList.remove('is-open');
+        panel.style.height = '0px';
+      }
+
+      items.forEach(function (item) {
+        var btn = item.querySelector('.xp-toggle');
+        var panel = item.querySelector('.xp-panel');
+        if (!btn || !panel) return;
+
+        if (item.classList.contains('is-open')) panel.style.height = 'auto';
+
+        var co = item.querySelector('.xp-co');
+        var label = co ? co.textContent.trim() : '';
+
+        btn.addEventListener('click', function () {
+          var willOpen = !item.classList.contains('is-open');
+          if (willOpen) expand(item, panel); else collapse(item, panel);
+          btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+          // tracked here rather than with data-umami-event so the company and
+          // the direction of the toggle travel with the event
+          if (window.umami && typeof window.umami.track === 'function') {
+            window.umami.track('experience-toggle', {
+              company: label,
+              state: willOpen ? 'open' : 'close'
+            });
+          }
+        });
+      });
+    })();
+  </script>
+
 </body>
 </html>
