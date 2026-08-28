@@ -1532,25 +1532,26 @@
     .how-stack {
       display: flex;
       flex-direction: column;
-      gap: 1.15rem;
+      /* the three blocks are unboxed, so space alone separates them and it
+         has to be wider than the gap a border used to carry */
+      gap: 5.75rem;
+      /* These read as sub-sections of How I Work, so they sit in a narrower
+         column than the section heading above them. With no border or fill
+         left to group them, the inset is what marks them as nested.
+         62.5rem still clears the process chart's 660px minimum. */
+      width: 100%;
+      max-width: 62.5rem;
+      margin-inline: auto;
     }
-    .panel {
-      border-radius: var(--radius);
-      padding: 1.7rem 1.5rem;
-      background: rgba(var(--surface-rgb),0.72);
-      border: 1px solid rgba(var(--ink-rgb),0.13);
-    }
+    /* No container: each block sits directly on the page, with its label
+       and content carrying the structure instead of a card. */
+    .panel { }
     /* Header reads as a titled band across the top of the panel rather than
        a floating icon+label. Negative margins pull it back out to the panel
        edges, cancelling the panel's own padding. */
+    /* was a tinted band bled to the panel edges; now just a sub-heading */
     .panel__head {
-      margin: -1.7rem -1.5rem 1.6rem;
-      padding: 1.05rem 1.5rem;
-      background: linear-gradient(180deg, rgba(var(--violet-rgb),0.10), rgba(var(--violet-rgb),0.02));
-      border-bottom: 1px solid rgba(var(--ink-rgb),0.12);
-      /* inner radius: panel radius minus its 1px border, so the band's
-         corners sit flush inside the panel's rounded top */
-      border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
+      margin-bottom: 2.1rem;
       font-family: var(--font-display);
       font-weight: 700;
       font-size: 0.86rem;
@@ -1723,7 +1724,7 @@
     .cs-item {
       position: relative;
       display: grid;
-      grid-template-columns: 2.4rem minmax(10rem, 15rem) 1fr;
+      grid-template-columns: 2.4rem minmax(10rem, 18rem) 1fr;
       align-items: start;
       gap: 0 1.5rem;
       padding-bottom: 1.75rem;
@@ -1780,7 +1781,10 @@
       font-weight: 300;
       line-height: 1.7;
       padding-top: 0.5rem;
-      max-width: 74ch;
+      /* No measure cap here: it held the text ~80px short of the column,
+         so this block's right edge sat inside the other two. The title
+         column carries a little more width instead, which keeps the line
+         length reasonable while the body fills to the same edge. */
     }
     /* every one of these lines opens with the claim and then qualifies it,
        so the opening clause carries the weight */
@@ -1799,8 +1803,10 @@
       padding: 1.5rem 0;
       border-top: 1px solid rgba(var(--ink-rgb),0.12);
     }
-    .tk-group:first-child { padding-top: 0; border-top: 0; }
-    .tk-group:last-child  { padding-bottom: 0; }
+    /* every group is bounded the same way: a rule above each one, plus a
+       closing rule under the last - previously the first and last were the
+       only two with an open edge */
+    .tk-group:last-child { border-bottom: 1px solid rgba(var(--ink-rgb),0.12); }
     .tk-group__idx {
       display: block;
       font-family: var(--font-display);
@@ -2132,7 +2138,7 @@
       .tk-group      { grid-template-columns: 1fr; gap: 0.9rem; }
       /* title drops above its own body, both still hanging off the spine */
       .cs-item       { grid-template-columns: 2.4rem 1fr; }
-      .cs-item__body { grid-column: 2; padding-top: 0.4rem; max-width: none; }
+      .cs-item__body { grid-column: 2; padding-top: 0.4rem; }
     }
     @media (max-width: 640px) {
       .about-hero-sec { padding-top: calc(7rem + clamp(1.5rem, 3vw, 2.5rem)); }
