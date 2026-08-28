@@ -1449,7 +1449,11 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.4rem;
-      margin-top: auto;
+      /* No margin-top:auto here. The cards stretch to a shared row height,
+         and pinning this block to the bottom pushed the leftover height
+         into the gap above the rule - so cards with fewer chips opened a
+         hole between the description and the divider. Content now packs
+         from the top and the slack collects at the bottom instead. */
       padding-top: 0.9rem;
       border-top: 1px solid rgba(var(--ink-rgb),0.12);
     }
@@ -2434,7 +2438,7 @@
               <div class="dom-chips">
                 <span>AI-Powered Solutions</span>
                 <span>SportsTech AI</span>
-                <span>HR Technology</span>
+                <span>HR &amp; Recruiting</span>
                 <span>FinTech AI</span>
               </div>
             </article>
@@ -2470,7 +2474,7 @@
               <p class="dom-card__desc">Domains most designers haven't touched - which means fewer assumptions and sharper research.</p>
               <div class="dom-chips">
                 <span>Agriculture &amp; Farming</span>
-                <span>HR Technology</span>
+                <span>HR &amp; Recruiting</span>
               </div>
             </article>
           </div>
