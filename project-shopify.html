@@ -83,6 +83,8 @@
       --grad-lo:#4257c4;
       --scroll-rgb:140,100,255;
       --shine-rgb:160,150,255;
+      --tile-scrim-rgb:10,10,15;
+      --viewer-head-rgb:24,20,38;
       /* Values kept distinct from the tokens above so dark mode renders
          exactly as it did before the theme layer went in. */
       --menu-bg-rgb:    10,8,18;
@@ -96,6 +98,7 @@
       --loop-rgb:       150,138,225;
       --surface-3-rgb:  38,32,58;
       --viewer-rgb:     7,8,13;
+      --viewer-a:       0.78;
       --card-base:      #17132a;
       --card-base-2:    #1b162c;
 
@@ -166,6 +169,8 @@
       --grad-lo:#27368C;
       --scroll-rgb:100,72,186;
       --shine-rgb:110,96,200;
+      --tile-scrim-rgb:205,203,216;
+      --viewer-head-rgb:213,211,226;
       --menu-bg-rgb:    237,235,244;
       --chip-bg-rgb:    237,235,244;
       --icon-muted-rgb: 92,87,112;
@@ -176,7 +181,8 @@
       --text-max:       #1C1927;
       --loop-rgb:       68,89,190;
       --surface-3-rgb:  244,243,249;
-      --viewer-rgb:     214,212,228;
+      --viewer-rgb:     38,33,64;
+      --viewer-a:       0.52;
       --card-base:      #EDEBF4;
       --card-base-2:    #EDEBF4;
     }
@@ -193,14 +199,25 @@
     :root[data-theme="light"] .exp-card__period,
     :root[data-theme="light"] .testi-card__org { color: var(--muted); }
 
-    :root[data-theme="light"] .mq-item,
     :root[data-theme="light"] .blob-badge__location,
     :root[data-theme="light"] .sol-row__label { color: var(--violet); }
+
+    /* The marquee runs two tones in dark - muted rows against a violet
+       accent row. Pulling every .mq-item up to full violet for contrast
+       flattened that, so the plain rows get a dark neutral instead and
+       the accent row keeps the violet. */
+    :root[data-theme="light"] .mq-item { color: rgba(var(--text-rgb), 0.8); }
+    :root[data-theme="light"] .marquee-row--accent .mq-item { color: var(--violet); }
 
     :root[data-theme="light"] .footer-brand__tagline { color: var(--green); }
     :root[data-theme="light"] .card-tag    { color: rgba(var(--ink-rgb), 0.78); }
     :root[data-theme="light"] .sticky__idx { color: rgba(var(--ink-rgb), 0.72); }
     :root[data-theme="light"] .testi-card__mark { color: rgba(var(--violet-rgb), 0.85); }
+
+    /* mixes toward white for the dark card; needs the opposite on light */
+    :root[data-theme="light"] .brand-card__icon {
+      color: color-mix(in srgb, var(--acc) 70%, black);
+    }
 
     /* ── Theme toggle ───────────────────────────────────────────────
        Sits inside .site-header so it inherits the nav's fade-on-scroll
