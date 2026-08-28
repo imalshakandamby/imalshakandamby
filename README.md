@@ -18,3 +18,22 @@ Let's connect and explore how we can create beautiful and effective digital expe
     
 💻 IDE -->
     Visual Studio Code
+
+-------------------------------------------------------------------------------------------------------
+
+📄 ABOUT THIS REPOSITORY -->
+    Source of my portfolio site, published at https://imalshakandamby.github.io
+    It is public because GitHub Pages requires it on a free account,
+    not because the work is free to reuse.
+
+🔒 USING THIS CODE -->
+    The code, design, written case studies, and images here are mine and are
+    not licensed for reuse. You are welcome to read the source and learn from
+    how something is built. Please do not republish it, in whole or in part,
+    as your own portfolio or as a template.
+
+    Company names, product names, and screenshots belong to the respective
+    clients and are shown to describe work I contributed to.
+
+    Want to use something? Just ask -->  imalshakandamby@gmail.com
+    Full terms -->  LICENSE
