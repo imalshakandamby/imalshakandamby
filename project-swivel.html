@@ -214,6 +214,24 @@
     :root[data-theme="light"] .sticky__idx { color: rgba(var(--ink-rgb), 0.72); }
     :root[data-theme="light"] .testi-card__mark { color: rgba(var(--violet-rgb), 0.85); }
 
+    /* Highlights inside the case intro. Three strengths of the primary,
+       stepping up as the story moves from problem to approach to result,
+       so the variation carries meaning rather than being decorative. */
+    .case-hi {
+      background: color-mix(in srgb, var(--violet) 20%, transparent);
+      /* full-strength text, not the paragraph's muted grey: inheriting it
+         put highlighted phrases at 3:1 on the strongest wash in light mode,
+         i.e. the emphasised words were the hardest to read */
+      color: var(--text);
+      padding: 0.1em 0.25em;
+      margin: 0 -0.05em;
+      border-radius: 3px;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+    .case-hi--mid    { background: color-mix(in srgb, var(--violet) 30%, transparent); }
+    .case-hi--strong { background: color-mix(in srgb, var(--violet) 42%, transparent); }
+
     /* ── Theme toggle ───────────────────────────────────────────────
        Sits inside .site-header so it inherits the nav's fade-on-scroll
        and shares its top baseline, rather than being a second fixed
@@ -1754,7 +1772,9 @@
     <a href="index.html#work" class="back-link" aria-label="Back to other works" data-umami-event="back-to-work" data-umami-event-position="top"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>Back to Other Works</a>
     <section class="case-header">
       <h1>Swivel Internal Websites &amp; Marketing Pages</h1>
-      <p>Designed and optimized responsive corporate websites and marketing landing pages for multiple Swivel Group brands, including Swivel Group, Swivel Tech, Swivel Finance, and Swivel Foundation. Working closely with the Lead UX Designer, marketing team, and company co-founders, I helped transform outdated marketing experiences into modern, conversion-focused platforms that improved user engagement and strengthened brand presence across digital channels.</p>
+      <p>Swivel's marketing websites <mark class="case-hi">weren't generating the engagement or lead conversions</mark> the business needed, and the issues went deeper than visual polish. <mark class="case-hi">Four disconnected brand sites</mark> - Swivel Tech, Swivel Finance, and the wider group - had <mark class="case-hi">incomplete navigation</mark>, <mark class="case-hi">outdated UI patterns</mark>, and <mark class="case-hi">no unified brand system</mark>, so visitors moving between entities encountered a different experience each time and the path from landing on a page to taking action was undefined.</p>
+      <p>I <mark class="case-hi case-hi--mid">rebuilt the navigation around a complete service architecture</mark>, <mark class="case-hi case-hi--mid">redesigned the visual language</mark> to signal Swivel's AI-forward positioning, and <mark class="case-hi case-hi--mid">mapped clear user journeys from landing to action</mark>. Working closely with the Lead UX Designer, marketing team, and co-founders, I established <mark class="case-hi case-hi--mid">one unified design system across all four brand sites</mark>, then <mark class="case-hi case-hi--mid">delivered fully responsive experiences across desktop, tablet, and mobile</mark>.</p>
+      <p>The result: a <mark class="case-hi case-hi--strong">40% increase in lead conversion</mark>, <mark class="case-hi case-hi--strong">workflow friction cut by 30%</mark> through AI-powered features embedded directly into the site experience, and <mark class="case-hi case-hi--strong">4x stronger brand consistency</mark> - replacing four inconsistent sites with one coherent system that finally <mark class="case-hi case-hi--strong">reflected the quality of the work Swivel actually delivered</mark>.</p>
     </section>
     <div class="reveal-left" style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.7rem;flex-wrap:wrap;">
       <span style="font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-right:0.25rem;">Live Product Links :</span>
