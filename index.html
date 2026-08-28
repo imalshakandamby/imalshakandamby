@@ -666,16 +666,6 @@
       right: -20px;
       animation-delay: 0.8s;
     }
-    .blob-dot {
-      position: absolute;
-      top: 45%; left: 5px;
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--violet);
-      opacity: 0.5;
-      animation: float 5s ease-in-out infinite;
-      animation-delay: 1.2s;
-    }
     @keyframes float {
       0%, 100% { transform: translateY(0px); }
       50%       { transform: translateY(-10px); }
@@ -1124,7 +1114,6 @@
       .blob-chip--shipped { top: 4px; right: -8px; left: auto; }
       .blob-chip--shipped .blob-chip__num   { font-size: 0.85rem; }
       .blob-chip--shipped .blob-chip__label { font-size: 0.4rem; }
-      .blob-dot      { display: none; }
       .project-grid  { grid-template-columns: 1fr; }
       .section-header { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
     }
@@ -1154,7 +1143,6 @@
       .blob-chip--shipped { top: 2px; right: -6px; left: auto; }
       .blob-chip--shipped .blob-chip__num   { font-size: 0.75rem; }
       .blob-chip--shipped .blob-chip__label { font-size: 0.36rem; }
-      .blob-dot      { display: none; }
       .project-grid  { grid-template-columns: 1fr; }
       .section-header { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
     }
@@ -1986,7 +1974,6 @@
           <div class="blob-chip__label">Design Projects</div>
         </div>
 
-        <div class="blob-dot" aria-hidden="true"></div>
       </div><!-- /blob-wrap -->
 
     </div><!-- /hero__inner -->
