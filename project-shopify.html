@@ -219,6 +219,24 @@
       color: color-mix(in srgb, var(--acc) 70%, black);
     }
 
+    /* Highlights inside the case intro. Three strengths of the primary,
+       stepping up as the story moves from problem to approach to result,
+       so the variation carries meaning rather than being decorative. */
+    .case-hi {
+      background: color-mix(in srgb, var(--violet) 20%, transparent);
+      /* full-strength text, not the paragraph's muted grey: inheriting it
+         put highlighted phrases at 3:1 on the strongest wash in light mode,
+         i.e. the emphasised words were the hardest to read */
+      color: var(--text);
+      padding: 0.1em 0.25em;
+      margin: 0 -0.05em;
+      border-radius: 3px;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+    .case-hi--mid    { background: color-mix(in srgb, var(--violet) 30%, transparent); }
+    .case-hi--strong { background: color-mix(in srgb, var(--violet) 42%, transparent); }
+
     /* ── Theme toggle ───────────────────────────────────────────────
        Sits inside .site-header so it inherits the nav's fade-on-scroll
        and shares its top baseline, rather than being a second fixed
@@ -1807,9 +1825,10 @@
     <a href="index.html#work" class="back-link" aria-label="Back to other works" data-umami-event="back-to-work" data-umami-event-position="top"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>Back to Other Works</a>
     <section class="case-header">
       <h1>Shopify Product Recommendation Quizzes</h1>
-      <p>Designed and developed interactive product recommendation quizzes for multiple Shopify e-commerce brands, helping customers discover products tailored to their preferences while improving engagement and conversion rates. I was responsible for the end-to-end experience, from UX planning and visual design to implementation, testing, and developer collaboration.</p>
-      <p style="color:var(--muted);line-height:1.7;margin-bottom:1.25rem;">These quizzes served as personalized shopping assistants, guiding users toward relevant products through engaging question flows across industries such as Food &amp; Beverage, Furniture &amp; Home Furnishings, Beauty &amp; Personal Care, Fashion &amp; Apparel, Home &amp; Interior Design, and Consumer Retail.</p>
-      <p style="font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(var(--violet-rgb),0.8);margin-bottom:0.65rem;">Featured Brands</p>
+      <p>Every client brand came with its own business goals, customer behaviours, and product catalogue, which meant no single quiz template could work across all of them. Some brands had <mark class="case-hi">quizzes already live but underperforming</mark>, <mark class="case-hi">suffering from low completion rates</mark>, <mark class="case-hi">unclear user journeys</mark>, and <mark class="case-hi">poor conversion</mark>. Others needed a <mark class="case-hi">quiz built from zero</mark>, with <mark class="case-hi">no existing pattern to design from</mark>. <mark class="case-hi">Every new brand also meant learning a different industry fast</mark> enough to identify what was actually broken or missing before designing the fix.</p>
+      <p>I designed <mark class="case-hi case-hi--mid">brand-specific quiz logic for each client</mark> instead of stretching one template across every case - <mark class="case-hi case-hi--mid">diagnosing and rebuilding underperforming quizzes at the flow level</mark>, not just visually, while <mark class="case-hi case-hi--mid">designing entirely new experiences from first principles</mark> wherever nothing existed yet. A <mark class="case-hi case-hi--mid">fast discovery process</mark> let me ramp up on each new industry quickly, and every quiz was delivered <mark class="case-hi case-hi--mid">fully responsive across devices</mark>.</p>
+      <p>The result: <mark class="case-hi case-hi--strong">45% higher completion</mark> on rebuilt quizzes, a <mark class="case-hi case-hi--strong">30% lift in conversion</mark> through brand-specific recommendation logic, and <mark class="case-hi case-hi--strong">10+ quizzes shipped across international Shopify brands</mark> - proving the approach was repeatable at scale, not a one-off success, while holding <mark class="case-hi case-hi--strong">consistent quality across genuinely different industries</mark>.</p>
+      <p style="font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(var(--violet-rgb),0.8);margin-top:2.75rem;margin-bottom:0.65rem;">Featured Brands</p>
       <ul class="brand-grid">
         <li>
           <a class="brand-card" style="--acc:var(--violet)" href="https://app.noteworthyscents.com/scent-quiz" target="_blank" rel="noopener"
